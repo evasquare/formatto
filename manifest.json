@@ -1,0 +1,10 @@
+{
+    "id": "formatto",
+    "name": "Formatto",
+    "version": "1.0.0",
+    "minAppVersion": "0.15.0",
+    "description": "Obsidian Formatter.",
+    "author": "decaplanet",
+    "authorUrl": "https://decaplanet.com",
+    "isDesktopOnly": false
+}
