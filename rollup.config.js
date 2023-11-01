@@ -3,7 +3,7 @@ import typescript from "@rollup/plugin-typescript";
 import { env } from "process";
 
 export default {
-    input: "src/main.ts",
+    input: "src/plugin/main.ts",
     output: {
         format: "cjs",
         file: "main.js",
