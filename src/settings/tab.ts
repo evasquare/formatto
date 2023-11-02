@@ -1,4 +1,4 @@
-import { App, Notice, PluginSettingTab, Setting } from "obsidian";
+import { App, debounce, Notice, PluginSettingTab, Setting } from "obsidian";
 
 import MainPlugin from "../plugin/main";
 
@@ -30,6 +30,18 @@ export class MainPluginSettingTab extends PluginSettingTab {
             cls: "formatto-margin-top",
         });
 
+        const debounceMsg = debounce(
+            (text: string, value: string) => {
+                if (
+                    value !== "" &&
+                    (isNaN(parseInt(value)) || parseInt(value) < 0)
+                ) {
+                    new Notice(text);
+                }
+            },
+            1000,
+            true
+        );
         // - Top Heading Line Gap
         new Setting(containerEl)
             .setName("Top Heading Line Gap")
@@ -43,8 +55,9 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
-                            new Notice(
-                                "Please enter a valid number.\nIt should be at least 0."
+                            debounceMsg(
+                                "Please enter a valid number.\nIt should be at least 0.",
+                                value
                             );
                         }
 
