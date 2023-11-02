@@ -1,5 +1,5 @@
-.formatto__margin-top {
-    margin-top: var(--heading-spacing);
+.formatto__vertical-gap {
+    height: var(--p-spacing);
 }
 
 .formatto__paragraph-margin {

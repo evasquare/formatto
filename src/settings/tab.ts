@@ -28,6 +28,8 @@ export class MainPluginSettingTab extends PluginSettingTab {
             cls: "formatto__paragraph-margin formatto__important",
         });
 
+        containerEl.createEl("div", { cls: "formatto__vertical-gap" });
+
         const debounceMsg = debounce(
             (text: string, value: string) => {
                 if (
@@ -44,7 +46,6 @@ export class MainPluginSettingTab extends PluginSettingTab {
         //* Property Gaps
         containerEl.createEl("h2", {
             text: "Property Gaps",
-            cls: "formatto__margin-top",
         });
 
         new Setting(containerEl)
@@ -73,7 +74,6 @@ export class MainPluginSettingTab extends PluginSettingTab {
         //* Heading Gaps
         containerEl.createEl("h2", {
             text: "Heading Gaps",
-            cls: "formatto-margin-top",
         });
         new Setting(containerEl)
             .setName("Top Level Headings")
@@ -150,7 +150,6 @@ export class MainPluginSettingTab extends PluginSettingTab {
         //* Other Gaps
         containerEl.createEl("h2", {
             text: "Other Gaps",
-            cls: "formatto-margin-top",
         });
         new Setting(containerEl)
             .setName("Contents After Headings")
