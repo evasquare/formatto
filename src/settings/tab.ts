@@ -22,12 +22,10 @@ export class MainPluginSettingTab extends PluginSettingTab {
                 text: "Deca",
                 href: "https://github.com/decaplanet",
             });
-        containerEl.createEl("span", { text: "." });
-
-        // Format Preferences
-        containerEl.createEl("h2", {
-            text: "Format Preferences",
-            cls: "formatto-margin-top",
+        containerEl.createEl("span", { text: ".\n" });
+        containerEl.createEl("p", {
+            text: "All values should be at least 0.",
+            cls: "formatto__paragraph-margin formatto__important",
         });
 
         const debounceMsg = debounce(
@@ -42,13 +40,124 @@ export class MainPluginSettingTab extends PluginSettingTab {
             1000,
             true
         );
-        // - Top Heading Line Gap
+
+        //* Property Gaps
+        containerEl.createEl("h2", {
+            text: "Property Gaps",
+            cls: "formatto__margin-top",
+        });
+
         new Setting(containerEl)
-            .setName("Top Heading Line Gap")
-            .setDesc("A number value that is at least 0.")
+            .setName("After Properties")
+            .setDesc("Decides the gap after YAML properties.")
+            .addText((text) =>
+                text
+                    .setPlaceholder("2")
+                    .setValue(this.plugin.settings.topHeadingLineGap)
+                    .onChange(async (value) => {
+                        if (
+                            value !== "" &&
+                            (isNaN(parseInt(value)) || parseInt(value) < 0)
+                        ) {
+                            debounceMsg(
+                                "Please enter a valid number.\nIt should be at least 0.",
+                                value
+                            );
+                        }
+
+                        this.plugin.settings.topHeadingLineGap = value;
+                        await this.plugin.saveSettings();
+                    })
+            );
+
+        //* Heading Gaps
+        containerEl.createEl("h2", {
+            text: "Heading Gaps",
+            cls: "formatto-margin-top",
+        });
+        new Setting(containerEl)
+            .setName("Top Level Headings")
+            .setDesc("Decides gaps between highest level of headings.")
             .addText((text) =>
                 text
                     .setPlaceholder("3")
+                    .setValue(this.plugin.settings.topHeadingLineGap)
+                    .onChange(async (value) => {
+                        if (
+                            value !== "" &&
+                            (isNaN(parseInt(value)) || parseInt(value) < 0)
+                        ) {
+                            debounceMsg(
+                                "Please enter a valid number.\nIt should be at least 0.",
+                                value
+                            );
+                        }
+
+                        this.plugin.settings.topHeadingLineGap = value;
+                        await this.plugin.saveSettings();
+                    })
+            );
+        new Setting(containerEl)
+            .setName("First Sub Heading")
+            .setDesc(
+                "Decides the gap between a parent heading and the first of its children headings."
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder("1")
+                    .setValue(this.plugin.settings.topHeadingLineGap)
+                    .onChange(async (value) => {
+                        if (
+                            value !== "" &&
+                            (isNaN(parseInt(value)) || parseInt(value) < 0)
+                        ) {
+                            debounceMsg(
+                                "Please enter a valid number.\nIt should be at least 0.",
+                                value
+                            );
+                        }
+
+                        this.plugin.settings.topHeadingLineGap = value;
+                        await this.plugin.saveSettings();
+                    })
+            );
+
+        new Setting(containerEl)
+            .setName("Sub Headings")
+            .setDesc(
+                "Decides gaps between headings that are not the highest level."
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder("2")
+                    .setValue(this.plugin.settings.topHeadingLineGap)
+                    .onChange(async (value) => {
+                        if (
+                            value !== "" &&
+                            (isNaN(parseInt(value)) || parseInt(value) < 0)
+                        ) {
+                            debounceMsg(
+                                "Please enter a valid number.\nIt should be at least 0.",
+                                value
+                            );
+                        }
+
+                        this.plugin.settings.topHeadingLineGap = value;
+                        await this.plugin.saveSettings();
+                    })
+            );
+
+        //* Other Gaps
+        containerEl.createEl("h2", {
+            text: "Other Gaps",
+            cls: "formatto-margin-top",
+        });
+        new Setting(containerEl)
+            .setName("Contents After Headings")
+            .setDesc("Decides the gap after a heading.")
+            .addText((text) =>
+                text
+                    .setPlaceholder("0")
                     .setValue(this.plugin.settings.topHeadingLineGap)
                     .onChange(async (value) => {
                         if (

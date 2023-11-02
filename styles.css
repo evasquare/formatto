@@ -1,3 +1,13 @@
-.formatto-margin-top {
+.formatto__margin-top {
     margin-top: var(--heading-spacing);
+}
+
+.formatto__paragraph-margin {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.formatto__important {
+    color: tomato;
+    /* font-weight: bold; */
 }
