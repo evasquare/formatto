@@ -18,6 +18,7 @@ export default class MainPlugin extends Plugin {
             await this.loadData()
         );
     }
+
     async saveSettings() {
         await this.saveData(this.settings);
     }

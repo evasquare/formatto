@@ -55,7 +55,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
             .addText((text) =>
                 text
                     .setPlaceholder("2")
-                    .setValue(this.plugin.settings.topHeadingLineGap)
+                    .setValue(this.plugin.settings.propertyGaps.afterProperties)
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
@@ -67,7 +67,8 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             );
                         }
 
-                        this.plugin.settings.topHeadingLineGap = value;
+                        this.plugin.settings.propertyGaps.afterProperties =
+                            value;
                         await this.plugin.saveSettings();
                     })
             );
@@ -82,7 +83,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
             .addText((text) =>
                 text
                     .setPlaceholder("3")
-                    .setValue(this.plugin.settings.topHeadingLineGap)
+                    .setValue(this.plugin.settings.headingGaps.topLevelHeadings)
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
@@ -94,7 +95,8 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             );
                         }
 
-                        this.plugin.settings.topHeadingLineGap = value;
+                        this.plugin.settings.headingGaps.topLevelHeadings =
+                            value;
                         await this.plugin.saveSettings();
                     })
             );
@@ -106,7 +108,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
             .addText((text) =>
                 text
                     .setPlaceholder("1")
-                    .setValue(this.plugin.settings.topHeadingLineGap)
+                    .setValue(this.plugin.settings.headingGaps.firstSubHeading)
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
@@ -118,7 +120,8 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             );
                         }
 
-                        this.plugin.settings.topHeadingLineGap = value;
+                        this.plugin.settings.headingGaps.firstSubHeading =
+                            value;
                         await this.plugin.saveSettings();
                     })
             );
@@ -131,7 +134,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
             .addText((text) =>
                 text
                     .setPlaceholder("2")
-                    .setValue(this.plugin.settings.topHeadingLineGap)
+                    .setValue(this.plugin.settings.headingGaps.subHeadings)
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
@@ -143,7 +146,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             );
                         }
 
-                        this.plugin.settings.topHeadingLineGap = value;
+                        this.plugin.settings.headingGaps.subHeadings = value;
                         await this.plugin.saveSettings();
                     })
             );
@@ -158,7 +161,9 @@ export class MainPluginSettingTab extends PluginSettingTab {
             .addText((text) =>
                 text
                     .setPlaceholder("0")
-                    .setValue(this.plugin.settings.topHeadingLineGap)
+                    .setValue(
+                        this.plugin.settings.otherGaps.contentsAfterHeadings
+                    )
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
@@ -170,7 +175,8 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             );
                         }
 
-                        this.plugin.settings.topHeadingLineGap = value;
+                        this.plugin.settings.otherGaps.contentsAfterHeadings =
+                            value;
                         await this.plugin.saveSettings();
                     })
             );
