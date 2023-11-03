@@ -24,13 +24,13 @@ export interface MainPluginSettings {
 
 export const DEFAULT_PROPERTY_GAPS: Partial<PropertyGaps> = {
     afterProperties: "2",
-} as const;
+};
 
 export const DEFAULT_HEADING_GAPS: Partial<HeadingGaps> = {
     topLevelHeadings: "3",
     firstSubHeading: "1",
     subHeadings: "2",
-} as const;
+};
 
 export const DEFAULT_OTHER_GAPS: Partial<OtherGaps> = {
     contentsAfterHeadings: "0",
