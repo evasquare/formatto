@@ -11,6 +11,11 @@
         "noUncheckedIndexedAccess": true,
         "moduleResolution": "node10",
         "module": "ESNext",
-        "lib": ["ES2022"]
+        "lib": ["ES2022"],
+        "baseUrl": "./",
+        "paths": {
+            "@settings/*": ["./src/settings/*"],
+            "@events/*": ["./src/events/*"]
+        }
     }
 }

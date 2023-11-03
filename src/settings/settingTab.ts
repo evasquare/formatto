@@ -1,6 +1,7 @@
-import { App, debounce, Notice, PluginSettingTab, Setting } from "obsidian";
+import { debounce, Notice, PluginSettingTab, Setting } from "obsidian";
 
-import MainPlugin from "../plugin/main";
+import type { App } from "obsidian";
+import type MainPlugin from "../main";
 
 export class MainPluginSettingTab extends PluginSettingTab {
     plugin: MainPlugin;

@@ -1,9 +1,9 @@
-import { Workspace } from "obsidian";
+import MainPlugin from "../main";
 
-const getEditorMenus = (workspace: Workspace) => {
+const getEditorMenus = (plugin: MainPlugin) => {
     // Array of events to register.
     const events = [
-        workspace.on("editor-menu", (menu, editor, view) => {
+        plugin.app.workspace.on("editor-menu", (menu, editor, view) => {
             menu.addItem((item) =>
                 item
                     .setTitle("Format Document")

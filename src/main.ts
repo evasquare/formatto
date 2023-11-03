@@ -1,21 +1,10 @@
 import { Plugin } from "obsidian";
 
-import getEditorMenus from "../events/getEditorMenus";
-import { MainPluginSettingTab } from "../settings/tab";
+import getEditorMenus from "@events/getEditorMenus";
+import { MainPluginSettingTab } from "@settings/settingTab";
+import { DEFAULT_SETTINGS } from "@settings/settingTypes";
 
-interface MainPluginSettings {
-    topHeadingLineGap: string;
-}
-
-/**
- * `Partial<Type>` is a TypeScript utility that returns a type with all properties of Type set to optional.
- * It enables type checking while letting you only define the properties you want to provide defaults for.
- *
- * Source : https://docs.obsidian.md/Plugins/User+interface/Settings#Provide+default+values
- */
-const DEFAULT_SETTINGS: Partial<MainPluginSettings> = {
-    topHeadingLineGap: "3",
-};
+import type { MainPluginSettings } from "@settings/settingTypes";
 
 //* ENTRY POINT
 export default class MainPlugin extends Plugin {
@@ -51,5 +40,5 @@ export default class MainPlugin extends Plugin {
     }
 
     // Dynamically load events.
-    events = getEditorMenus(this.app.workspace);
+    events = getEditorMenus(this);
 }
