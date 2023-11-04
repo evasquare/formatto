@@ -5,9 +5,10 @@
     "description": "Obsidian Formatter.",
     "main": "build/index.js",
     "scripts": {
-        "dev": "nodemon --exec \"rollup -c\"",
+        "dev:ts": "nodemon --config \"./nodemon-ts.json\"",
+        "dev:wasm": "nodemon --config \"./nodemon-wasm.json\"",
         "build:ts": "rollup -c",
-        "build:wasm": "cd ./wasm && wasm-pack build --target web && npm i",
+        "build:wasm": "cd ./wasm && wasm-pack build --target web && cd ../ && npm i",
         "test": "vitest"
     },
     "repository": {

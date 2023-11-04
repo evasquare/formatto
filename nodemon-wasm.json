@@ -1,0 +1,5 @@
+{
+    "watch": ["wasm/src"],
+    "ext": "rs",
+    "exec": "cd ./wasm && wasm-pack build --target web && cd ../ && npm i"
+}
