@@ -1,5 +1,5 @@
 {
-    "watch": ["src"],
-    "ext": "ts",
+    "watch": ["src", "wasm/pkg"],
+    "ext": "ts, js",
     "ignore": ["*.test.ts"]
 }

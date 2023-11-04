@@ -1,6 +1,8 @@
 import alias from "@rollup/plugin-alias";
 import commonjs from "@rollup/plugin-commonjs";
+import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
+import wasm from "@rollup/plugin-wasm";
 
 export default {
     input: "src/main.ts",
@@ -11,11 +13,10 @@ export default {
     },
     external: ["obsidian", "fs", "os", "path"],
     plugins: [
+        wasm(),
+        nodeResolve(),
         typescript({
             tsconfig: "./tsconfig.json",
-        }),
-        commonjs({
-            include: "node_modules/**",
         }),
         alias({
             entires: [
@@ -23,6 +24,9 @@ export default {
                 { find: "@utils", replacement: "./src/utils" },
                 { find: "@settings", replacement: "./src/settings" },
             ],
+        }),
+        commonjs({
+            include: "node_modules/**",
         }),
     ],
 };
