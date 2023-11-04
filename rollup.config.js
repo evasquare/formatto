@@ -19,8 +19,9 @@ export default {
         }),
         alias({
             entires: [
-                { find: "@settings", replacement: "./src/settings" },
                 { find: "@events", replacement: "./src/events" },
+                { find: "@utils", replacement: "./src/utils" },
+                { find: "@settings", replacement: "./src/settings" },
             ],
         }),
     ],

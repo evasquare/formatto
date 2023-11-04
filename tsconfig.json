@@ -14,8 +14,9 @@
         "lib": ["ES2022"],
         "baseUrl": "./",
         "paths": {
-            "@settings/*": ["./src/settings/*"],
-            "@events/*": ["./src/events/*"]
+            "@events/*": ["./src/events/*"],
+            "@utils/*": ["./src/utils/*"],
+            "@settings/*": ["./src/settings/*"]
         }
     }
 }
