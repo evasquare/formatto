@@ -1,6 +1,6 @@
 import { Plugin } from "obsidian";
 
-import getEditorMenus from "@events/getEditorMenus";
+import { EditorMenuCreator } from "@events/editorMenuCreator";
 import { MainPluginSettingTab } from "@settings/settingTab";
 import { DEFAULT_SETTINGS } from "@settings/settingTypes";
 
@@ -40,6 +40,6 @@ export default class MainPlugin extends Plugin {
         console.log("Plugin Unloaded: Formatto");
     }
 
-    // Dynamically load events.
-    events = getEditorMenus(this);
+    private eventsMenuCreator = new EditorMenuCreator(this);
+    private events = this.eventsMenuCreator.getEventsArr();
 }
