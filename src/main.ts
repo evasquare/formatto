@@ -4,10 +4,15 @@ import { EditorMenuCreator } from "@events/editorMenuCreator";
 import { MainPluginSettingTab } from "@settings/settingTab";
 import { DEFAULT_SETTINGS } from "@settings/settingTypes";
 
-import __wbg_init, { initSync } from "../wasm/pkg/formatto_wasm.js";
+import __wbg_init, { initSync, status } from "../wasm/pkg/formatto_wasm.js";
 import formatto_wasm from "../wasm/pkg/formatto_wasm_bg.wasm";
 
 import type { MainPluginSettings } from "@settings/settingTypes";
+
+(async () => {
+    // @ts-ignore
+    await initSync(await formatto_wasm());
+})();
 
 //* ENTRY POINT
 export default class MainPlugin extends Plugin {
@@ -36,20 +41,13 @@ export default class MainPlugin extends Plugin {
 
         console.log("Plugin Loaded: Formatto");
 
-        const wasmStatus =
-            (await this.webAssembly).status() === 1 ? "OK" : "ERR";
+        const wasmStatus = status();
         console.log(`WebAssembly Status: ${wasmStatus}`);
     }
 
     // Runs when the plugin is disabled.
     onunload() {
         console.log("Plugin Unloaded: Formatto");
-    }
-
-    webAssembly = this.loadWasm();
-    private async loadWasm() {
-        // @ts-ignore
-        return await initSync(await formatto_wasm());
     }
 
     private eventsMenuCreator = new EditorMenuCreator(this);
