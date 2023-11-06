@@ -9,7 +9,8 @@
         "dev:wasm": "nodemon --config \"./nodemon-wasm.json\"",
         "build:ts": "rollup -c",
         "build:wasm": "cd ./wasm && wasm-pack build --target web && cd ../ && npm i",
-        "test": "vitest"
+        "test:ts": "vitest",
+        "test:wasm": "cd ./wasm && wasm-pack test --chrome"
     },
     "repository": {
         "type": "git",
