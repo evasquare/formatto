@@ -1,3 +1,4 @@
+import { format_document } from "../../wasm/pkg/formatto_wasm";
 import MainPlugin from "../main";
 
 export class EditorMenuCreator {
@@ -17,9 +18,18 @@ export class EditorMenuCreator {
                             .setTitle("Format Document")
                             .setIcon("documents")
                             .onClick(() => {
-                                const value = editor.getValue();
+                                const cursorPosition = editor.getCursor();
 
-                                // TODO: Format the document ("value" variable).
+                                const formattedDocument = format_document(
+                                    editor.getValue()
+                                );
+
+                                console.log(formattedDocument);
+                                editor.setValue(formattedDocument);
+                                editor.setSelection(
+                                    cursorPosition,
+                                    cursorPosition
+                                );
                             })
                     );
                 }
