@@ -9,11 +9,6 @@ import formatto_wasm from "../wasm/pkg/formatto_wasm_bg.wasm";
 
 import type { MainPluginSettings } from "@settings/settingTypes";
 
-(async () => {
-    // @ts-ignore
-    await __wbg_init(await formatto_wasm());
-})();
-
 //* ENTRY POINT
 export default class MainPlugin extends Plugin {
     settings: MainPluginSettings;
@@ -32,9 +27,16 @@ export default class MainPlugin extends Plugin {
 
     // Runs whenever the user starts using the plugin in Obsidian.
     async onload() {
+        // Initialize WebAssembly
+        await (async () => {
+            // @ts-ignore
+            await __wbg_init(await formatto_wasm());
+        })();
+
         await this.loadSettings();
         this.addSettingTab(new MainPluginSettingTab(this.app, this));
 
+        // Register Events
         this.events.forEach((item) => {
             this.registerEvent(item);
         });
