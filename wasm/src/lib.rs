@@ -33,7 +33,8 @@ pub fn divide_top_headings(input: &str) -> Vec<Vec<&str>> {
     let mut current_section = Vec::<&str>::new();
 
     for line in input_lines {
-        let is_top_heading = line.starts_with("##") && !line.starts_with("###");
+        let is_top_heading = line.starts_with(&top_heading_sharp)
+            && !line.starts_with(format!("{}#", &top_heading_sharp).as_str());
 
         if is_top_heading && !current_section.is_empty() {
             sections.push(current_section);
