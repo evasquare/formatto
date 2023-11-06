@@ -41,7 +41,9 @@ pub fn divide_top_headings(input: &str) -> Vec<Vec<&str>> {
             current_section = Vec::<&str>::new();
         }
 
-        current_section.push(line);
+        if !line.is_empty() {
+            current_section.push(line);
+        }
     }
 
     if !current_section.is_empty() {
