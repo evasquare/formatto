@@ -24,7 +24,6 @@ export class EditorMenuCreator {
                                     editor.getValue()
                                 );
 
-                                console.log(formattedDocument);
                                 editor.setValue(formattedDocument);
                                 editor.setSelection(
                                     cursorPosition,
