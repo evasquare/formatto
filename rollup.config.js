@@ -13,7 +13,10 @@ export default {
     },
     external: ["obsidian", "fs", "os", "path"],
     plugins: [
-        wasm(),
+        wasm({
+            fileName: "[name][extname]",
+            maxFileSize: 100000000,
+        }),
         nodeResolve(),
         typescript({
             tsconfig: "./tsconfig.json",
