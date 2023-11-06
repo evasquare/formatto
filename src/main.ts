@@ -11,7 +11,7 @@ import type { MainPluginSettings } from "@settings/settingTypes";
 
 (async () => {
     // @ts-ignore
-    await initSync(await formatto_wasm());
+    await __wbg_init(await formatto_wasm());
 })();
 
 //* ENTRY POINT
@@ -41,7 +41,7 @@ export default class MainPlugin extends Plugin {
 
         console.log("Plugin Loaded: Formatto");
 
-        const wasmStatus = status();
+        const wasmStatus = status() === true ? "Loaded" : "Not Loaded";
         console.log(`WebAssembly Status: ${wasmStatus}`);
     }
 
