@@ -15,7 +15,7 @@ export default {
     plugins: [
         wasm({
             fileName: "[name][extname]",
-            maxFileSize: 100000000,
+            maxFileSize: Number.MAX_SAFE_INTEGER,
         }),
         nodeResolve(),
         typescript({
