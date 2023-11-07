@@ -7,7 +7,7 @@ use wasm_bindgen_test::*;
 wasm_bindgen_test_configure!(run_in_browser);
 
 mod parse_input_test {
-    use formatto_wasm::parsing_tools::parse_input;
+    use formatto_wasm::parsing_tools::get_section_vec;
     use formatto_wasm::{HeadingLevel, MarkdownSection};
 
     use std::{assert, vec};
@@ -37,7 +37,7 @@ end of heading 3
             ))],
         ];
 
-        assert_eq!(parse_input(input), expected_output);
+        assert_eq!(get_section_vec(input), expected_output);
     }
 
     #[wasm_bindgen_test]
@@ -56,7 +56,7 @@ Hi everyone
             ))],
         ];
 
-        assert_eq!(parse_input(input), expected_output);
+        assert_eq!(get_section_vec(input), expected_output);
     }
 
     #[wasm_bindgen_test]
@@ -73,7 +73,7 @@ Text under subheading"#;
             MarkdownSection::Unknown("Text under subheading".to_string()),
         ]];
 
-        assert_eq!(parse_input(input), expected_output);
+        assert_eq!(get_section_vec(input), expected_output);
     }
 
     #[wasm_bindgen_test]
@@ -82,7 +82,7 @@ Text under subheading"#;
 
         let expected_output: Vec<Vec<MarkdownSection>> = vec![];
 
-        assert_eq!(parse_input(input), expected_output);
+        assert_eq!(get_section_vec(input), expected_output);
     }
 
     #[wasm_bindgen_test]
@@ -112,6 +112,6 @@ fn main(
             ),
         ]];
 
-        assert_eq!(parse_input(input), expected_output);
+        assert_eq!(get_section_vec(input), expected_output);
     }
 }
