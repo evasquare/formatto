@@ -20,18 +20,19 @@ pub fn status() -> bool {
 }
 
 #[derive(Debug, PartialEq)]
-pub enum HeadingLevel<'a> {
-    Top(&'a str),
-    FirstSub(&'a str),
-    Sub(&'a str),
+pub enum HeadingLevel {
+    Top(String),
+    FirstSub(String),
+    Sub(String),
 }
 
 #[derive(Debug, PartialEq)]
-pub enum MarkdownSection<'a> {
+pub enum MarkdownSection {
     Property,
-    Heading(HeadingLevel<'a>),
+    Heading(HeadingLevel),
     Content,
-    Unknown(&'a str),
+    Code(String),
+    Unknown(String),
 }
 
 #[wasm_bindgen]

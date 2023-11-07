@@ -26,13 +26,15 @@ end of heading 3
 
         let expected_output = vec![
             vec![
-                MarkdownSection::Heading(HeadingLevel::Top("## Heading 2")),
-                MarkdownSection::Unknown("Hi everyone"),
-                MarkdownSection::Unknown("### Heading 3"),
-                MarkdownSection::Unknown("end of heading 3"),
-                MarkdownSection::Unknown("#### Heading 4"),
+                MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
+                MarkdownSection::Unknown("Hi everyone".to_string()),
+                MarkdownSection::Unknown("### Heading 3".to_string()),
+                MarkdownSection::Unknown("end of heading 3".to_string()),
+                MarkdownSection::Unknown("#### Heading 4".to_string()),
             ],
-            vec![MarkdownSection::Heading(HeadingLevel::Top("## Heading 2"))],
+            vec![MarkdownSection::Heading(HeadingLevel::Top(
+                "## Heading 2".to_string(),
+            ))],
         ];
 
         assert_eq!(parse_top_headings(input), expected_output);
@@ -46,10 +48,12 @@ Hi everyone
 
         let expected_output = vec![
             vec![
-                MarkdownSection::Heading(HeadingLevel::Top("## Heading 2")),
-                MarkdownSection::Unknown("Hi everyone"),
+                MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
+                MarkdownSection::Unknown("Hi everyone".to_string()),
             ],
-            vec![MarkdownSection::Heading(HeadingLevel::Top("## Heading 2"))],
+            vec![MarkdownSection::Heading(HeadingLevel::Top(
+                "## Heading 2".to_string(),
+            ))],
         ];
 
         assert_eq!(parse_top_headings(input), expected_output);
@@ -63,10 +67,10 @@ Hi everyone
 Text under subheading"#;
 
         let expected_output = vec![vec![
-            MarkdownSection::Heading(HeadingLevel::Top("## Heading 2")),
-            MarkdownSection::Unknown("Hi everyone"),
-            MarkdownSection::Unknown("### Subheading"),
-            MarkdownSection::Unknown("Text under subheading"),
+            MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
+            MarkdownSection::Unknown("Hi everyone".to_string()),
+            MarkdownSection::Unknown("### Subheading".to_string()),
+            MarkdownSection::Unknown("Text under subheading".to_string()),
         ]];
 
         assert_eq!(parse_top_headings(input), expected_output);
@@ -77,6 +81,36 @@ Text under subheading"#;
         let input = "";
 
         let expected_output: Vec<Vec<MarkdownSection>> = vec![];
+
+        assert_eq!(parse_top_headings(input), expected_output);
+    }
+
+    #[wasm_bindgen_test]
+    fn code_block() {
+        let input = r#"## Heading 2
+Hi everyone
+
+#### Heading 4
+```rust
+fn main(
+    println!(\"Hello World\");
+) {}
+```
+"#;
+
+        let expected_output: Vec<Vec<MarkdownSection>> = vec![vec![
+            MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
+            MarkdownSection::Unknown("Hi everyone".to_string()),
+            MarkdownSection::Unknown("#### Heading 4".to_string()),
+            MarkdownSection::Code(
+                r#"```rust
+fn main(
+    println!(\"Hello World\");
+) {}
+```"#
+                    .to_string(),
+            ),
+        ]];
 
         assert_eq!(parse_top_headings(input), expected_output);
     }
