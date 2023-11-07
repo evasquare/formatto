@@ -36,10 +36,7 @@ pub enum MarkdownSection<'a> {
 
 #[wasm_bindgen]
 pub fn format_document(input: &str) -> String {
-    use parsing_tools::divide_top_headings;
-
-    let top_heading_sections = divide_top_headings(input);
-    console_log!("top_heading_sections: {:#?}", top_heading_sections);
+    let top_heading_sections = parsing_tools::parse_top_headings(input);
 
     input.to_string()
 }

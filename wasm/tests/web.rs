@@ -6,8 +6,8 @@ use wasm_bindgen_test::*;
 
 wasm_bindgen_test_configure!(run_in_browser);
 
-mod divide_top_headings {
-    use formatto_wasm::parsing_tools::divide_top_headings;
+mod parse_top_headings {
+    use formatto_wasm::parsing_tools::parse_top_headings;
     use formatto_wasm::{HeadingLevel, MarkdownSection};
 
     use std::{assert, vec};
@@ -35,7 +35,7 @@ end of heading 3
             vec![MarkdownSection::Heading(HeadingLevel::Top("## Heading 2"))],
         ];
 
-        assert_eq!(divide_top_headings(input), expected_output);
+        assert_eq!(parse_top_headings(input), expected_output);
     }
 
     #[wasm_bindgen_test]
@@ -52,7 +52,7 @@ Hi everyone
             vec![MarkdownSection::Heading(HeadingLevel::Top("## Heading 2"))],
         ];
 
-        assert_eq!(divide_top_headings(input), expected_output);
+        assert_eq!(parse_top_headings(input), expected_output);
     }
 
     #[wasm_bindgen_test]
@@ -69,7 +69,7 @@ Text under subheading"#;
             MarkdownSection::Unknown("Text under subheading"),
         ]];
 
-        assert_eq!(divide_top_headings(input), expected_output);
+        assert_eq!(parse_top_headings(input), expected_output);
     }
 
     #[wasm_bindgen_test]
@@ -78,6 +78,6 @@ Text under subheading"#;
 
         let expected_output: Vec<Vec<MarkdownSection>> = vec![];
 
-        assert_eq!(divide_top_headings(input), expected_output);
+        assert_eq!(parse_top_headings(input), expected_output);
     }
 }

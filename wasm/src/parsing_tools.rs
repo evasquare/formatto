@@ -1,15 +1,11 @@
-use crate::{console_log, MarkdownSection};
+use crate::MarkdownSection;
 
-pub fn divide_top_headings(input: &str) -> Vec<Vec<MarkdownSection>> {
+pub fn parse_top_headings(input: &str) -> Vec<Vec<MarkdownSection>> {
     let input_lines: Vec<&str> = input.trim().split('\n').collect::<Vec<&str>>();
-
-    console_log!("{:#?}", &input_lines);
 
     //* Check top heading level.
     let top_heading_level = input_lines[0].chars().take_while(|&c| c == '#').count();
     let top_heading_sharp = "#".repeat(top_heading_level);
-
-    console_log!("Top heading level: {}", top_heading_sharp);
 
     //* Dividing documents into sections
     let mut sections = Vec::<Vec<MarkdownSection>>::new();
