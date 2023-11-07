@@ -1,6 +1,6 @@
 use wasm_bindgen::prelude::*;
 
-mod format_tools;
+pub mod format_tools;
 mod utils;
 
 #[wasm_bindgen]
@@ -19,24 +19,27 @@ pub fn status() -> bool {
     true
 }
 
-enum HeadingLevel {
-    Top,
-    FirstSub,
-    Sub,
+#[derive(Debug, PartialEq)]
+pub enum HeadingLevel<'a> {
+    Top(&'a str),
+    FirstSub(&'a str),
+    Sub(&'a str),
 }
 
-enum MarkdownComponent {
+#[derive(Debug, PartialEq)]
+pub enum MarkdownSection<'a> {
     Property,
-    Heading(HeadingLevel),
+    Heading(HeadingLevel<'a>),
     Content,
+    Unknown(&'a str),
 }
 
 #[wasm_bindgen]
 pub fn format_document(input: &str) -> String {
     use format_tools::divide_top_headings;
 
-    let top_heading_sections: Vec<Vec<&str>> = divide_top_headings(input);
-    console_log!("{:#?}", top_heading_sections);
+    let top_heading_sections = divide_top_headings(input);
+    console_log!("top_heading_sections: {:#?}", top_heading_sections);
 
     input.to_string()
 }
