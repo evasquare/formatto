@@ -37,7 +37,17 @@ pub enum MarkdownSection {
 
 #[wasm_bindgen]
 pub fn format_document(input: &str) -> String {
-    parsing_tools::parse_input(input);
+    if input.is_empty() {
+        return input.to_string();
+    }
 
-    input.to_string()
+    match parsing_tools::parse_input(input) {
+        Ok(sections) => sections,
+        Err(e) => {
+            let error_message = e.to_string();
+
+            // Display an error message in Obsidian.
+            wasm_bindgen::throw_str(&error_message);
+        }
+    }
 }

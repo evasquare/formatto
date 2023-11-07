@@ -1,9 +1,9 @@
 use crate::MarkdownSection;
+use std::error::Error;
 
 // TODO: Read other markdown sections too.
-// TODO: Error handling.
 
-pub fn parse_input(input: &str) -> Vec<Vec<MarkdownSection>> {
+pub fn parse_input(input: &str) -> Result<String, Box<dyn Error>> {
     let input_lines: Vec<&str> = input.trim().split('\n').collect::<Vec<&str>>();
 
     let top_heading_level = input_lines[0].chars().take_while(|&c| c == '#').count();
@@ -29,7 +29,7 @@ pub fn parse_input(input: &str) -> Vec<Vec<MarkdownSection>> {
                 code_block.push_str(format!("\n{}", line).as_str());
                 current_section.push(MarkdownSection::Code(code_block.clone()));
 
-                // ! CLEAR CODE BLOCK
+                // Clear the temporary code block.
                 code_block.clear();
 
                 is_reading_code_block = false;
@@ -73,5 +73,6 @@ pub fn parse_input(input: &str) -> Vec<Vec<MarkdownSection>> {
         sections.push(current_section);
     }
 
-    sections
+    // TODO: Replace this with the formatted string.
+    Ok(String::new())
 }

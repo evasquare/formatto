@@ -1,3 +1,5 @@
+import { Notice } from "obsidian";
+
 import { format_document } from "../../wasm/pkg/formatto_wasm";
 import MainPlugin from "../main";
 
@@ -20,9 +22,16 @@ export class EditorMenuCreator {
                             .onClick(() => {
                                 const cursorPosition = editor.getCursor();
 
-                                const formattedDocument = format_document(
-                                    editor.getValue()
-                                );
+                                let formattedDocument: string;
+                                try {
+                                    formattedDocument = format_document(
+                                        editor.getValue()
+                                    );
+                                } catch (error) {
+                                    new Notice(error);
+                                }
+
+                                if (formattedDocument === undefined) return;
 
                                 editor.setValue(formattedDocument);
                                 editor.setSelection(
