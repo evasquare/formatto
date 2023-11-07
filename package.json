@@ -5,12 +5,12 @@
     "description": "Obsidian Formatter.",
     "main": "build/index.js",
     "scripts": {
-        "dev:ts": "nodemon --config \"./nodemon-dev-ts.json\"",
-        "dev:wasm": "nodemon --config \"./nodemon-dev-wasm.json\"",
+        "dev:ts": "nodemon --config \"./nodemon-configs/nodemon-dev-ts.json\"",
+        "dev:wasm": "nodemon --config \"./nodemon-configs/nodemon-dev-wasm.json\"",
         "build:ts": "rollup -c",
         "build:wasm": "cd ./wasm && wasm-pack build --target web && cd ../ && npm i",
         "test:ts": "vitest",
-        "test:wasm": "nodemon --config ./nodemon-test-wasm.json"
+        "test:wasm": "nodemon --config ./nodemon-configs/nodemon-test-wasm.json"
     },
     "repository": {
         "type": "git",
