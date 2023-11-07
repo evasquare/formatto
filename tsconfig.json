@@ -15,7 +15,6 @@
         "baseUrl": "./",
         "paths": {
             "@events/*": ["./src/events/*"],
-            "@utils/*": ["./src/utils/*"],
             "@settings/*": ["./src/settings/*"]
         }
     }
