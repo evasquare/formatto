@@ -19,6 +19,18 @@ pub fn status() -> bool {
     true
 }
 
+enum HeadingLevel {
+    Top,
+    FirstSub,
+    Sub,
+}
+
+enum MarkdownComponent {
+    Property,
+    Heading(HeadingLevel),
+    Content,
+}
+
 #[wasm_bindgen]
 pub fn format_document(input: &str) -> String {
     use format_tools::divide_top_headings;
