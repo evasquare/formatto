@@ -7,7 +7,7 @@ use wasm_bindgen_test::*;
 wasm_bindgen_test_configure!(run_in_browser);
 
 mod divide_top_headings {
-    use formatto_wasm::format_tools::divide_top_headings;
+    use formatto_wasm::parsing_tools::divide_top_headings;
     use formatto_wasm::{HeadingLevel, MarkdownSection};
 
     use std::{assert, vec};

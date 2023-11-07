@@ -1,6 +1,6 @@
 use wasm_bindgen::prelude::*;
 
-pub mod format_tools;
+pub mod parsing_tools;
 mod utils;
 
 #[wasm_bindgen]
@@ -36,7 +36,7 @@ pub enum MarkdownSection<'a> {
 
 #[wasm_bindgen]
 pub fn format_document(input: &str) -> String {
-    use format_tools::divide_top_headings;
+    use parsing_tools::divide_top_headings;
 
     let top_heading_sections = divide_top_headings(input);
     console_log!("top_heading_sections: {:#?}", top_heading_sections);
