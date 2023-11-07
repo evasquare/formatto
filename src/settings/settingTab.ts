@@ -44,7 +44,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
             true
         );
 
-        //* Property Gaps
+        // Property Gaps
         containerEl.createEl("h2", {
             text: "Property Gaps",
         });
@@ -73,7 +73,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
 
-        //* Heading Gaps
+        // Heading Gaps
         containerEl.createEl("h2", {
             text: "Heading Gaps",
         });
@@ -151,7 +151,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
 
-        //* Other Gaps
+        // Other Gaps
         containerEl.createEl("h2", {
             text: "Other Gaps",
         });
