@@ -37,7 +37,7 @@ pub enum MarkdownSection {
 
 #[wasm_bindgen]
 pub fn format_document(input: &str) -> String {
-    let top_heading_sections = parsing_tools::parse_top_headings(input);
+    parsing_tools::parse_input(input);
 
     input.to_string()
 }
