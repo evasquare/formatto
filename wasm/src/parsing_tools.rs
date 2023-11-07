@@ -2,8 +2,7 @@ use crate::MarkdownSection;
 use std::error::Error;
 
 // TODO: Read other markdown sections too.
-
-pub fn parse_input(input: &str) -> Result<String, Box<dyn Error>> {
+pub fn get_section_vec(input: &str) -> Vec<Vec<MarkdownSection>> {
     let input_lines: Vec<&str> = input.trim().split('\n').collect::<Vec<&str>>();
 
     let top_heading_level = input_lines[0].chars().take_while(|&c| c == '#').count();
@@ -71,7 +70,13 @@ pub fn parse_input(input: &str) -> Result<String, Box<dyn Error>> {
     // Push a vector of each top heading and its contents.
     if !current_section.is_empty() {
         sections.push(current_section);
-    }
+    };
+
+    sections
+}
+
+pub fn parse_input(input: &str) -> Result<String, Box<dyn Error>> {
+    let section_vec = get_section_vec(input);
 
     // TODO: Replace this with the formatted string.
     Ok(String::new())
