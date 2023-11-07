@@ -61,8 +61,8 @@ pub fn parse_input(input: &str) -> Vec<Vec<MarkdownSection>> {
 
             if !line.is_empty() {
                 current_section.push(match is_top_heading {
-                    true => MarkdownSection::Heading(crate::HeadingLevel::Top(String::from(line))),
-                    false => MarkdownSection::Unknown(String::from(line)),
+                    true => MarkdownSection::Heading(crate::HeadingLevel::Top(line.to_string())),
+                    false => MarkdownSection::Unknown(line.to_string()),
                 });
             }
         }
