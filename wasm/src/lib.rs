@@ -31,8 +31,6 @@ pub fn format_document(input: &str, js_settings: JsValue) -> String {
         Ok(settings) => settings,
         Err(e) => {
             let error_message = e.to_string();
-
-            // Display an error message in Obsidian.
             wasm_bindgen::throw_str(&error_message);
         }
     };
@@ -45,8 +43,6 @@ pub fn format_document(input: &str, js_settings: JsValue) -> String {
         Ok(sections) => sections,
         Err(e) => {
             let error_message = e.to_string();
-
-            // Display an error message in Obsidian.
             wasm_bindgen::throw_str(&error_message);
         }
     }

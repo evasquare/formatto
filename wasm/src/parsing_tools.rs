@@ -13,7 +13,6 @@ pub fn get_section_vec(input: &str) -> Vec<MarkdownSection> {
     let top_heading_literal = "#".repeat(top_heading_level);
 
     let mut sections = Vec::<MarkdownSection>::new();
-    // let mut current_section = Vec::<MarkdownSection>::new();
 
     let mut code_block = String::new();
     let mut is_reading_code_block = false;
