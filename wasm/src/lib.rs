@@ -1,17 +1,19 @@
+use setting_types::MainPluginSettings;
+use std::error::Error;
 use wasm_bindgen::prelude::*;
 
-pub mod parsing_tools;
+mod macro_rules;
+mod parsing_tools;
+mod setting_types;
+mod token_types;
 mod utils;
 
 #[wasm_bindgen]
 extern "C" {
     #[wasm_bindgen(js_namespace = console)]
     pub fn log(s: &str);
-}
-
-#[macro_export]
-macro_rules! console_log {
-    ($($arg:tt)*) => ($crate::log(&format!($($arg)*)));
+    #[wasm_bindgen(js_namespace = console)]
+    pub fn error(s: &str);
 }
 
 #[wasm_bindgen]
@@ -19,29 +21,27 @@ pub fn status() -> bool {
     true
 }
 
-#[derive(Debug, PartialEq)]
-pub enum HeadingLevel {
-    Top(String),
-    FirstSub(String),
-    Sub(String),
-}
-
-#[derive(Debug, PartialEq)]
-pub enum MarkdownSection {
-    Property,
-    Heading(HeadingLevel),
-    Content,
-    Code(String),
-    Unknown(String),
+fn read_settings(settings: JsValue) -> Result<MainPluginSettings, Box<dyn Error>> {
+    Ok(serde_wasm_bindgen::from_value(settings)?)
 }
 
 #[wasm_bindgen]
-pub fn format_document(input: &str) -> String {
+pub fn format_document(input: &str, js_settings: JsValue) -> String {
+    let settings = match read_settings(js_settings) {
+        Ok(settings) => settings,
+        Err(e) => {
+            let error_message = e.to_string();
+
+            // Display an error message in Obsidian.
+            wasm_bindgen::throw_str(&error_message);
+        }
+    };
+
     if input.is_empty() {
         return input.to_string();
     }
 
-    match parsing_tools::parse_input(input) {
+    match parsing_tools::parse_input(input, settings) {
         Ok(sections) => sections,
         Err(e) => {
             let error_message = e.to_string();

@@ -25,7 +25,8 @@ export class EditorMenuCreator {
                                 let formattedDocument: string;
                                 try {
                                     formattedDocument = format_document(
-                                        editor.getValue()
+                                        editor.getValue(),
+                                        this.plugin.settings
                                     );
                                 } catch (error) {
                                     new Notice(error);
