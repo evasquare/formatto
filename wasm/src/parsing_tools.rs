@@ -98,7 +98,6 @@ fn get_formatted_string(
 ) -> Result<String, Box<dyn Error>> {
     let mut output = String::new();
 
-    // Format each section.
     for section in sections {
         match section {
             MarkdownSection::Heading(heading_level) => match heading_level {
