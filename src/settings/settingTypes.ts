@@ -1,7 +1,3 @@
-export interface PropertyGaps {
-    afterProperties: string;
-}
-
 export interface HeadingGaps {
     topLevelHeadings: string;
     firstSubHeading: string;
@@ -9,11 +5,12 @@ export interface HeadingGaps {
 }
 
 export interface OtherGaps {
+    afterProperties: string;
     contentsAfterHeadings: string;
+    beforeCodeBlocks: string;
 }
 
 export interface MainPluginSettings {
-    propertyGaps: Partial<PropertyGaps>;
     headingGaps: Partial<HeadingGaps>;
     otherGaps: Partial<OtherGaps>;
 }
@@ -22,10 +19,6 @@ export interface MainPluginSettings {
 // It enables type checking while letting you only define the properties you want to provide defaults for.
 // Source : https://docs.obsidian.md/Plugins/User+interface/Settings#Provide+default+values
 
-export const DEFAULT_PROPERTY_GAPS: Partial<PropertyGaps> = {
-    afterProperties: "2",
-};
-
 export const DEFAULT_HEADING_GAPS: Partial<HeadingGaps> = {
     topLevelHeadings: "3",
     firstSubHeading: "1",
@@ -33,11 +26,12 @@ export const DEFAULT_HEADING_GAPS: Partial<HeadingGaps> = {
 };
 
 export const DEFAULT_OTHER_GAPS: Partial<OtherGaps> = {
+    afterProperties: "2",
     contentsAfterHeadings: "0",
+    beforeCodeBlocks: "1",
 };
 
 export const DEFAULT_SETTINGS: MainPluginSettings = {
-    propertyGaps: DEFAULT_PROPERTY_GAPS,
     headingGaps: DEFAULT_HEADING_GAPS,
     otherGaps: DEFAULT_OTHER_GAPS,
 };

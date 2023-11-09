@@ -44,35 +44,6 @@ export class MainPluginSettingTab extends PluginSettingTab {
             true
         );
 
-        // Property Gaps
-        containerEl.createEl("h2", {
-            text: "Property Gaps",
-        });
-
-        new Setting(containerEl)
-            .setName("After Properties")
-            .setDesc("Decides the gap after YAML properties.")
-            .addText((text) =>
-                text
-                    .setPlaceholder("2")
-                    .setValue(this.plugin.settings.propertyGaps.afterProperties)
-                    .onChange(async (value) => {
-                        if (
-                            value !== "" &&
-                            (isNaN(parseInt(value)) || parseInt(value) < 0)
-                        ) {
-                            debounceMsg(
-                                "Please enter a valid number.\nIt should be at least 0.",
-                                value
-                            );
-                        }
-
-                        this.plugin.settings.propertyGaps.afterProperties =
-                            value;
-                        await this.plugin.saveSettings();
-                    })
-            );
-
         // Heading Gaps
         containerEl.createEl("h2", {
             text: "Heading Gaps",
@@ -156,8 +127,55 @@ export class MainPluginSettingTab extends PluginSettingTab {
             text: "Other Gaps",
         });
         new Setting(containerEl)
+            .setName("After Properties")
+            .setDesc("Decides the gap after YAML properties.")
+            .addText((text) =>
+                text
+                    .setPlaceholder("2")
+                    .setValue(this.plugin.settings.otherGaps.afterProperties)
+                    .onChange(async (value) => {
+                        if (
+                            value !== "" &&
+                            (isNaN(parseInt(value)) || parseInt(value) < 0)
+                        ) {
+                            debounceMsg(
+                                "Please enter a valid number.\nIt should be at least 0.",
+                                value
+                            );
+                        }
+
+                        this.plugin.settings.otherGaps.afterProperties = value;
+                        await this.plugin.saveSettings();
+                    })
+            );
+        new Setting(containerEl)
             .setName("Contents After Headings")
             .setDesc("Decides the gap after a heading.")
+            .addText((text) =>
+                text
+                    .setPlaceholder("0")
+                    .setValue(
+                        this.plugin.settings.otherGaps.contentsAfterHeadings
+                    )
+                    .onChange(async (value) => {
+                        if (
+                            value !== "" &&
+                            (isNaN(parseInt(value)) || parseInt(value) < 0)
+                        ) {
+                            debounceMsg(
+                                "Please enter a valid number.\nIt should be at least 0.",
+                                value
+                            );
+                        }
+
+                        this.plugin.settings.otherGaps.contentsAfterHeadings =
+                            value;
+                        await this.plugin.saveSettings();
+                    })
+            );
+        new Setting(containerEl)
+            .setName("Code Blocks")
+            .setDesc("Decides the gap before a code block.")
             .addText((text) =>
                 text
                     .setPlaceholder("0")
