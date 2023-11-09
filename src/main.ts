@@ -27,13 +27,14 @@ export default class MainPlugin extends Plugin {
 
     // Runs whenever the user starts using the plugin in Obsidian.
     async onload() {
+        await this.loadSettings();
+
         // Initialize WebAssembly
         await (async () => {
             // @ts-ignore
             await __wbg_init(await formatto_wasm());
         })();
 
-        await this.loadSettings();
         this.addSettingTab(new MainPluginSettingTab(this.app, this));
 
         // Register Events
