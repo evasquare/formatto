@@ -6,6 +6,8 @@ use wasm_bindgen_test::*;
 
 wasm_bindgen_test_configure!(run_in_browser);
 
+// TODO: Update unit testing.
+
 mod parse_input_test {
     use formatto_wasm::parsing_tools::get_section_vec;
     use formatto_wasm::{HeadingLevel, MarkdownSection};
