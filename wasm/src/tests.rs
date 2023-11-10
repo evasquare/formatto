@@ -1,21 +1,11 @@
-//! Test suite for the Web and headless browsers.
-
-#![cfg(target_arch = "wasm32")]
-
-use wasm_bindgen_test::*;
-
-wasm_bindgen_test_configure!(run_in_browser);
-
-// TODO: Update unit testing.
-
+#[cfg(test)]
 mod parse_input_test {
-    use formatto_wasm::parsing_tools::get_section_vec;
-    use formatto_wasm::token_types::{HeadingLevel, MarkdownSection};
+    use crate::{
+        parsing_tools::get_section_vec,
+        token_types::{HeadingLevel, MarkdownSection},
+    };
 
-    use std::{assert, vec};
-    use wasm_bindgen_test::*;
-
-    #[wasm_bindgen_test]
+    #[test]
     fn random_line_breaks() {
         let input = r#"## Heading 2
 Hi everyone
@@ -26,7 +16,7 @@ end of heading 3
 #### Heading 4
 ## Heading 2"#;
 
-        let expected_output: Vec<MarkdownSection> = vec![
+        let expected_output = vec![
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
             MarkdownSection::Content("Hi everyone".to_string()),
             MarkdownSection::Heading(HeadingLevel::FirstSub("### Heading 3".to_string())),
@@ -38,13 +28,13 @@ end of heading 3
         assert_eq!(get_section_vec(input), expected_output);
     }
 
-    #[wasm_bindgen_test]
+    #[test]
     fn no_subheadings() {
         let input = r#"## Heading 2
 Hi everyone
 ## Heading 2"#;
 
-        let expected_output: Vec<MarkdownSection> = vec![
+        let expected_output = vec![
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
             MarkdownSection::Content("Hi everyone".to_string()),
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
@@ -53,14 +43,14 @@ Hi everyone
         assert_eq!(get_section_vec(input), expected_output);
     }
 
-    #[wasm_bindgen_test]
+    #[test]
     fn single_section() {
         let input = r#"## Heading 2
 Hi everyone
 ### Subheading
 Text under subheading"#;
 
-        let expected_output: Vec<MarkdownSection> = vec![
+        let expected_output = vec![
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
             MarkdownSection::Content("Hi everyone".to_string()),
             MarkdownSection::Heading(HeadingLevel::FirstSub("### Subheading".to_string())),
@@ -70,16 +60,16 @@ Text under subheading"#;
         assert_eq!(get_section_vec(input), expected_output);
     }
 
-    #[wasm_bindgen_test]
+    #[test]
     fn empty_input() {
         let input = "";
 
-        let expected_output: Vec<MarkdownSection> = vec![];
+        let expected_output = vec![];
 
         assert_eq!(get_section_vec(input), expected_output);
     }
 
-    #[wasm_bindgen_test]
+    #[test]
     fn code_block() {
         let input = r#"## Heading 2
 Hi everyone
@@ -92,7 +82,7 @@ fn main(
 ```
 "#;
 
-        let expected_output: Vec<MarkdownSection> = vec![
+        let expected_output = vec![
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
             MarkdownSection::Content("Hi everyone".to_string()),
             MarkdownSection::Heading(HeadingLevel::Sub("#### Heading 4".to_string())),
@@ -107,5 +97,71 @@ fn main(
         ];
 
         assert_eq!(get_section_vec(input), expected_output);
+    }
+}
+
+#[cfg(test)]
+mod get_top_heading_level {
+    use crate::parsing_tools::get_top_heading_level;
+
+    #[test]
+    fn top_heading_at_start_of_input() {
+        let input = r#"## Heading 2
+Hi everyone
+
+#### Heading 4
+```rust
+fn main(
+    println!(\"Hello World\");
+) {}
+```"#
+            .split('\n')
+            .collect::<Vec<&str>>();
+        let expected_output = 2;
+
+        assert_eq!(get_top_heading_level(&input), expected_output);
+    }
+
+    #[test]
+    fn top_heading_in_middle_of_input() {
+        let input = r#"#### Heading 4
+        
+## Heading 2
+Hi everyone
+
+#### Heading 4
+```rust
+fn main(
+    println!(\"Hello World\");
+) {}
+```"#
+            .split('\n')
+            .collect::<Vec<&str>>();
+        let expected_output = 2;
+
+        assert_eq!(get_top_heading_level(&input), expected_output);
+    }
+
+    #[test]
+    fn top_heading_at_end_of_input() {
+        let input = r#"#### Heading 4
+        
+## Heading 2
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+
+#### Heading 4
+```rust
+fn main(
+    println!(\"Hello World\");
+) {}
+```
+
+# Heading 1
+Lorem Ipsum is simply dummy text of the printing and typesetting industry."#
+            .split('\n')
+            .collect::<Vec<&str>>();
+        let expected_output = 1;
+
+        assert_eq!(get_top_heading_level(&input), expected_output);
     }
 }

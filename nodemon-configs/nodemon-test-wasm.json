@@ -1,5 +1,5 @@
 {
-    "watch": ["wasm/src", "wasm/tests"],
+    "watch": ["wasm/src"],
     "ext": "rs",
-    "exec": "cd ./wasm && wasm-pack test --chrome"
+    "exec": "cd ./wasm && cargo test"
 }
