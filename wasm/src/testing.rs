@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod parse_input_test {
     use crate::{
-        parsing::parsing_tools::get_section_vec,
+        parsing::parsing_tools::get_sections,
         types::token_types::{HeadingLevel, MarkdownSection},
     };
 
@@ -32,7 +32,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
         ];
 
-        assert_eq!(get_section_vec(input), expected_output);
+        assert_eq!(get_sections(input), expected_output);
     }
 
     #[test]
@@ -50,14 +50,14 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
         ];
 
-        assert_eq!(get_section_vec(input), expected_output);
+        assert_eq!(get_sections(input), expected_output);
     }
 
     #[test]
     fn single_section() {
         let input = r#"## Heading 2
 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-### Subheading
+### Heading 3
 Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
 
         let expected_output = vec![
@@ -66,14 +66,14 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
                     .to_string(),
             ),
-            MarkdownSection::Heading(HeadingLevel::FirstSub("### Subheading".to_string())),
+            MarkdownSection::Heading(HeadingLevel::FirstSub("### Heading 3".to_string())),
             MarkdownSection::Content(
                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
                     .to_string(),
             ),
         ];
 
-        assert_eq!(get_section_vec(input), expected_output);
+        assert_eq!(get_sections(input), expected_output);
     }
 
     #[test]
@@ -82,7 +82,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
 
         let expected_output = vec![];
 
-        assert_eq!(get_section_vec(input), expected_output);
+        assert_eq!(get_sections(input), expected_output);
     }
 
     #[test]
@@ -103,7 +103,7 @@ fn main(
                 "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
                     .to_string(),
             ),
-            MarkdownSection::Heading(HeadingLevel::Sub("#### Heading 4".to_string())),
+            MarkdownSection::Heading(HeadingLevel::FirstSub("#### Heading 4".to_string())),
             MarkdownSection::Code(
                 r#"```rust
 fn main(
@@ -114,7 +114,7 @@ fn main(
             ),
         ];
 
-        assert_eq!(get_section_vec(input), expected_output);
+        assert_eq!(get_sections(input), expected_output);
     }
 }
 
