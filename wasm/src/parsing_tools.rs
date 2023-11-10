@@ -92,13 +92,27 @@ pub fn get_section_vec(input: &str) -> Vec<MarkdownSection> {
             let is_top_heading = line.starts_with(&top_heading_literal)
                 && !line.starts_with(format!("{}#", top_heading_literal).as_str());
 
-            // TODO: Parse sub-headings.
-
             if is_top_heading && !line.is_empty() {
-                sections.push(match is_top_heading {
-                    true => MarkdownSection::Heading(HeadingLevel::Top(line.to_string())),
-                    false => MarkdownSection::Unknown(line.to_string()),
+                sections.push(MarkdownSection::Heading(HeadingLevel::Top(
+                    line.to_string(),
+                )));
+            }
+
+            if !is_top_heading {
+                let filtered_string = line
+                    .chars()
+                    .take_while(|&c| c == '#' || c == ' ')
+                    .collect::<Vec<char>>();
+
+                let is_sub_heading = filtered_string.last().map_or(false, |last_char| {
+                    *last_char == ' ' && filtered_string.len() > 1
                 });
+
+                if is_sub_heading && !line.is_empty() {
+                    sections.push(MarkdownSection::Heading(HeadingLevel::Sub(
+                        line.to_string(),
+                    )));
+                }
             }
 
             continue;
