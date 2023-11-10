@@ -4,7 +4,7 @@ import { EditorMenuCreator } from "@events/editorMenuCreator";
 import { MainPluginSettingTab } from "@settings/settingTab";
 import { DEFAULT_SETTINGS } from "@settings/settingTypes";
 
-import __wbg_init, { status } from "../wasm/pkg/formatto_wasm";
+import __wbg_init from "../wasm/pkg/formatto_wasm";
 import formatto_wasm from "../wasm/pkg/formatto_wasm_bg.wasm";
 
 import type { MainPluginSettings } from "@settings/settingTypes";
