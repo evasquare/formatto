@@ -2,10 +2,11 @@ use setting_types::MainPluginSettings;
 use std::error::Error;
 use wasm_bindgen::prelude::*;
 
+pub mod parsing_tools;
+pub mod token_types;
+
 mod macro_rules;
-mod parsing_tools;
 mod setting_types;
-mod token_types;
 mod utils;
 
 #[wasm_bindgen]

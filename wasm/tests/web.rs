@@ -10,7 +10,7 @@ wasm_bindgen_test_configure!(run_in_browser);
 
 mod parse_input_test {
     use formatto_wasm::parsing_tools::get_section_vec;
-    use formatto_wasm::{HeadingLevel, MarkdownSection};
+    use formatto_wasm::token_types::{HeadingLevel, MarkdownSection};
 
     use std::{assert, vec};
     use wasm_bindgen_test::*;
@@ -26,17 +26,13 @@ end of heading 3
 #### Heading 4
 ## Heading 2"#;
 
-        let expected_output = vec![
-            vec![
-                MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
-                MarkdownSection::Unknown("Hi everyone".to_string()),
-                MarkdownSection::Unknown("### Heading 3".to_string()),
-                MarkdownSection::Unknown("end of heading 3".to_string()),
-                MarkdownSection::Unknown("#### Heading 4".to_string()),
-            ],
-            vec![MarkdownSection::Heading(HeadingLevel::Top(
-                "## Heading 2".to_string(),
-            ))],
+        let expected_output: Vec<MarkdownSection> = vec![
+            MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
+            MarkdownSection::Content("Hi everyone".to_string()),
+            MarkdownSection::Heading(HeadingLevel::FirstSub("### Heading 3".to_string())),
+            MarkdownSection::Content("end of heading 3".to_string()),
+            MarkdownSection::Heading(HeadingLevel::FirstSub("#### Heading 4".to_string())),
+            MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
         ];
 
         assert_eq!(get_section_vec(input), expected_output);
@@ -48,14 +44,10 @@ end of heading 3
 Hi everyone
 ## Heading 2"#;
 
-        let expected_output = vec![
-            vec![
-                MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
-                MarkdownSection::Unknown("Hi everyone".to_string()),
-            ],
-            vec![MarkdownSection::Heading(HeadingLevel::Top(
-                "## Heading 2".to_string(),
-            ))],
+        let expected_output: Vec<MarkdownSection> = vec![
+            MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
+            MarkdownSection::Content("Hi everyone".to_string()),
+            MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
         ];
 
         assert_eq!(get_section_vec(input), expected_output);
@@ -68,12 +60,12 @@ Hi everyone
 ### Subheading
 Text under subheading"#;
 
-        let expected_output = vec![vec![
+        let expected_output: Vec<MarkdownSection> = vec![
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
-            MarkdownSection::Unknown("Hi everyone".to_string()),
-            MarkdownSection::Unknown("### Subheading".to_string()),
-            MarkdownSection::Unknown("Text under subheading".to_string()),
-        ]];
+            MarkdownSection::Content("Hi everyone".to_string()),
+            MarkdownSection::Heading(HeadingLevel::FirstSub("### Subheading".to_string())),
+            MarkdownSection::Content("Text under subheading".to_string()),
+        ];
 
         assert_eq!(get_section_vec(input), expected_output);
     }
@@ -82,7 +74,7 @@ Text under subheading"#;
     fn empty_input() {
         let input = "";
 
-        let expected_output: Vec<Vec<MarkdownSection>> = vec![];
+        let expected_output: Vec<MarkdownSection> = vec![];
 
         assert_eq!(get_section_vec(input), expected_output);
     }
@@ -100,10 +92,10 @@ fn main(
 ```
 "#;
 
-        let expected_output: Vec<Vec<MarkdownSection>> = vec![vec![
+        let expected_output: Vec<MarkdownSection> = vec![
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
-            MarkdownSection::Unknown("Hi everyone".to_string()),
-            MarkdownSection::Unknown("#### Heading 4".to_string()),
+            MarkdownSection::Content("Hi everyone".to_string()),
+            MarkdownSection::Heading(HeadingLevel::Sub("#### Heading 4".to_string())),
             MarkdownSection::Code(
                 r#"```rust
 fn main(
@@ -112,7 +104,7 @@ fn main(
 ```"#
                     .to_string(),
             ),
-        ]];
+        ];
 
         assert_eq!(get_section_vec(input), expected_output);
     }
