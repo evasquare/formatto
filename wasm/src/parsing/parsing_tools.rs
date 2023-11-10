@@ -92,9 +92,6 @@ pub fn get_formatted_string(
                 },
                 0,
             )),
-            MarkdownSection::Unknown(content) => {
-                output.push_str(&insert_line_breaks(&content, 1, 0));
-            }
         }
 
         if right_after_properties {
