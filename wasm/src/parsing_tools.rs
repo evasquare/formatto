@@ -15,14 +15,14 @@ pub fn get_section_vec(input: &str) -> Vec<MarkdownSection> {
     let mut sections = Vec::<MarkdownSection>::new();
     let input_lines: Vec<&str> = input.trim().split('\n').collect::<Vec<&str>>();
 
-    let top_heading_level = get_top_heading_level(&input_lines);
-    let top_heading_literal = "#".repeat(top_heading_level);
-
     let mut properties = String::new();
     let mut is_reading_properties = false;
 
     let mut code_block = String::new();
     let mut is_reading_code_block = false;
+
+    let top_heading_level = get_top_heading_level(&input_lines);
+    let top_heading_literal = "#".repeat(top_heading_level);
 
     for line in input_lines {
         // * Parse Properties.
