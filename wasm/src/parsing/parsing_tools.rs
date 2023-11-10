@@ -14,6 +14,7 @@ pub fn get_formatted_string(
 ) -> Result<String, Box<dyn Error>> {
     let mut output = String::new();
     let mut right_after_properties = false;
+
     let after_properties_gap = parse_str_to_usize(&settings.other_gaps.after_properties)? + 1;
 
     for section in sections {
@@ -21,6 +22,7 @@ pub fn get_formatted_string(
             MarkdownSection::Property(content) => {
                 output.push_str(&content);
                 right_after_properties = true;
+                continue;
             }
             MarkdownSection::Heading(heading_level) => match heading_level {
                 HeadingLevel::Top(content) => {
@@ -94,6 +96,10 @@ pub fn get_formatted_string(
                 output.push_str(&insert_line_breaks(&content, 1, 0));
             }
         }
+
+        if right_after_properties {
+            right_after_properties = false;
+        }
     }
 
     Ok(output)
@@ -105,7 +111,9 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
     }
 
     let mut sections = Vec::<MarkdownSection>::new();
-    let input_line_split = input.trim().split('\n').collect::<Vec<&str>>();
+
+    let input_lines = input.trim().split('\n');
+    let input_lines_vec = input_lines.clone().collect::<Vec<&str>>();
 
     let mut md_properties = String::new();
     let mut is_reading_md_properties = false;
@@ -113,7 +121,7 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
     let mut md_code_block = String::new();
     let mut is_reading_md_code_block = false;
 
-    let md_top_heading_level = get_top_heading_level(&input_line_split);
+    let md_top_heading_level = get_top_heading_level(&input_lines_vec);
     let md_top_heading_literal = "#".repeat(md_top_heading_level);
 
     let mut current_heading_level = 0;
@@ -122,7 +130,7 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
     // unless it detects a markdown syntax that needs to be handled.
     let mut md_content = String::new();
 
-    for line in input_line_split {
+    for (index, line) in input_lines.enumerate() {
         if line.is_empty() {
             continue;
         }
@@ -140,6 +148,7 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
                 if is_first_line {
                     md_properties.push_str(line);
                     is_reading_md_properties = true;
+                    continue;
                 } else if is_reading_md_properties {
                     md_properties.push('\n');
                     md_properties.push_str(line);
@@ -196,7 +205,7 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
         }
 
         // * Read headings.
-        {
+        if line.starts_with('#') {
             let is_top_heading = line.starts_with(&md_top_heading_literal)
                 && !line.starts_with(format!("{}#", md_top_heading_literal).as_str());
 
@@ -235,7 +244,7 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
                         )));
                     }
 
-                    current_heading_level = md_top_heading_level;
+                    current_heading_level = filtered_string.len() - 1;
                 }
             }
         }
@@ -243,6 +252,10 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
         // * Read contents.
         if is_reading_content {
             append_string_with_line_breaks(&mut md_content, line);
+        }
+
+        // run this when it's the last line.
+        if index == input_lines_vec.len() - 1 {
             push_content_section(&mut sections, &mut md_content);
         }
     }
@@ -301,7 +314,7 @@ fn parse_str_to_usize(input: &Option<String>) -> Result<usize, Box<dyn Error>> {
             Err(err) => {
                 console_error!("{}", err);
                 Err(String::from(
-                    "Failed to read settings. Some of them are possibly not number values.",
+                    "Failed to read settings. Some of them are possibly not positive number values.",
                 )
                 .into())
             }
