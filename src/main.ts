@@ -41,11 +41,6 @@ export default class MainPlugin extends Plugin {
         this.events.forEach((item) => {
             this.registerEvent(item);
         });
-
-        console.log("Plugin Loaded: Formatto");
-
-        const wasmStatus = status() === true ? "Loaded" : "Not Loaded";
-        console.log(`WebAssembly Status: ${wasmStatus}`);
     }
 
     // Runs when the plugin is disabled.
