@@ -1,13 +1,15 @@
-use setting_types::MainPluginSettings;
 use std::error::Error;
+use types::setting_types::MainPluginSettings;
 use wasm_bindgen::prelude::*;
 
-mod macro_rules;
-mod parsing_tools;
-mod setting_types;
-mod tests;
-mod token_types;
+mod parsing;
+mod testing;
 mod utils;
+
+mod types {
+    pub mod setting_types;
+    pub mod token_types;
+}
 
 #[wasm_bindgen]
 extern "C" {
@@ -15,6 +17,18 @@ extern "C" {
     pub fn log(s: &str);
     #[wasm_bindgen(js_namespace = console)]
     pub fn error(s: &str);
+}
+
+mod macro_rules {
+    #[macro_export]
+    macro_rules! console_log {
+        ($($arg:tt)*) => ($crate::log(&format!($($arg)*)));
+    }
+
+    #[macro_export]
+    macro_rules! console_error {
+        ($($arg:tt)*) => ($crate::error(&format!($($arg)*)));
+    }
 }
 
 #[wasm_bindgen]
@@ -40,7 +54,7 @@ pub fn format_document(input: &str, js_settings: JsValue) -> String {
         return input.to_string();
     }
 
-    match parsing_tools::parse_input(input, settings) {
+    match parsing::parse_input(input, settings) {
         Ok(sections) => sections,
         Err(e) => {
             let error_message = e.to_string();

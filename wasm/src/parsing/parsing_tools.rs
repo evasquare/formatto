@@ -1,12 +1,85 @@
+use crate::console_error;
+use crate::types::{
+    setting_types::MainPluginSettings,
+    token_types::{HeadingLevel, MarkdownSection},
+};
 use std::error::Error;
 
-use crate::console_error;
-use crate::setting_types::MainPluginSettings;
-use crate::token_types::{HeadingLevel, MarkdownSection};
+pub fn get_formatted_string(
+    sections: Vec<MarkdownSection>,
+    settings: &MainPluginSettings,
+) -> Result<String, Box<dyn Error>> {
+    let mut output = String::new();
+    let mut right_after_properties = false;
+    let after_properties_gap = parse_str_to_usize(&settings.other_gaps.after_properties)? + 1;
 
-pub fn parse_input(input: &str, settings: MainPluginSettings) -> Result<String, Box<dyn Error>> {
-    let sections = get_section_vec(input);
-    let output = get_formatted_string(sections, &settings)?;
+    for section in sections {
+        match section {
+            MarkdownSection::Property(content) => {
+                output.push_str(&content);
+                right_after_properties = true;
+            }
+            MarkdownSection::Heading(heading_level) => match heading_level {
+                HeadingLevel::Top(content) => {
+                    output.push_str(&insert_line_breaks(
+                        &content,
+                        if right_after_properties {
+                            after_properties_gap
+                        } else {
+                            parse_str_to_usize(&settings.heading_gaps.top_level_headings)?
+                        },
+                        0,
+                    ));
+                }
+                HeadingLevel::FirstSub(content) => {
+                    let formatted = insert_line_breaks(
+                        &content,
+                        if right_after_properties {
+                            after_properties_gap
+                        } else {
+                            parse_str_to_usize(&settings.heading_gaps.first_sub_heading)?
+                        },
+                        0,
+                    );
+                    output.push_str(&formatted);
+                }
+                HeadingLevel::Sub(content) => {
+                    output.push_str(&insert_line_breaks(
+                        &content,
+                        if right_after_properties {
+                            after_properties_gap
+                        } else {
+                            parse_str_to_usize(&settings.heading_gaps.sub_headings)?
+                        },
+                        0,
+                    ));
+                }
+            },
+            MarkdownSection::Content(content) => {
+                output.push_str(&insert_line_breaks(
+                    &content,
+                    if right_after_properties {
+                        after_properties_gap
+                    } else {
+                        parse_str_to_usize(&settings.other_gaps.contents_after_headings)?
+                    },
+                    0,
+                ));
+            }
+            MarkdownSection::Code(content) => output.push_str(&insert_line_breaks(
+                &content,
+                if right_after_properties {
+                    after_properties_gap
+                } else {
+                    parse_str_to_usize(&settings.other_gaps.before_code_blocks)?
+                },
+                0,
+            )),
+            MarkdownSection::Unknown(content) => {
+                output.push_str(&insert_line_breaks(&content, 1, 0));
+            }
+        }
+    }
 
     Ok(output)
 }
@@ -122,85 +195,6 @@ pub fn get_section_vec(input: &str) -> Vec<MarkdownSection> {
     }
 
     sections
-}
-
-fn get_formatted_string(
-    sections: Vec<MarkdownSection>,
-    settings: &MainPluginSettings,
-) -> Result<String, Box<dyn Error>> {
-    let mut output = String::new();
-    let mut right_after_properties = false;
-    let after_properties_gap = parse_str_to_usize(&settings.other_gaps.after_properties)? + 1;
-
-    for section in sections {
-        match section {
-            MarkdownSection::Property(content) => {
-                output.push_str(&content);
-                right_after_properties = true;
-            }
-            MarkdownSection::Heading(heading_level) => match heading_level {
-                HeadingLevel::Top(content) => {
-                    output.push_str(&insert_line_breaks(
-                        &content,
-                        if right_after_properties {
-                            after_properties_gap
-                        } else {
-                            parse_str_to_usize(&settings.heading_gaps.top_level_headings)?
-                        },
-                        0,
-                    ));
-                }
-                HeadingLevel::FirstSub(content) => {
-                    let formatted = insert_line_breaks(
-                        &content,
-                        if right_after_properties {
-                            after_properties_gap
-                        } else {
-                            parse_str_to_usize(&settings.heading_gaps.first_sub_heading)?
-                        },
-                        0,
-                    );
-                    output.push_str(&formatted);
-                }
-                HeadingLevel::Sub(content) => {
-                    output.push_str(&insert_line_breaks(
-                        &content,
-                        if right_after_properties {
-                            after_properties_gap
-                        } else {
-                            parse_str_to_usize(&settings.heading_gaps.sub_headings)?
-                        },
-                        0,
-                    ));
-                }
-            },
-            MarkdownSection::Content(content) => {
-                output.push_str(&insert_line_breaks(
-                    &content,
-                    if right_after_properties {
-                        after_properties_gap
-                    } else {
-                        parse_str_to_usize(&settings.other_gaps.contents_after_headings)?
-                    },
-                    0,
-                ));
-            }
-            MarkdownSection::Code(content) => output.push_str(&insert_line_breaks(
-                &content,
-                if right_after_properties {
-                    after_properties_gap
-                } else {
-                    parse_str_to_usize(&settings.other_gaps.before_code_blocks)?
-                },
-                0,
-            )),
-            MarkdownSection::Unknown(content) => {
-                output.push_str(&insert_line_breaks(&content, 1, 0));
-            }
-        }
-    }
-
-    Ok(output)
 }
 
 pub fn get_top_heading_level(input_lines: &[&str]) -> usize {

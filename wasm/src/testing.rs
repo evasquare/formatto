@@ -1,8 +1,8 @@
 #[cfg(test)]
 mod parse_input_test {
     use crate::{
-        parsing_tools::get_section_vec,
-        token_types::{HeadingLevel, MarkdownSection},
+        parsing::parsing_tools::get_section_vec,
+        types::token_types::{HeadingLevel, MarkdownSection},
     };
 
     #[test]
@@ -120,7 +120,7 @@ fn main(
 
 #[cfg(test)]
 mod get_top_heading_level {
-    use crate::parsing_tools::get_top_heading_level;
+    use crate::parsing::parsing_tools::get_top_heading_level;
 
     #[test]
     fn top_heading_at_start_of_input() {
