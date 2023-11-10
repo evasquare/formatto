@@ -7,6 +7,7 @@
     "scripts": {
         "dev:ts": "nodemon --config \"./nodemon-configs/nodemon-dev-ts.json\"",
         "dev:wasm": "nodemon --config \"./nodemon-configs/nodemon-dev-wasm.json\"",
+        "build": "npm run build:wasm && npm run build:ts",
         "build:ts": "rollup -c",
         "build:wasm": "cd ./wasm && wasm-pack build --target web && cd ../ && npm i",
         "test:ts": "vitest",
@@ -28,7 +29,8 @@
         "@typescript-eslint/parser": "^6.9.1",
         "eslint": "^8.52.0",
         "nodemon": "^3.0.1",
-        "vitest": "^0.34.6"
+        "vitest": "^0.34.6",
+        "wasm-pack": "^0.12.1"
     },
     "dependencies": {
         "@rollup/plugin-alias": "^5.0.1",
@@ -37,7 +39,7 @@
         "@rollup/plugin-typescript": "^11.1.5",
         "@rollup/plugin-wasm": "^6.2.2",
         "obsidian": "latest",
-        "rollup": "^4.2.0",
+        "rollup": "^4.3.0",
         "typescript": "^5.2.2"
     }
 }
