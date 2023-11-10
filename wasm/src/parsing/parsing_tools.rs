@@ -121,6 +121,7 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
     let md_top_heading_level = get_top_heading_level(&input_lines_vec);
     let md_top_heading_literal = "#".repeat(md_top_heading_level);
 
+    let mut is_reading_content = false;
     let mut current_heading_level = 0;
 
     // Everything goes into `MarkdownSection::Content` type,
@@ -128,10 +129,11 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
     let mut md_content = String::new();
 
     for (index, line) in input_lines.enumerate() {
-        if line.is_empty() {
+        if line.is_empty() && !is_reading_content {
             continue;
         }
-        let mut is_reading_content = true;
+
+        is_reading_content = true;
 
         // Reads Properties.
         if sections.is_empty() && (line == "---" || is_reading_md_properties) {
