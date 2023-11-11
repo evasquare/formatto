@@ -9,7 +9,7 @@ use std::{error::Error, vec};
 
 // TODO: Read HTML syntax
 
-/// Returns a String value that is replacing the entire document.
+/// Return a String value that is replacing the entire document.
 pub fn get_formatted_string(
     sections: Vec<MarkdownSection>,
     settings: &MainPluginSettings,
@@ -276,7 +276,7 @@ fn push_content_section(sections: &mut Vec<MarkdownSection>, content: &mut Strin
 }
 
 fn append_string_with_line_breaks(string: &mut String, line: &str) {
-    // Breaks lines unless it's the first line.
+    // Break lines unless it's the first line.
     if !string.is_empty() {
         string.push('\n');
     }
