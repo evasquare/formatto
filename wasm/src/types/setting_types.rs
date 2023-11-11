@@ -14,6 +14,7 @@ pub struct OtherGaps {
     pub after_properties: Option<String>,
     pub contents_after_headings: Option<String>,
     pub before_code_blocks: Option<String>,
+    pub code_blocks_after_headings: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]

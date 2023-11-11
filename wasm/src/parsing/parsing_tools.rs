@@ -14,6 +14,7 @@ pub fn get_formatted_string(
 ) -> Result<String, Box<dyn Error>> {
     let mut output = String::new();
     let mut right_after_properties = false;
+    let mut right_after_heading = false;
 
     let after_properties_gap = parse_str_to_usize(&settings.other_gaps.after_properties)? + 1;
 
@@ -22,56 +23,66 @@ pub fn get_formatted_string(
             MarkdownSection::Property(content) => {
                 output.push_str(&content);
                 right_after_properties = true;
+
+                if right_after_heading {
+                    right_after_heading = false;
+                }
+
                 continue;
             }
-            MarkdownSection::Heading(heading_level) => match heading_level {
-                HeadingLevel::Top(content) => {
-                    if output.is_empty() {
-                        output.push_str(&insert_line_breaks(
+            MarkdownSection::Heading(heading_level) => {
+                match heading_level {
+                    HeadingLevel::Top(content) => {
+                        if output.is_empty() {
+                            output.push_str(&insert_line_breaks(
+                                &content,
+                                if right_after_properties {
+                                    after_properties_gap
+                                } else {
+                                    0
+                                },
+                                0,
+                            ));
+                        } else {
+                            output.push_str(&insert_line_breaks(
+                                &content,
+                                if right_after_properties {
+                                    after_properties_gap
+                                } else {
+                                    parse_str_to_usize(&settings.heading_gaps.top_level_headings)?
+                                        + 1
+                                },
+                                0,
+                            ));
+                        }
+                    }
+                    HeadingLevel::FirstSub(content) => {
+                        let formatted = insert_line_breaks(
                             &content,
                             if right_after_properties {
                                 after_properties_gap
                             } else {
-                                0
+                                parse_str_to_usize(&settings.heading_gaps.first_sub_heading)? + 1
                             },
                             0,
-                        ));
-                    } else {
+                        );
+                        output.push_str(&formatted);
+                    }
+                    HeadingLevel::Sub(content) => {
                         output.push_str(&insert_line_breaks(
                             &content,
                             if right_after_properties {
                                 after_properties_gap
                             } else {
-                                parse_str_to_usize(&settings.heading_gaps.top_level_headings)? + 1
+                                parse_str_to_usize(&settings.heading_gaps.sub_headings)? + 1
                             },
                             0,
                         ));
                     }
                 }
-                HeadingLevel::FirstSub(content) => {
-                    let formatted = insert_line_breaks(
-                        &content,
-                        if right_after_properties {
-                            after_properties_gap
-                        } else {
-                            parse_str_to_usize(&settings.heading_gaps.first_sub_heading)? + 1
-                        },
-                        0,
-                    );
-                    output.push_str(&formatted);
-                }
-                HeadingLevel::Sub(content) => {
-                    output.push_str(&insert_line_breaks(
-                        &content,
-                        if right_after_properties {
-                            after_properties_gap
-                        } else {
-                            parse_str_to_usize(&settings.heading_gaps.sub_headings)? + 1
-                        },
-                        0,
-                    ));
-                }
-            },
+
+                right_after_heading = true;
+            }
             MarkdownSection::Content(content) => {
                 output.push_str(&insert_line_breaks(
                     &content,
@@ -82,16 +93,28 @@ pub fn get_formatted_string(
                     },
                     0,
                 ));
+
+                if right_after_heading {
+                    right_after_heading = false;
+                }
             }
-            MarkdownSection::Code(content) => output.push_str(&insert_line_breaks(
-                &content,
-                if right_after_properties {
-                    after_properties_gap
-                } else {
-                    parse_str_to_usize(&settings.other_gaps.before_code_blocks)? + 1
-                },
-                0,
-            )),
+            MarkdownSection::Code(content) => {
+                output.push_str(&insert_line_breaks(
+                    &content,
+                    if right_after_properties {
+                        after_properties_gap
+                    } else if right_after_heading {
+                        parse_str_to_usize(&settings.other_gaps.code_blocks_after_headings)? + 1
+                    } else {
+                        parse_str_to_usize(&settings.other_gaps.before_code_blocks)? + 1
+                    },
+                    0,
+                ));
+
+                if right_after_heading {
+                    right_after_heading = false;
+                }
+            }
         }
 
         if right_after_properties {

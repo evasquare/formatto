@@ -8,6 +8,7 @@ export interface OtherGaps {
     afterProperties: string;
     contentsAfterHeadings: string;
     beforeCodeBlocks: string;
+    codeBlocksAfterHeadings: string;
 }
 
 export interface MainPluginSettings {
@@ -29,6 +30,7 @@ export const DEFAULT_OTHER_GAPS: Partial<OtherGaps> = {
     afterProperties: "2",
     contentsAfterHeadings: "0",
     beforeCodeBlocks: "1",
+    codeBlocksAfterHeadings: "0",
 };
 
 export const DEFAULT_SETTINGS: MainPluginSettings = {

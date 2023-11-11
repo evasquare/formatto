@@ -198,5 +198,32 @@ export class MainPluginSettingTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     })
             );
+        new Setting(containerEl)
+            .setName("Code Blocks After Headings")
+            .setDesc(
+                "Decides the gap before a code block when the code block is right after a heading."
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder("0")
+                    .setValue(
+                        this.plugin.settings.otherGaps.codeBlocksAfterHeadings
+                    )
+                    .onChange(async (value) => {
+                        if (
+                            value !== "" &&
+                            (isNaN(parseInt(value)) || parseInt(value) < 0)
+                        ) {
+                            debounceMsg(
+                                "Please enter a valid number.\nIt should be at least 0.",
+                                value
+                            );
+                        }
+
+                        this.plugin.settings.otherGaps.codeBlocksAfterHeadings =
+                            value;
+                        await this.plugin.saveSettings();
+                    })
+            );
     }
 }
