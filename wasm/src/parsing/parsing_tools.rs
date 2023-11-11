@@ -7,8 +7,6 @@ use crate::{
 };
 use std::{error::Error, vec};
 
-// TODO: Read HTML syntax
-
 /// Return a String value that is replacing the entire document.
 pub fn get_formatted_string(
     sections: Vec<MarkdownSection>,
