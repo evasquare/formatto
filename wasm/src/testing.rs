@@ -1,3 +1,5 @@
+// Test cases are based on the default setting.
+
 #[cfg(test)]
 mod parse_input_test {
     use crate::{
