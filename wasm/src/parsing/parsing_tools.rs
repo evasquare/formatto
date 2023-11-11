@@ -152,7 +152,7 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
     let mut md_content = String::new();
 
     for (index, line) in input_lines.enumerate() {
-        if line.is_empty() && !is_reading_content {
+        if line.is_empty() && !is_reading_content && !is_reading_md_code_block {
             continue;
         }
 
