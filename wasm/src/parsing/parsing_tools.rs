@@ -15,11 +15,8 @@ pub fn get_formatted_string(
     let mut output = String::new();
 
     let mut right_after_properties = false;
-
     let mut right_after_heading = false;
     let mut right_after_code_block = false;
-
-    let after_properties_gap = parse_str_to_usize(&settings.other_gaps.after_properties)? + 1;
 
     for section in sections {
         match section {
@@ -37,7 +34,7 @@ pub fn get_formatted_string(
                             output.push_str(&insert_line_breaks(
                                 &content,
                                 if right_after_properties {
-                                    after_properties_gap
+                                    parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
                                 } else {
                                     0
                                 },
@@ -47,7 +44,7 @@ pub fn get_formatted_string(
                             output.push_str(&insert_line_breaks(
                                 &content,
                                 if right_after_properties {
-                                    after_properties_gap
+                                    parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
                                 } else {
                                     parse_str_to_usize(
                                         &settings.heading_gaps.before_top_level_headings,
@@ -61,7 +58,7 @@ pub fn get_formatted_string(
                         let formatted = insert_line_breaks(
                             &content,
                             if right_after_properties {
-                                after_properties_gap
+                                parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
                             } else {
                                 parse_str_to_usize(&settings.heading_gaps.before_first_sub_heading)?
                                     + 1
@@ -74,7 +71,7 @@ pub fn get_formatted_string(
                         output.push_str(&insert_line_breaks(
                             &content,
                             if right_after_properties {
-                                after_properties_gap
+                                parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
                             } else {
                                 parse_str_to_usize(&settings.heading_gaps.before_sub_headings)? + 1
                             },
@@ -91,7 +88,7 @@ pub fn get_formatted_string(
                 output.push_str(&insert_line_breaks(
                     &content,
                     if right_after_properties {
-                        after_properties_gap
+                        parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
                     } else if right_after_code_block {
                         parse_str_to_usize(&settings.other_gaps.before_contents_after_code_blocks)?
                             + 1
@@ -109,7 +106,7 @@ pub fn get_formatted_string(
                 output.push_str(&insert_line_breaks(
                     &content,
                     if right_after_properties {
-                        after_properties_gap
+                        parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
                     } else if right_after_heading {
                         parse_str_to_usize(&settings.other_gaps.before_code_blocks_after_headings)?
                             + 1
@@ -138,15 +135,14 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
 
     let input_lines = input.trim().split('\n');
     let input_lines_vec = input_lines.clone().collect::<Vec<&str>>();
+    let md_top_heading_level = get_top_heading_level(&input_lines_vec);
+    let md_top_heading_literal = "#".repeat(md_top_heading_level);
 
     let mut md_properties = String::new();
     let mut is_reading_md_properties = false;
 
     let mut md_code_block = String::new();
     let mut is_reading_md_code_block = false;
-
-    let md_top_heading_level = get_top_heading_level(&input_lines_vec);
-    let md_top_heading_literal = "#".repeat(md_top_heading_level);
 
     let mut is_reading_content = false;
     let mut current_heading_level = 0;
@@ -289,6 +285,15 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
     sections
 }
 
+// Functions used for reading "Content" sections.
+fn append_string_with_line_breaks(string: &mut String, line: &str) {
+    // Break lines unless it's the first line.
+    if !string.is_empty() {
+        string.push('\n');
+    }
+
+    string.push_str(line);
+}
 fn push_content_section(sections: &mut Vec<MarkdownSection>, content: &mut String) {
     // Check if "content" is empty.
     // Because this function is also called with empty values.
@@ -300,15 +305,7 @@ fn push_content_section(sections: &mut Vec<MarkdownSection>, content: &mut Strin
     content.clear();
 }
 
-fn append_string_with_line_breaks(string: &mut String, line: &str) {
-    // Break lines unless it's the first line.
-    if !string.is_empty() {
-        string.push('\n');
-    }
-
-    string.push_str(line);
-}
-
+/// Receive lines of a markdown document and return the top heading level.
 pub fn get_top_heading_level(input_lines: &[&str]) -> usize {
     let mut top_heading_level: usize = usize::MAX;
     let mut is_reading_md_code_block = false;

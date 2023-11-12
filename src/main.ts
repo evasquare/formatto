@@ -9,7 +9,7 @@ import formatto_wasm from "../wasm/pkg/formatto_wasm_bg.wasm";
 
 import type { MainPluginSettings } from "@settings/settingTypes";
 
-// ENTRY POINT
+// * ENTRY POINT
 export default class MainPlugin extends Plugin {
     settings: MainPluginSettings;
 
