@@ -13,8 +13,11 @@ pub fn get_formatted_string(
     settings: &MainPluginSettings,
 ) -> Result<String, Box<dyn Error>> {
     let mut output = String::new();
+
     let mut right_after_properties = false;
+
     let mut right_after_heading = false;
+    let mut right_after_code_block = false;
 
     let after_properties_gap = parse_str_to_usize(&settings.other_gaps.after_properties)? + 1;
 
@@ -22,13 +25,10 @@ pub fn get_formatted_string(
         match section {
             MarkdownSection::Property(content) => {
                 output.push_str(&content);
+
                 right_after_properties = true;
-
-                if right_after_heading {
-                    right_after_heading = false;
-                }
-
-                continue;
+                right_after_heading = false;
+                right_after_code_block = false;
             }
             MarkdownSection::Heading(heading_level) => {
                 match heading_level {
@@ -49,8 +49,9 @@ pub fn get_formatted_string(
                                 if right_after_properties {
                                     after_properties_gap
                                 } else {
-                                    parse_str_to_usize(&settings.heading_gaps.top_level_headings)?
-                                        + 1
+                                    parse_str_to_usize(
+                                        &settings.heading_gaps.before_top_level_headings,
+                                    )? + 1
                                 },
                                 0,
                             ));
@@ -62,7 +63,8 @@ pub fn get_formatted_string(
                             if right_after_properties {
                                 after_properties_gap
                             } else {
-                                parse_str_to_usize(&settings.heading_gaps.first_sub_heading)? + 1
+                                parse_str_to_usize(&settings.heading_gaps.before_first_sub_heading)?
+                                    + 1
                             },
                             0,
                         );
@@ -74,29 +76,34 @@ pub fn get_formatted_string(
                             if right_after_properties {
                                 after_properties_gap
                             } else {
-                                parse_str_to_usize(&settings.heading_gaps.sub_headings)? + 1
+                                parse_str_to_usize(&settings.heading_gaps.before_sub_headings)? + 1
                             },
                             0,
                         ));
                     }
                 }
 
+                right_after_properties = false;
                 right_after_heading = true;
+                right_after_code_block = false;
             }
             MarkdownSection::Content(content) => {
                 output.push_str(&insert_line_breaks(
                     &content,
                     if right_after_properties {
                         after_properties_gap
+                    } else if right_after_code_block {
+                        parse_str_to_usize(&settings.other_gaps.before_contents_after_code_blocks)?
+                            + 1
                     } else {
-                        parse_str_to_usize(&settings.other_gaps.contents_after_headings)? + 1
+                        parse_str_to_usize(&settings.other_gaps.before_contents)? + 1
                     },
                     0,
                 ));
 
-                if right_after_heading {
-                    right_after_heading = false;
-                }
+                right_after_properties = false;
+                right_after_heading = false;
+                right_after_code_block = false;
             }
             MarkdownSection::Code(content) => {
                 output.push_str(&insert_line_breaks(
@@ -104,21 +111,18 @@ pub fn get_formatted_string(
                     if right_after_properties {
                         after_properties_gap
                     } else if right_after_heading {
-                        parse_str_to_usize(&settings.other_gaps.code_blocks_after_headings)? + 1
+                        parse_str_to_usize(&settings.other_gaps.before_code_blocks_after_headings)?
+                            + 1
                     } else {
                         parse_str_to_usize(&settings.other_gaps.before_code_blocks)? + 1
                     },
                     0,
                 ));
 
-                if right_after_heading {
-                    right_after_heading = false;
-                }
+                right_after_properties = false;
+                right_after_heading = false;
+                right_after_code_block = true
             }
-        }
-
-        if right_after_properties {
-            right_after_properties = false;
         }
     }
 
@@ -307,8 +311,17 @@ fn append_string_with_line_breaks(string: &mut String, line: &str) {
 
 pub fn get_top_heading_level(input_lines: &[&str]) -> usize {
     let mut top_heading_level: usize = usize::MAX;
+    let mut is_reading_md_code_block = false;
 
     for line in input_lines {
+        // Skip code blocks.
+        if line.starts_with("```") {
+            is_reading_md_code_block = !is_reading_md_code_block;
+        }
+        if is_reading_md_code_block {
+            continue;
+        }
+
         let current_line_level = line.chars().take_while(|&c| c == '#').count();
 
         if line.starts_with('#') && top_heading_level > current_line_level {

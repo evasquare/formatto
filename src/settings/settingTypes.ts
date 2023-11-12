@@ -1,14 +1,19 @@
 export interface HeadingGaps {
-    topLevelHeadings: string;
-    firstSubHeading: string;
-    subHeadings: string;
+    beforeTopLevelHeadings: string;
+    // ----
+    beforeFirstSubHeading: string;
+    beforeSubHeadings: string;
 }
 
 export interface OtherGaps {
     afterProperties: string;
-    contentsAfterHeadings: string;
+    // ----
+    beforeContents: string;
+    beforeContentsAfterCodeBlocks: string;
+    // ----
     beforeCodeBlocks: string;
-    codeBlocksAfterHeadings: string;
+    // ----
+    beforeCodeBlocksAfterHeadings: string;
 }
 
 export interface MainPluginSettings {
@@ -21,16 +26,21 @@ export interface MainPluginSettings {
 // Source : https://docs.obsidian.md/Plugins/User+interface/Settings#Provide+default+values
 
 export const DEFAULT_HEADING_GAPS: Partial<HeadingGaps> = {
-    topLevelHeadings: "3",
-    firstSubHeading: "1",
-    subHeadings: "2",
+    beforeTopLevelHeadings: "3",
+    // ----
+    beforeFirstSubHeading: "1",
+    beforeSubHeadings: "2",
 };
 
 export const DEFAULT_OTHER_GAPS: Partial<OtherGaps> = {
     afterProperties: "2",
-    contentsAfterHeadings: "0",
+    // ----
+    beforeContents: "0",
+    beforeContentsAfterCodeBlocks: "1",
+    // ----
     beforeCodeBlocks: "1",
-    codeBlocksAfterHeadings: "0",
+    // ----
+    beforeCodeBlocksAfterHeadings: "0",
 };
 
 export const DEFAULT_SETTINGS: MainPluginSettings = {

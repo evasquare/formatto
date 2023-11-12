@@ -49,12 +49,14 @@ export class MainPluginSettingTab extends PluginSettingTab {
             text: "Heading Gaps",
         });
         new Setting(containerEl)
-            .setName("Top Level Headings")
-            .setDesc("Decides gaps between highest level of headings.")
+            .setName("Before Top Level Headings")
+            .setDesc("Decides gaps before highest level of headings.")
             .addText((text) =>
                 text
                     .setPlaceholder("3")
-                    .setValue(this.plugin.settings.headingGaps.topLevelHeadings)
+                    .setValue(
+                        this.plugin.settings.headingGaps.beforeTopLevelHeadings
+                    )
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
@@ -66,20 +68,22 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             );
                         }
 
-                        this.plugin.settings.headingGaps.topLevelHeadings =
+                        this.plugin.settings.headingGaps.beforeTopLevelHeadings =
                             value;
                         await this.plugin.saveSettings();
                     })
             );
         new Setting(containerEl)
-            .setName("First Sub Heading")
+            .setName("Before First Sub Heading")
             .setDesc(
-                "Decides the gap between a parent heading and the first of its children headings."
+                "Decides the child heading gap right before a parent heading."
             )
             .addText((text) =>
                 text
                     .setPlaceholder("1")
-                    .setValue(this.plugin.settings.headingGaps.firstSubHeading)
+                    .setValue(
+                        this.plugin.settings.headingGaps.beforeFirstSubHeading
+                    )
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
@@ -91,21 +95,22 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             );
                         }
 
-                        this.plugin.settings.headingGaps.firstSubHeading =
+                        this.plugin.settings.headingGaps.beforeFirstSubHeading =
                             value;
                         await this.plugin.saveSettings();
                     })
             );
-
         new Setting(containerEl)
-            .setName("Sub Headings")
+            .setName("Before Sub Headings")
             .setDesc(
-                "Decides gaps between headings that are not the highest level."
+                "Decides gaps before headings that are not in the highest level."
             )
             .addText((text) =>
                 text
                     .setPlaceholder("2")
-                    .setValue(this.plugin.settings.headingGaps.subHeadings)
+                    .setValue(
+                        this.plugin.settings.headingGaps.beforeSubHeadings
+                    )
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
@@ -117,7 +122,8 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             );
                         }
 
-                        this.plugin.settings.headingGaps.subHeadings = value;
+                        this.plugin.settings.headingGaps.beforeSubHeadings =
+                            value;
                         await this.plugin.saveSettings();
                     })
             );
@@ -128,7 +134,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
         });
         new Setting(containerEl)
             .setName("After Properties")
-            .setDesc("Decides the gap after YAML properties.")
+            .setDesc("Decides the gap after a YAML properties.")
             .addText((text) =>
                 text
                     .setPlaceholder("2")
@@ -149,65 +155,40 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
         new Setting(containerEl)
-            .setName("Contents After Headings")
-            .setDesc("Decides the gap after a heading.")
-            .addText((text) =>
-                text
-                    .setPlaceholder("0")
-                    .setValue(
-                        this.plugin.settings.otherGaps.contentsAfterHeadings
-                    )
-                    .onChange(async (value) => {
-                        if (
-                            value !== "" &&
-                            (isNaN(parseInt(value)) || parseInt(value) < 0)
-                        ) {
-                            debounceMsg(
-                                "Please enter a valid number.\nIt should be at least 0.",
-                                value
-                            );
-                        }
-
-                        this.plugin.settings.otherGaps.contentsAfterHeadings =
-                            value;
-                        await this.plugin.saveSettings();
-                    })
-            );
-        new Setting(containerEl)
-            .setName("Code Blocks")
-            .setDesc("Decides the gap before a code block.")
-            .addText((text) =>
-                text
-                    .setPlaceholder("0")
-                    .setValue(
-                        this.plugin.settings.otherGaps.contentsAfterHeadings
-                    )
-                    .onChange(async (value) => {
-                        if (
-                            value !== "" &&
-                            (isNaN(parseInt(value)) || parseInt(value) < 0)
-                        ) {
-                            debounceMsg(
-                                "Please enter a valid number.\nIt should be at least 0.",
-                                value
-                            );
-                        }
-
-                        this.plugin.settings.otherGaps.contentsAfterHeadings =
-                            value;
-                        await this.plugin.saveSettings();
-                    })
-            );
-        new Setting(containerEl)
-            .setName("Code Blocks After Headings")
+            .setName("Before Contents")
             .setDesc(
-                "Decides the gap before a code block when the code block is right after a heading."
+                "Decides gaps before contents (ex: Text section right before headings)."
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder("0")
+                    .setValue(this.plugin.settings.otherGaps.beforeContents)
+                    .onChange(async (value) => {
+                        if (
+                            value !== "" &&
+                            (isNaN(parseInt(value)) || parseInt(value) < 0)
+                        ) {
+                            debounceMsg(
+                                "Please enter a valid number.\nIt should be at least 0.",
+                                value
+                            );
+                        }
+
+                        this.plugin.settings.otherGaps.beforeContents = value;
+                        await this.plugin.saveSettings();
+                    })
+            );
+        new Setting(containerEl)
+            .setName("Before Contents After Code Blocks")
+            .setDesc(
+                "Decides gaps before contents that are right after code blocks."
             )
             .addText((text) =>
                 text
                     .setPlaceholder("0")
                     .setValue(
-                        this.plugin.settings.otherGaps.codeBlocksAfterHeadings
+                        this.plugin.settings.otherGaps
+                            .beforeContentsAfterCodeBlocks
                     )
                     .onChange(async (value) => {
                         if (
@@ -220,7 +201,57 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             );
                         }
 
-                        this.plugin.settings.otherGaps.codeBlocksAfterHeadings =
+                        this.plugin.settings.otherGaps.beforeContentsAfterCodeBlocks =
+                            value;
+                        await this.plugin.saveSettings();
+                    })
+            );
+        new Setting(containerEl)
+            .setName("Before Code Blocks")
+            .setDesc("Decides gaps before code blocks.")
+            .addText((text) =>
+                text
+                    .setPlaceholder("0")
+                    .setValue(this.plugin.settings.otherGaps.beforeCodeBlocks)
+                    .onChange(async (value) => {
+                        if (
+                            value !== "" &&
+                            (isNaN(parseInt(value)) || parseInt(value) < 0)
+                        ) {
+                            debounceMsg(
+                                "Please enter a valid number.\nIt should be at least 0.",
+                                value
+                            );
+                        }
+
+                        this.plugin.settings.otherGaps.beforeCodeBlocks = value;
+                        await this.plugin.saveSettings();
+                    })
+            );
+        new Setting(containerEl)
+            .setName("Before Code Blocks After Headings")
+            .setDesc(
+                "Decides gaps before code blocks that are right after headings."
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder("0")
+                    .setValue(
+                        this.plugin.settings.otherGaps
+                            .beforeCodeBlocksAfterHeadings
+                    )
+                    .onChange(async (value) => {
+                        if (
+                            value !== "" &&
+                            (isNaN(parseInt(value)) || parseInt(value) < 0)
+                        ) {
+                            debounceMsg(
+                                "Please enter a valid number.\nIt should be at least 0.",
+                                value
+                            );
+                        }
+
+                        this.plugin.settings.otherGaps.beforeCodeBlocksAfterHeadings =
                             value;
                         await this.plugin.saveSettings();
                     })
