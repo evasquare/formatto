@@ -1,11 +1,13 @@
 import { Plugin } from "obsidian";
 
-import { EditorMenuCreator } from "@events/editorMenuCreator";
+import { FormattoEditorMenu } from "@events/editorMenu";
 import { MainPluginSettingTab } from "@settings/settingTab";
 import { DEFAULT_SETTINGS } from "@settings/settingTypes";
 
 import __wbg_init from "../wasm/pkg/formatto_wasm";
 import formatto_wasm from "../wasm/pkg/formatto_wasm_bg.wasm";
+import { FormattoCommands } from "./commands/commands";
+import { FormattoUtils } from "./utils";
 
 import type { FormattoPluginSettings } from "@settings/settingTypes";
 
@@ -38,9 +40,16 @@ export default class FormattoPlugin extends Plugin {
         this.addSettingTab(new MainPluginSettingTab(this.app, this));
 
         // Register Events
-        this.events.forEach((item) => {
+        this.eventsArr.forEach((item) => {
             this.registerEvent(item);
         });
+
+        // Register Commands
+        this.commandsArr.forEach((item) => {
+            this.addCommand(item);
+        });
+
+        console.log("Plugin Loaded: Formatto");
     }
 
     // Runs when the plugin is disabled.
@@ -48,6 +57,11 @@ export default class FormattoPlugin extends Plugin {
         console.log("Plugin Unloaded: Formatto");
     }
 
-    private eventsMenuCreator = new EditorMenuCreator(this);
-    private events = this.eventsMenuCreator.getEventsArr();
+    utils = new FormattoUtils(this);
+
+    private eventsMenuCreator = new FormattoEditorMenu(this);
+    private eventsArr = this.eventsMenuCreator.getEventsArr();
+
+    private commandsCreator = new FormattoCommands(this);
+    private commandsArr = this.commandsCreator.getCommandsArr();
 }

@@ -13,23 +13,6 @@ export class MainPluginSettingTab extends PluginSettingTab {
 
     display(): void {
         const { containerEl } = this;
-        containerEl.empty();
-
-        // Settings Header
-        containerEl.createEl("h1", { text: "Formatto" });
-        containerEl
-            .createEl("span", { text: "Obsidian Formatter by " })
-            .createEl("a", {
-                text: "Deca",
-                href: "https://github.com/decaplanet",
-            });
-        containerEl.createEl("span", { text: ".\n" });
-        containerEl.createEl("p", {
-            text: "All values should be at least 0.",
-            cls: "formatto__paragraph-margin formatto__important",
-        });
-
-        containerEl.createEl("div", { cls: "formatto__vertical-gap" });
 
         const debounceMsg = debounce(
             (text: string, value: string) => {
