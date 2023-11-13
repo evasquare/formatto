@@ -7,11 +7,11 @@ import { DEFAULT_SETTINGS } from "@settings/settingTypes";
 import __wbg_init from "../wasm/pkg/formatto_wasm";
 import formatto_wasm from "../wasm/pkg/formatto_wasm_bg.wasm";
 
-import type { MainPluginSettings } from "@settings/settingTypes";
+import type { FormattoPluginSettings } from "@settings/settingTypes";
 
 // * ENTRY POINT
-export default class MainPlugin extends Plugin {
-    settings: MainPluginSettings;
+export default class FormattoPlugin extends Plugin {
+    settings: FormattoPluginSettings;
 
     // Load and Save Settings
     async loadSettings() {

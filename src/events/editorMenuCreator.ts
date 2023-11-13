@@ -1,12 +1,12 @@
 import { Notice } from "obsidian";
 
 import { format_document } from "../../wasm/pkg/formatto_wasm";
-import MainPlugin from "../main";
+import FormattoPlugin from "../main";
 
 export class EditorMenuCreator {
-    private plugin: MainPlugin;
+    private plugin: FormattoPlugin;
 
-    constructor(plugin: MainPlugin) {
+    constructor(plugin: FormattoPlugin) {
         this.plugin = plugin;
     }
 

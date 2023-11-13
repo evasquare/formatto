@@ -12,7 +12,7 @@ export interface OtherGaps {
     beforeCodeBlocksAfterHeadings: string;
 }
 
-export interface MainPluginSettings {
+export interface FormattoPluginSettings {
     headingGaps: Partial<HeadingGaps>;
     otherGaps: Partial<OtherGaps>;
 }
@@ -35,7 +35,7 @@ export const DEFAULT_OTHER_GAPS: Partial<OtherGaps> = {
     beforeCodeBlocksAfterHeadings: "0",
 };
 
-export const DEFAULT_SETTINGS: MainPluginSettings = {
+export const DEFAULT_SETTINGS: FormattoPluginSettings = {
     headingGaps: DEFAULT_HEADING_GAPS,
     otherGaps: DEFAULT_OTHER_GAPS,
 };

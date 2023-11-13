@@ -1,12 +1,12 @@
 import { debounce, Notice, PluginSettingTab, Setting } from "obsidian";
 
 import type { App } from "obsidian";
-import type MainPlugin from "../main";
+import type FormattoPlugin from "../main";
 
 export class MainPluginSettingTab extends PluginSettingTab {
-    plugin: MainPlugin;
+    plugin: FormattoPlugin;
 
-    constructor(app: App, plugin: MainPlugin) {
+    constructor(app: App, plugin: FormattoPlugin) {
         super(app, plugin);
         this.plugin = plugin;
     }
