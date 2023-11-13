@@ -6,8 +6,8 @@ import { DEFAULT_SETTINGS } from "@settings/settingTypes";
 
 import __wbg_init from "../wasm/pkg/formatto_wasm";
 import formatto_wasm from "../wasm/pkg/formatto_wasm_bg.wasm";
-import { FormattoCommands } from "./commands/commands";
-import { FormattoUtils } from "./utils";
+import { FormattoCommand } from "./commands/commands";
+import { FormattoUtil } from "./utils";
 
 import type { FormattoPluginSettings } from "@settings/settingTypes";
 
@@ -57,11 +57,11 @@ export default class FormattoPlugin extends Plugin {
         console.log("Plugin Unloaded: Formatto");
     }
 
-    utils = new FormattoUtils(this);
+    utils = new FormattoUtil(this);
 
     private eventsMenuCreator = new FormattoEditorMenu(this);
     private eventsArr = this.eventsMenuCreator.getEventsArr();
 
-    private commandsCreator = new FormattoCommands(this);
+    private commandsCreator = new FormattoCommand(this);
     private commandsArr = this.commandsCreator.getCommandsArr();
 }

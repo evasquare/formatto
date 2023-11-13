@@ -2,7 +2,7 @@ import { Command } from "obsidian";
 
 import MainPlugin from "../main";
 
-export class FormattoCommands {
+export class FormattoCommand {
     private plugin: MainPlugin;
 
     constructor(plugin: MainPlugin) {

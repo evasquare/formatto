@@ -3,7 +3,7 @@ import { Editor, Notice } from "obsidian";
 import { format_document } from "../wasm/pkg/formatto_wasm";
 import FormattoPlugin from "./main";
 
-export class FormattoUtils {
+export class FormattoUtil {
     private plugin: FormattoPlugin;
 
     constructor(plugin: FormattoPlugin) {
