@@ -5,7 +5,7 @@
     "minAppVersion": "0.15.0",
     "description": "Obsidian Formatter.",
     "author": "decaplanet",
-    "authorUrl": "https://decaplanet.com",
     "repo": "decaplanet/formatto",
+    "authorUrl": "https://decaplanet.com",
     "isDesktopOnly": false
 }
