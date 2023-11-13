@@ -3,8 +3,8 @@
     "name": "Formatto",
     "version": "1.0.0",
     "minAppVersion": "0.15.0",
-    "description": "Obsidian Formatter.",
-    "author": "decaplanet",
+    "description": "Format markdown document.",
+    "author": "Deca",
     "repo": "decaplanet/formatto",
     "authorUrl": "https://decaplanet.com",
     "isDesktopOnly": false

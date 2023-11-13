@@ -7,3 +7,9 @@ Formatto is a simple Rust-powered markdown formatter plugin for [Obsidian](https
     <img alt="use-example" width="49.4%" src="./images/example1.gif">
     <img alt="settings-example" width="49.4%" src="./images/example2.png">
 </div>
+
+## How to Use
+You can use the plugin in two ways:
+
+- Right click in the editor and select "Format Document"
+- Use a command "Formatto: Format Document"
