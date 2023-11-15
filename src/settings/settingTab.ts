@@ -29,10 +29,10 @@ export class MainPluginSettingTab extends PluginSettingTab {
 
         // Heading Gaps
         containerEl.createEl("h2", {
-            text: "Heading Gaps",
+            text: "Heading gaps",
         });
         new Setting(containerEl)
-            .setName("Before Top Level Headings")
+            .setName("Before top level headings")
             .setDesc("Decides gaps before highest level of headings.")
             .addText((text) =>
                 text
@@ -57,7 +57,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
         new Setting(containerEl)
-            .setName("Before First Sub Heading")
+            .setName("Before first sub heading")
             .setDesc(
                 "Decides the child heading gap right before a parent heading."
             )
@@ -84,7 +84,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
         new Setting(containerEl)
-            .setName("Before Sub Headings")
+            .setName("Before sub headings")
             .setDesc(
                 "Decides gaps before headings that are not in the highest level."
             )
@@ -113,10 +113,10 @@ export class MainPluginSettingTab extends PluginSettingTab {
 
         // Other Gaps
         containerEl.createEl("h2", {
-            text: "Other Gaps",
+            text: "Other gaps",
         });
         new Setting(containerEl)
-            .setName("After Properties")
+            .setName("After properties")
             .setDesc("Decides the gap after a YAML properties.")
             .addText((text) =>
                 text
@@ -138,7 +138,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
         new Setting(containerEl)
-            .setName("Before Contents")
+            .setName("Before contents")
             .setDesc(
                 "Decides gaps before contents (ex: Text section right before headings)."
             )
@@ -162,7 +162,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
         new Setting(containerEl)
-            .setName("Before Contents After Code Blocks")
+            .setName("Before contents after code blocks")
             .setDesc(
                 "Decides gaps before contents that are right after code blocks."
             )
@@ -190,7 +190,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
         new Setting(containerEl)
-            .setName("Before Code Blocks")
+            .setName("Before code blocks")
             .setDesc("Decides gaps before code blocks.")
             .addText((text) =>
                 text
@@ -212,7 +212,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
         new Setting(containerEl)
-            .setName("Before Code Blocks After Headings")
+            .setName("Before code blocks after headings")
             .setDesc(
                 "Decides gaps before code blocks that are right after headings."
             )

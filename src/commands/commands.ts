@@ -12,7 +12,7 @@ export class FormattoCommand {
     getCommandsArr(): Command[] {
         return [
             {
-                id: "formatto-format__format",
+                id: "format",
                 name: "Format Document",
                 editorCallback: (editor) => {
                     this.plugin.utils.getEventsArr(editor);
