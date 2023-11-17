@@ -8,6 +8,37 @@ mod parse_input_test {
     };
 
     #[test]
+    fn only_headings() {
+        let input = r#"## Heading 2
+### Heading 3
+#### Heading 4"#;
+
+        let expected_output = vec![
+            MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
+            MarkdownSection::Heading(HeadingLevel::FirstSub("### Heading 3".to_string())),
+            MarkdownSection::Heading(HeadingLevel::FirstSub("#### Heading 4".to_string())),
+        ];
+
+        assert_eq!(get_sections(input), expected_output);
+    }
+
+    #[test]
+    fn only_content() {
+        let input = r#"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
+
+        let expected_output = vec![MarkdownSection::Content(
+            r#"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+Lorem Ipsum is simply dummy text of the printing and typesetting industry."#
+                .to_string(),
+        )];
+
+        assert_eq!(get_sections(input), expected_output);
+    }
+
+    #[test]
     fn sub_heading() {
         let input = r#"## Heading 2
 Lorem Ipsum is simply dummy text of the printing and typesetting industry.

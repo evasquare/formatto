@@ -135,8 +135,13 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
 
     let input_lines = input.trim().split('\n');
     let input_lines_vec = input_lines.clone().collect::<Vec<&str>>();
-    let md_top_heading_level = get_top_heading_level(&input_lines_vec);
-    let md_top_heading_literal = "#".repeat(md_top_heading_level);
+    let mut md_top_heading_level: usize = 0;
+    let mut md_top_heading_literal: String = String::from("");
+
+    if input.contains('#') {
+        md_top_heading_level = get_top_heading_level(&input_lines_vec);
+        md_top_heading_literal = "#".repeat(md_top_heading_level);
+    }
 
     let mut md_properties = String::new();
     let mut is_reading_md_properties = false;
