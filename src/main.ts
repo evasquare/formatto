@@ -53,7 +53,7 @@ export default class FormattoPlugin extends Plugin {
     }
 
     utils = new FormattoUtil(this);
-    private iconCreator = new CustomIcon(this);
+    private iconCreator = new CustomIcon();
     private eventsMenuCreator = new FormattoEditorMenu(this);
     private commandCreator = new FormattoCommand(this);
 }
