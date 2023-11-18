@@ -1,6 +1,5 @@
-import { addIcon, Editor, Notice } from "obsidian";
+import { Editor, Notice } from "obsidian";
 
-import formattoLogo from "../icons/formatto-logo.svg";
 import { format_document } from "../wasm/pkg/formatto_wasm";
 import FormattoPlugin from "./main";
 
