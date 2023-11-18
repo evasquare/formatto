@@ -31,12 +31,4 @@ export class FormattoUtil {
 
         new Notice("Document Formatted!");
     }
-
-    private icons = [{ name: "formatto-logo", svg: formattoLogo }];
-
-    registerIcons = () => {
-        this.icons.forEach(({ name: id, svg }) => {
-            addIcon(id, svg);
-        });
-    };
 }
