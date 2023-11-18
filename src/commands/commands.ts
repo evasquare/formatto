@@ -9,10 +9,16 @@ export class FormattoCommand {
         this.plugin = plugin;
     }
 
+    registerCommands() {
+        this.getCommandsArr().forEach((item) => {
+            this.plugin.addCommand(item);
+        });
+    }
+
     getCommandsArr(): Command[] {
         return [
             {
-                id: "format",
+                id: "formatto-logo",
                 name: "Format Document",
                 editorCallback: (editor) => {
                     this.plugin.utils.getEventsArr(editor);

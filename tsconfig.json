@@ -1,5 +1,6 @@
 {
     "include": ["src/**/*"],
+    "files": ["./global.d.ts"],
     "compilerOptions": {
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,

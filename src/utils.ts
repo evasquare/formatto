@@ -1,5 +1,6 @@
-import { Editor, Notice } from "obsidian";
+import { addIcon, Editor, Notice } from "obsidian";
 
+import formattoLogo from "../icons/formatto-logo.svg";
 import { format_document } from "../wasm/pkg/formatto_wasm";
 import FormattoPlugin from "./main";
 
@@ -30,4 +31,12 @@ export class FormattoUtil {
 
         new Notice("Document Formatted!");
     }
+
+    private icons = [{ name: "formatto-logo", svg: formattoLogo }];
+
+    registerIcons = () => {
+        this.icons.forEach(({ name: id, svg }) => {
+            addIcon(id, svg);
+        });
+    };
 }

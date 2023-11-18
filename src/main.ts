@@ -39,15 +39,9 @@ export default class FormattoPlugin extends Plugin {
 
         this.addSettingTab(new MainPluginSettingTab(this.app, this));
 
-        // Register Events
-        this.eventsArr.forEach((item) => {
-            this.registerEvent(item);
-        });
-
-        // Register Commands
-        this.commandsArr.forEach((item) => {
-            this.addCommand(item);
-        });
+        this.utils.registerIcons();
+        this.eventsMenuCreator.registerEditorMenus();
+        this.commandsCreator.registerCommands();
 
         console.log("Plugin Loaded: Formatto");
     }
@@ -58,10 +52,6 @@ export default class FormattoPlugin extends Plugin {
     }
 
     utils = new FormattoUtil(this);
-
     private eventsMenuCreator = new FormattoEditorMenu(this);
-    private eventsArr = this.eventsMenuCreator.getEventsArr();
-
     private commandsCreator = new FormattoCommand(this);
-    private commandsArr = this.commandsCreator.getCommandsArr();
 }

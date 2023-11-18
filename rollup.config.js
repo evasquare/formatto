@@ -3,6 +3,7 @@ import commonjs from "@rollup/plugin-commonjs";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import typescript from "@rollup/plugin-typescript";
 import wasm from "@rollup/plugin-wasm";
+import svg from "rollup-plugin-svg";
 
 export default {
     input: "src/main.ts",
@@ -30,5 +31,6 @@ export default {
         commonjs({
             include: "node_modules/**",
         }),
+        svg(),
     ],
 };

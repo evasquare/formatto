@@ -11,3 +11,9 @@
     color: tomato;
     font-weight: bold;
 }
+
+.formatto__custom-icons {
+    width: 20px;
+    height: 20px;
+    fill: var(--text-muted);
+}
