@@ -7,7 +7,7 @@ export class RibbonIcon {
         this.plugin = plugin;
     }
 
-    registerIcons = () => {
+    registerRibbonIcons = () => {
         this.plugin.addRibbonIcon("formatto-logo", "Format Document", () => {
             this.plugin.utils.getEventsArr(
                 this.plugin.app.workspace.activeEditor.editor

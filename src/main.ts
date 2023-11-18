@@ -12,6 +12,7 @@ import { RibbonIcon } from "./etc/ribbonIcon";
 import { FormattoUtil } from "./utils";
 
 import type { FormattoPluginSettings } from "@settings/settingTypes";
+
 // * ENTRY POINT
 export default class FormattoPlugin extends Plugin {
     settings: FormattoPluginSettings;
@@ -46,8 +47,8 @@ export default class FormattoPlugin extends Plugin {
 
         this.addSettingTab(new MainPluginSettingTab(this.app, this));
 
-        this.ribbonIcon.registerIcons();
         this.iconCreator.registerIcons();
+        this.ribbonIcon.registerRibbonIcons();
         this.eventsMenuCreator.registerEditorMenus();
         this.commandCreator.registerCommands();
 
