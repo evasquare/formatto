@@ -7,7 +7,7 @@ import { DEFAULT_SETTINGS } from "@settings/settingTypes";
 import __wbg_init from "../wasm/pkg/formatto_wasm";
 import formatto_wasm from "../wasm/pkg/formatto_wasm_bg.wasm";
 import { FormattoCommand } from "./commands/commands";
-import { CustomIcon } from "./etc/icon";
+import { CustomIcon } from "./icons/icon";
 import { FormattoUtil } from "./utils";
 
 import type { FormattoPluginSettings } from "@settings/settingTypes";

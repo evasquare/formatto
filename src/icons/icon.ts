@@ -1,6 +1,6 @@
 import { addIcon } from "obsidian";
 
-import formattoLogo from "../icons/formatto-logo.svg";
+import formattoLogo from "./img/formatto-logo.svg";
 
 export class CustomIcon {
     private icons = [{ name: "formatto-logo", svg: formattoLogo }];
