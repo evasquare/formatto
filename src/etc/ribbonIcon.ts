@@ -1,4 +1,4 @@
-import { debounce, Debouncer, Notice } from "obsidian";
+import { debounce, Notice } from "obsidian";
 import FormattoPlugin from "src/main";
 
 export class RibbonIcon {
