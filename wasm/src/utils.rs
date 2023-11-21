@@ -1,3 +1,7 @@
+// To use the feature, use the following argument.
+// "--features development"
+// ex) "wasm-pack build --target web --features development"
+
 #[allow(dead_code)]
 #[cfg(feature = "development")]
 pub fn set_panic_hook() {

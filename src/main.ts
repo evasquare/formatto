@@ -13,7 +13,7 @@ import { FormattoUtil } from "./utils";
 
 import type { FormattoPluginSettings } from "@settings/settingTypes";
 
-// * ENTRY POINT
+/** Entry Point. */
 export default class FormattoPlugin extends Plugin {
     settings: FormattoPluginSettings;
 
