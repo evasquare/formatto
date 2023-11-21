@@ -54,7 +54,7 @@ pub fn format_document(input: &str, js_settings: JsValue) -> String {
         return input.to_string();
     }
 
-    // Return value to TypeScript side or throw an error.
+    // Return value to the TypeScript side or throw an error.
     match parsing::parse_input(input, settings) {
         Ok(sections) => sections,
         Err(e) => {
