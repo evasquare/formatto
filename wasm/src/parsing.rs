@@ -1,6 +1,6 @@
-use super::types::setting_types::MainPluginSettings;
 use std::error::Error;
 
+use super::types::setting_types::MainPluginSettings;
 pub mod parsing_tools;
 
 pub fn parse_input(input: &str, settings: MainPluginSettings) -> Result<String, Box<dyn Error>> {
