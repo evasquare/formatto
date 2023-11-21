@@ -1,17 +1,3 @@
-.formatto__vertical-gap {
-    height: var(--p-spacing);
-}
-
-.formatto__paragraph-margin {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-.formatto__important {
-    color: tomato;
-    font-weight: bold;
-}
-
 .formatto__custom-icons {
     width: 20px;
     height: 20px;
