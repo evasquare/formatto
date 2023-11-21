@@ -92,6 +92,8 @@ pub fn get_formatted_string(
                     } else if right_after_code_block {
                         parse_str_to_usize(&settings.other_gaps.before_contents_after_code_blocks)?
                             + 1
+                    } else if output.is_empty() {
+                        0
                     } else {
                         parse_str_to_usize(&settings.other_gaps.before_contents)? + 1
                     },
