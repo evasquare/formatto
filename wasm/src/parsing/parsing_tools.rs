@@ -140,7 +140,7 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
     let mut md_top_heading_level: usize = 0;
     let mut md_top_heading_literal: String = String::from("");
 
-    if input.contains('#') {
+    if input.contains("# ") {
         md_top_heading_level = get_top_heading_level(&input_lines_vec);
         md_top_heading_literal = "#".repeat(md_top_heading_level);
     }
@@ -234,9 +234,10 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
         }
 
         // * Read headings.
-        if line.starts_with('#') {
+        if line.starts_with('#') && line.contains("# ") {
             let is_top_heading = line.starts_with(&md_top_heading_literal)
-                && !line.starts_with(format!("{}#", md_top_heading_literal).as_str());
+                && !line.starts_with(format!("{}#", md_top_heading_literal).as_str())
+                && line.contains("# ");
 
             if is_top_heading {
                 is_reading_content = false;

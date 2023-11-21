@@ -8,6 +8,22 @@ mod parse_input_test {
     };
 
     #[test]
+    fn sharp_symbol_without_heading() {
+        let input = r#"##Heading 2
+###Heading 3
+####Heading 4"#;
+
+        let expected_output = vec![MarkdownSection::Content(
+            r#"##Heading 2
+###Heading 3
+####Heading 4"#
+                .to_string(),
+        )];
+
+        assert_eq!(get_sections(input), expected_output);
+    }
+
+    #[test]
     fn only_headings() {
         let input = r#"## Heading 2
 ### Heading 3
