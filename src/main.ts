@@ -23,7 +23,7 @@ export default class FormattoPlugin extends Plugin {
     private eventsMenuCreator = new FormattoEditorMenu(this);
     private commandCreator = new FormattoCommand(this);
 
-    // Load and Save Settings
+    /** Load and Save Settings */
     async loadSettings() {
         this.settings = Object.assign(
             {},
@@ -35,7 +35,7 @@ export default class FormattoPlugin extends Plugin {
         await this.saveData(this.settings);
     }
 
-    // Runs whenever the user starts using the plugin in Obsidian.
+    /** Runs whenever the user starts using the plugin in Obsidian. */
     async onload() {
         await this.loadSettings();
 
@@ -55,7 +55,7 @@ export default class FormattoPlugin extends Plugin {
         console.log("Plugin Loaded: Formatto");
     }
 
-    // Runs when the plugin is disabled.
+    /** Runs when the plugin is disabled. */
     onunload() {
         console.log("Plugin Unloaded: Formatto");
     }
