@@ -150,29 +150,29 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
     let mut md_code_block = String::new();
     let mut is_reading_md_code_block = false;
 
-    let mut is_reading_content = false;
-    let mut current_heading_level = 0;
+    let mut is_reading_md_content = false;
+    let mut currently_reading_heading_level = 0;
 
     // Everything goes into `MarkdownSection::Content` type,
     // unless it detects a markdown syntax that needs to be handled.
     let mut md_content = String::new();
 
     for (index, line) in input_lines.enumerate() {
-        if line.is_empty() && !is_reading_content && !is_reading_md_code_block {
+        if line.is_empty() && !is_reading_md_content && !is_reading_md_code_block {
             continue;
         }
-        is_reading_content = true;
+        is_reading_md_content = true;
 
-        // Reads Properties.
+        // * Reads Properties.
         if sections.is_empty() && (line == "---" || is_reading_md_properties) {
-            is_reading_content = false;
+            is_reading_md_content = false;
             push_content_section(&mut sections, &mut md_content);
 
-            let is_first_line = sections.is_empty() && md_properties.is_empty();
+            let is_first_property_line = md_properties.is_empty();
 
-            // Enter and exit properties section.
+            // Enter and exit point of a property section.
             if line == "---" {
-                if is_first_line {
+                if is_first_property_line {
                     md_properties.push_str(line);
                     is_reading_md_properties = true;
                     continue;
@@ -188,7 +188,7 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
 
             // Keep reading properties.
             if is_reading_md_properties {
-                if !is_first_line {
+                if !is_first_property_line {
                     md_properties.push('\n');
                 }
                 md_properties.push_str(line);
@@ -198,10 +198,10 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
 
         // * Read code blocks.
         if line.starts_with("```") || is_reading_md_code_block {
-            is_reading_content = false;
+            is_reading_md_content = false;
             push_content_section(&mut sections, &mut md_content);
 
-            // Enter and exit a code block.
+            // Enter and exit point of a code block.
             if line.starts_with("```") {
                 if !is_reading_md_code_block {
                     md_code_block.push_str(line);
@@ -214,7 +214,6 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
                     // Clear the temporary code block.
                     md_code_block.clear();
                     is_reading_md_code_block = false;
-
                     continue;
                 }
             }
@@ -235,14 +234,14 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
                 && !line.starts_with(format!("{}#", md_top_heading_literal).as_str());
 
             if is_top_heading {
-                is_reading_content = false;
+                is_reading_md_content = false;
                 push_content_section(&mut sections, &mut md_content);
 
                 sections.push(MarkdownSection::Heading(HeadingLevel::Top(
                     line.to_string(),
                 )));
 
-                current_heading_level = md_top_heading_level;
+                currently_reading_heading_level = md_top_heading_level;
             } else {
                 // `take_while` stops as soon as a reading element is false.
                 let filtered_char_vec = line
@@ -256,10 +255,10 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
                 });
 
                 if is_sub_heading {
-                    is_reading_content = false;
+                    is_reading_md_content = false;
                     push_content_section(&mut sections, &mut md_content);
 
-                    if filtered_char_vec.len() - 1 > current_heading_level {
+                    if filtered_char_vec.len() - 1 > currently_reading_heading_level {
                         sections.push(MarkdownSection::Heading(HeadingLevel::FirstSub(
                             line.to_string(),
                         )));
@@ -269,13 +268,13 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
                         )));
                     }
 
-                    current_heading_level = filtered_char_vec.len() - 1;
+                    currently_reading_heading_level = filtered_char_vec.len() - 1;
                 }
             }
         }
 
         // * Read contents.
-        if is_reading_content {
+        if is_reading_md_content {
             append_string_with_line_breaks(&mut md_content, line);
         }
 
