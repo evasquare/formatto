@@ -1,7 +1,7 @@
 [package]
 name = "formatto-wasm"
 description = "Wasm bindings for formatto."
-version = "1.0.3"
+version = "1.0.4"
 authors = ["decaplanet <contact@decaplanet.com>"]
 license = "MIT"
 edition = "2018"
