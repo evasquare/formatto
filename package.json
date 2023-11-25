@@ -9,7 +9,7 @@
         "dev:wasm": "nodemon --config \"./nodemon-configs/nodemon-dev-wasm.json\"",
         "build": "npm run build:wasm && npm run build:ts",
         "build:ts": "rollup -c",
-        "build:wasm": "cd ./wasm && wasm-pack build --target web && cd ../ && npm i",
+        "build:wasm": "cd ./wasm && wasm-pack build --target web --release && cd ../ && npm i",
         "test:ts": "vitest",
         "test:rust": "nodemon --config ./nodemon-configs/nodemon-test-wasm.json"
     },
