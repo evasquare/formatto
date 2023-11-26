@@ -12,8 +12,8 @@ module.exports = {
     },
     plugins: ["@typescript-eslint"],
     rules: {
-        indent: ["error", 4],
-        quotes: ["error", "double"],
+        indent: ["warn", 4],
+        quotes: ["warn", "double"],
         semi: ["error", "always"],
 
         // Unused vars
@@ -21,7 +21,6 @@ module.exports = {
         "@typescript-eslint/no-unused-vars": ["warn"],
 
         // Etc
-        "linebreak-style": ["error", "unix"],
         "prefer-const": ["warn"],
     },
 };
