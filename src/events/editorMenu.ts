@@ -15,19 +15,16 @@ export class FormattoEditorMenu {
 
     private getEventsArr() {
         return [
-            this.plugin.app.workspace.on(
-                "editor-menu",
-                (menu, editor, view) => {
-                    menu.addItem((item) =>
-                        item
-                            .setTitle("Format Document")
-                            .setIcon("formatto-logo")
-                            .onClick(() => {
-                                this.plugin.utils.getEventsArr(editor);
-                            })
-                    );
-                }
-            ),
+            this.plugin.app.workspace.on("editor-menu", (menu, editor) => {
+                menu.addItem((item) =>
+                    item
+                        .setTitle("Format Document")
+                        .setIcon("formatto-logo")
+                        .onClick(() => {
+                            this.plugin.utils.getEventsArr(editor);
+                        })
+                );
+            }),
         ];
     }
 }

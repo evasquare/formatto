@@ -41,7 +41,7 @@ export default class FormattoPlugin extends Plugin {
 
         // Initialize WebAssembly
         await (async () => {
-            // @ts-ignore
+            // @ts-expect-error: formatto_wasm should be called.
             await __wbg_init(await formatto_wasm());
         })();
 
