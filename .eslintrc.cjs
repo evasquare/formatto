@@ -6,6 +6,7 @@ module.exports = {
     extends: [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
+        // Remove this line if you're not using Prettier.
         "prettier",
     ],
     overrides: [],
