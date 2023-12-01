@@ -1,5 +1,3 @@
-// Test cases are based on the default setting.
-
 mod parsing_tools {
     #[cfg(test)]
     mod get_top_heading_level {
