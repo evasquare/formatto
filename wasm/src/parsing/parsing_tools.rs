@@ -30,34 +30,26 @@ pub fn get_formatted_string(
             MarkdownSection::Heading(heading_level) => {
                 match heading_level {
                     HeadingLevel::Top(content) => {
-                        if output.is_empty() {
-                            output.push_str(&insert_line_breaks(
-                                &content,
-                                if right_after_properties {
-                                    parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
-                                } else {
-                                    0
-                                },
-                                0,
-                            ));
-                        } else {
-                            output.push_str(&insert_line_breaks(
-                                &content,
-                                if right_after_properties {
-                                    parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
-                                } else {
-                                    parse_str_to_usize(
-                                        &settings.heading_gaps.before_top_level_headings,
-                                    )? + 1
-                                },
-                                0,
-                            ));
-                        }
+                        output.push_str(&insert_line_breaks(
+                            &content,
+                            if right_after_properties {
+                                parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
+                            } else if output.is_empty() {
+                                0
+                            } else {
+                                parse_str_to_usize(
+                                    &settings.heading_gaps.before_top_level_headings,
+                                )? + 1
+                            },
+                            0,
+                        ));
                     }
                     HeadingLevel::FirstSub(content) => {
                         let formatted = insert_line_breaks(
                             &content,
-                            if right_after_properties {
+                            if output.is_empty() {
+                                0
+                            } else if right_after_properties {
                                 parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
                             } else {
                                 parse_str_to_usize(&settings.heading_gaps.before_first_sub_heading)?
@@ -70,7 +62,9 @@ pub fn get_formatted_string(
                     HeadingLevel::Sub(content) => {
                         output.push_str(&insert_line_breaks(
                             &content,
-                            if right_after_properties {
+                            if output.is_empty() {
+                                0
+                            } else if right_after_properties {
                                 parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
                             } else {
                                 parse_str_to_usize(&settings.heading_gaps.before_sub_headings)? + 1
@@ -87,14 +81,13 @@ pub fn get_formatted_string(
             MarkdownSection::Content(content) => {
                 output.push_str(&insert_line_breaks(
                     &content,
-                    if right_after_properties {
+                    if output.is_empty() {
+                        0
+                    } else if right_after_properties {
                         parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
                     } else if right_after_code_block {
                         parse_str_to_usize(&settings.other_gaps.before_contents_after_code_blocks)?
                             + 1
-                    } else if output.is_empty() {
-                        // When the document starts with a content section.
-                        0
                     } else {
                         parse_str_to_usize(&settings.other_gaps.before_contents)? + 1
                     },
@@ -108,7 +101,9 @@ pub fn get_formatted_string(
             MarkdownSection::Code(content) => {
                 output.push_str(&insert_line_breaks(
                     &content,
-                    if right_after_properties {
+                    if output.is_empty() {
+                        0
+                    } else if right_after_properties {
                         parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
                     } else if right_after_heading {
                         parse_str_to_usize(&settings.other_gaps.before_code_blocks_after_headings)?
