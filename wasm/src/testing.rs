@@ -1,7 +1,7 @@
 mod parsing_tools {
     #[cfg(test)]
     mod get_top_heading_level {
-        use crate::parsing::parsing_tools::get_top_heading_level;
+        use crate::tools::parsing::get_top_heading_level;
 
         #[test]
         fn multiple_headings() {
@@ -112,9 +112,9 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#
 
     #[cfg(test)]
     mod get_sections {
-        use crate::{
-            parsing::parsing_tools::get_sections,
-            types::token_types::{HeadingLevel, MarkdownSection},
+        use crate::tools::{
+            parsing::get_sections,
+            tokens::{HeadingLevel, MarkdownSection},
         };
 
         #[test]

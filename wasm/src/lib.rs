@@ -1,15 +1,12 @@
 use std::error::Error;
-use types::setting_types::MainPluginSettings;
 use wasm_bindgen::prelude::*;
 
-mod parsing;
-mod testing;
-mod utils;
+use crate::setting_schema::MainPluginSettings;
 
-mod types {
-    pub mod setting_types;
-    pub mod token_types;
-}
+mod setting_schema;
+mod testing;
+mod tools;
+mod utils;
 
 #[wasm_bindgen]
 extern "C" {
@@ -36,10 +33,6 @@ pub fn status() -> bool {
     true
 }
 
-fn read_settings(settings: JsValue) -> Result<MainPluginSettings, Box<dyn Error>> {
-    Ok(serde_wasm_bindgen::from_value(settings)?)
-}
-
 #[wasm_bindgen]
 pub fn format_document(input: &str, js_settings: JsValue) -> String {
     let settings = match read_settings(js_settings) {
@@ -55,11 +48,22 @@ pub fn format_document(input: &str, js_settings: JsValue) -> String {
     }
 
     // Return value to the TypeScript side or throw an error.
-    match parsing::parse_input(input, settings) {
+    match parse_input(input, settings) {
         Ok(sections) => sections,
         Err(e) => {
             let error_message = e.to_string();
             wasm_bindgen::throw_str(&error_message);
         }
     }
+}
+
+fn read_settings(settings: JsValue) -> Result<MainPluginSettings, Box<dyn Error>> {
+    Ok(serde_wasm_bindgen::from_value(settings)?)
+}
+
+fn parse_input(input: &str, settings: MainPluginSettings) -> Result<String, Box<dyn Error>> {
+    let sections = tools::parsing::get_sections(input);
+    let output = tools::formatting::get_formatted_string(sections, &settings)?;
+
+    Ok(output)
 }
