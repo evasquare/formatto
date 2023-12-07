@@ -21,9 +21,7 @@ export class RibbonIcon {
                 return;
             }
 
-            this.plugin.utils.getEventsArr(
-                this.plugin.app.workspace.activeEditor.editor
-            );
+            this.plugin.utils.getEventsArr(editor);
         });
     };
 }
