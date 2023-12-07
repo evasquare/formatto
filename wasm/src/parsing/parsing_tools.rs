@@ -32,10 +32,10 @@ pub fn get_formatted_string(
                     HeadingLevel::Top(content) => {
                         output.push_str(&insert_line_breaks(
                             &content,
-                            if right_after_properties {
-                                parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
-                            } else if output.is_empty() {
+                            if output.is_empty() {
                                 0
+                            } else if right_after_properties {
+                                parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
                             } else {
                                 parse_str_to_usize(
                                     &settings.heading_gaps.before_top_level_headings,
