@@ -203,14 +203,6 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> usize {
     top_heading_level
 }
 
-/// Insert line breaks before and after an input.
-pub fn insert_line_breaks(input: &str, before: usize, after: usize) -> String {
-    let line_breaks_before = "\n".repeat(before);
-    let line_breaks_after = "\n".repeat(after);
-
-    format!("{}{}{}", line_breaks_before, input, line_breaks_after)
-}
-
 /// Parse a usize value from a &str type argument.
 /// Also return an `Error` to handle exceptions.
 pub fn parse_str_to_usize(input: &Option<String>) -> Result<usize, Box<dyn Error>> {

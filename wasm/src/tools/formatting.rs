@@ -2,7 +2,7 @@ use std::error::Error;
 
 use crate::setting_schema::MainPluginSettings;
 use crate::tools::{
-    parsing::{insert_line_breaks, parse_str_to_usize},
+    parsing::parse_str_to_usize,
     tokens::{HeadingLevel, MarkdownSection},
 };
 
@@ -121,4 +121,12 @@ pub fn get_formatted_string(
     }
 
     Ok(output)
+}
+
+/// Insert line breaks before and after an input.
+pub fn insert_line_breaks(input: &str, before: usize, after: usize) -> String {
+    let line_breaks_before = "\n".repeat(before);
+    let line_breaks_after = "\n".repeat(after);
+
+    format!("{}{}{}", line_breaks_before, input, line_breaks_after)
 }
