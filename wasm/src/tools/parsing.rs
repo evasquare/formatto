@@ -14,7 +14,11 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
 
     let mut md_top_heading_level: usize = 0;
     let mut md_top_heading_literal = String::from("");
-    if input.contains("# ") {
+
+    let contains_heading = input
+        .split('\n')
+        .any(|line| line.contains("# ") || line.chars().all(|item| item == '#'));
+    if contains_heading {
         md_top_heading_level = get_top_heading_level(&input_lines_vec);
         md_top_heading_literal = "#".repeat(md_top_heading_level);
     }
@@ -103,7 +107,8 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
         }
 
         // * Read headings.
-        if line.starts_with('#') && line.contains("# ") {
+        let only_contains_header_symbols = line.chars().all(|item| item == '#');
+        if line.starts_with('#') && (line.contains("# ") || only_contains_header_symbols) {
             let is_top_heading = line.starts_with(&md_top_heading_literal)
                 && !line.starts_with(format!("{}#", md_top_heading_literal).as_str());
 
@@ -117,22 +122,14 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
 
                 currently_reading_heading_level = md_top_heading_level;
             } else {
-                // `take_while` stops as soon as a reading element is false.
-                let filtered_char_vec = line
-                    .chars()
-                    .take_while(|&c| c == '#' || c == ' ')
-                    .collect::<Vec<char>>();
-
-                // `map_or` is used to handle `Option<T>` value.
-                let is_sub_heading = filtered_char_vec.last().map_or(false, |last_char| {
-                    *last_char == ' ' && filtered_char_vec.len() > 1
-                });
+                let is_sub_heading = line.contains("# ") || only_contains_header_symbols;
+                let heading_level = line.chars().take_while(|&c| c == '#').count();
 
                 if is_sub_heading {
                     is_reading_md_content = false;
                     push_content_section(&mut sections, &mut md_content);
 
-                    if filtered_char_vec.len() - 1 > currently_reading_heading_level {
+                    if heading_level > currently_reading_heading_level {
                         sections.push(MarkdownSection::Heading(HeadingLevel::FirstSub(
                             line.to_string(),
                         )));
@@ -142,7 +139,7 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
                         )));
                     }
 
-                    currently_reading_heading_level = filtered_char_vec.len() - 1;
+                    currently_reading_heading_level = heading_level;
                 }
             }
         }

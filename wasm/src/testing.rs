@@ -358,5 +358,37 @@ fn main(
 
             assert_eq!(get_sections(input), expected_output);
         }
+
+        #[test]
+        fn headings_without_letters() {
+            let input = r#"#
+##
+##
+##
+##
+###
+###
+####
+####
+##
+#
+```"#;
+
+            let expected_output = vec![
+                MarkdownSection::Heading(HeadingLevel::Top("#".to_string())),
+                MarkdownSection::Heading(HeadingLevel::FirstSub("##".to_string())),
+                MarkdownSection::Heading(HeadingLevel::Sub("##".to_string())),
+                MarkdownSection::Heading(HeadingLevel::Sub("##".to_string())),
+                MarkdownSection::Heading(HeadingLevel::Sub("##".to_string())),
+                MarkdownSection::Heading(HeadingLevel::FirstSub("###".to_string())),
+                MarkdownSection::Heading(HeadingLevel::Sub("###".to_string())),
+                MarkdownSection::Heading(HeadingLevel::FirstSub("####".to_string())),
+                MarkdownSection::Heading(HeadingLevel::Sub("####".to_string())),
+                MarkdownSection::Heading(HeadingLevel::Sub("##".to_string())),
+                MarkdownSection::Heading(HeadingLevel::Top("#".to_string())),
+            ];
+
+            assert_eq!(get_sections(input), expected_output);
+        }
     }
 }
