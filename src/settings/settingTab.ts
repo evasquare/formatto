@@ -4,8 +4,8 @@ import type { App } from "obsidian";
 import type FormattoPlugin from "../main";
 
 export class MainPluginSettingTab extends PluginSettingTab {
-    plugin: FormattoPlugin;
-    invalidNumberMessage =
+    private plugin: FormattoPlugin;
+    private invalidNumberMessage =
         "Please enter a valid number.\nIt should be at least 0.";
 
     constructor(app: App, plugin: FormattoPlugin) {
