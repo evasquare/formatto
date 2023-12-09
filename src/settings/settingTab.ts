@@ -3,7 +3,7 @@ import { debounce, Notice, PluginSettingTab, Setting } from "obsidian";
 import type { App } from "obsidian";
 import type FormattoPlugin from "../main";
 
-const num_msg = "Please enter a valid number.\nIt should be at least 0.";
+const numMsg = "Please enter a valid number.\nIt should be at least 0.";
 
 export class MainPluginSettingTab extends PluginSettingTab {
     plugin: FormattoPlugin;
@@ -48,7 +48,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(
-                                num_msg,
+                                numMsg,
                                 value
                             );
                         }
@@ -75,7 +75,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(
-                                num_msg,
+                                numMsg,
                                 value
                             );
                         }
@@ -102,7 +102,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(
-                                num_msg,
+                                numMsg,
                                 value
                             );
                         }
@@ -130,7 +130,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(
-                                num_msg,
+                                numMsg,
                                 value
                             );
                         }
@@ -154,7 +154,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(
-                                num_msg,
+                                numMsg,
                                 value
                             );
                         }
@@ -181,7 +181,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(
-                                num_msg,
+                                numMsg,
                                 value
                             );
                         }
@@ -204,7 +204,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(
-                                num_msg,
+                                numMsg,
                                 value
                             );
                         }
@@ -231,7 +231,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(
-                                num_msg,
+                                numMsg,
                                 value
                             );
                         }
