@@ -3,10 +3,10 @@ import { debounce, Notice, PluginSettingTab, Setting } from "obsidian";
 import type { App } from "obsidian";
 import type FormattoPlugin from "../main";
 
-const numMsg = "Please enter a valid number.\nIt should be at least 0.";
-
 export class MainPluginSettingTab extends PluginSettingTab {
     plugin: FormattoPlugin;
+    invalidNumberMessage =
+        "Please enter a valid number.\nIt should be at least 0.";
 
     constructor(app: App, plugin: FormattoPlugin) {
         super(app, plugin);
@@ -47,10 +47,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
-                            debounceMsg(
-                                numMsg,
-                                value
-                            );
+                            debounceMsg(this.invalidNumberMessage, value);
                         }
 
                         this.plugin.settings.headingGaps.beforeTopLevelHeadings =
@@ -74,10 +71,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
-                            debounceMsg(
-                                numMsg,
-                                value
-                            );
+                            debounceMsg(this.invalidNumberMessage, value);
                         }
 
                         this.plugin.settings.headingGaps.beforeFirstSubHeading =
@@ -101,10 +95,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
-                            debounceMsg(
-                                numMsg,
-                                value
-                            );
+                            debounceMsg(this.invalidNumberMessage, value);
                         }
 
                         this.plugin.settings.headingGaps.beforeSubHeadings =
@@ -129,10 +120,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
-                            debounceMsg(
-                                numMsg,
-                                value
-                            );
+                            debounceMsg(this.invalidNumberMessage, value);
                         }
 
                         this.plugin.settings.otherGaps.afterProperties = value;
@@ -153,10 +141,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
-                            debounceMsg(
-                                numMsg,
-                                value
-                            );
+                            debounceMsg(this.invalidNumberMessage, value);
                         }
 
                         this.plugin.settings.otherGaps.beforeContents = value;
@@ -180,10 +165,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
-                            debounceMsg(
-                                numMsg,
-                                value
-                            );
+                            debounceMsg(this.invalidNumberMessage, value);
                         }
 
                         this.plugin.settings.otherGaps.beforeContentsAfterCodeBlocks =
@@ -203,10 +185,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
-                            debounceMsg(
-                                numMsg,
-                                value
-                            );
+                            debounceMsg(this.invalidNumberMessage, value);
                         }
 
                         this.plugin.settings.otherGaps.beforeCodeBlocks = value;
@@ -230,10 +209,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
-                            debounceMsg(
-                                numMsg,
-                                value
-                            );
+                            debounceMsg(this.invalidNumberMessage, value);
                         }
 
                         this.plugin.settings.otherGaps.beforeCodeBlocksAfterHeadings =
