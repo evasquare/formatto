@@ -15,9 +15,10 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
     let mut md_top_heading_level: usize = 0;
     let mut md_top_heading_literal = String::from("");
 
-    let contains_heading = input
-        .split('\n')
-        .any(|line| line.contains("# ") || line.chars().all(|item| item == '#'));
+    let contains_heading = input.split('\n').any(|line| {
+        !line.is_empty() && (line.contains("# ") || line.chars().all(|item| item == '#'))
+    });
+
     if contains_heading {
         md_top_heading_level = get_top_heading_level(&input_lines_vec);
         md_top_heading_literal = "#".repeat(md_top_heading_level);
