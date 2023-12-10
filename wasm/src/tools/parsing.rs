@@ -41,7 +41,7 @@ pub fn get_sections(input: &str) -> Result<Vec<MarkdownSection>, Box<dyn Error>>
         }
         is_reading_md_content = true;
 
-        // * Reads Properties.
+        // * Read Properties.
         if sections.is_empty() && (line == "---" || is_reading_md_properties) {
             is_reading_md_content = false;
             push_content_section(&mut sections, &mut md_content);
