@@ -12,12 +12,12 @@ export class FormattoUtil {
 
     getEventsArr(editor: Editor) {
         const cursorPosition = editor.getCursor();
-        const oldValue = editor.getValue();
+        const originalDocument = editor.getValue();
 
         let formattedDocument: string;
         try {
             formattedDocument = format_document(
-                oldValue,
+                originalDocument,
                 this.plugin.settings
             );
         } catch (error) {
@@ -29,7 +29,7 @@ export class FormattoUtil {
         editor.setValue(formattedDocument);
         editor.setSelection(cursorPosition, cursorPosition);
 
-        if (oldValue == editor.getValue()) {
+        if (originalDocument == editor.getValue()) {
             new Notice("There is nothing to be formatted!");
         } else {
             new Notice("Document Formatted!");
