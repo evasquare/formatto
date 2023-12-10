@@ -29,12 +29,9 @@ export class FormattoUtil {
         editor.setValue(formattedDocument);
         editor.setSelection(cursorPosition, cursorPosition);
 
-        if(oldValue == editor.getValue())
-        {
+        if (oldValue == editor.getValue()) {
             new Notice("There is nothing to be formatted!");
-        }
-        else
-        {
+        } else {
             new Notice("Document Formatted!");
         }
     }
