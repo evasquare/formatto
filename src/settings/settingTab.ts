@@ -16,6 +16,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
     display(): void {
         const { containerEl } = this;
 
+        containerEl.empty();
         const debounceMsg = debounce(
             (text: string, value: string) => {
                 if (
