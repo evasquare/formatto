@@ -3,9 +3,9 @@ use std::{error::Error, vec};
 use crate::console_error;
 use crate::tools::tokens::{HeadingLevel, MarkdownSection};
 
-pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
+pub fn get_sections(input: &str) -> Result<Vec<MarkdownSection>, Box<dyn Error>> {
     if input.is_empty() {
-        return vec![];
+        return Ok(vec![]);
     }
 
     let mut sections = Vec::<MarkdownSection>::new();
@@ -156,7 +156,7 @@ pub fn get_sections(input: &str) -> Vec<MarkdownSection> {
         }
     }
 
-    sections
+    Ok(sections)
 }
 
 // Functions used for reading "Content" sections.
