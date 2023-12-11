@@ -153,6 +153,13 @@ pub fn get_sections(input: &str) -> Result<Vec<MarkdownSection>, Box<dyn Error>>
         if index == input_lines_vec.len() - 1 {
             push_content_section(&mut sections, &mut md_content);
         }
+
+        is_reading_md_content = false;
+    }
+
+    // Return an error if the document is invalid.
+    if is_reading_md_code_block || is_reading_md_properties {
+        return Err(String::from("Failed to parse the document.").into());
     }
 
     Ok(sections)
