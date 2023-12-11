@@ -30,9 +30,9 @@ export class FormattoUtil {
         editor.setSelection(cursorPosition, cursorPosition);
 
         if (originalDocument == editor.getValue()) {
-            new Notice("There is nothing to format!");
+            new Notice("There is nothing to format.");
         } else {
-            new Notice("Document Formatted!");
+            new Notice("Document Formatted.");
         }
     }
 }
