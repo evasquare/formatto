@@ -21,7 +21,7 @@ export class FormattoCommand {
                 id: "formatto-logo",
                 name: "Format Document",
                 editorCallback: (editor) => {
-                    this.plugin.utils.getEventsArr(editor);
+                    this.plugin.utils.formatDocument(editor);
                 },
             },
         ];

@@ -10,7 +10,7 @@ export class FormattoUtil {
         this.plugin = plugin;
     }
 
-    getEventsArr(editor: Editor) {
+    formatDocument(editor: Editor) {
         const cursorPosition = editor.getCursor();
         const originalDocument = editor.getValue();
 

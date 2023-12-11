@@ -21,7 +21,7 @@ export class FormattoEditorMenu {
                         .setTitle("Format Document")
                         .setIcon("formatto-logo")
                         .onClick(() => {
-                            this.plugin.utils.getEventsArr(editor);
+                            this.plugin.utils.formatDocument(editor);
                         })
                 );
             }),

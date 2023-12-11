@@ -23,7 +23,7 @@ export class RibbonIcon {
                 return;
             }
 
-            this.plugin.utils.getEventsArr(editor);
+            this.plugin.utils.formatDocument(editor);
         });
     };
 }
