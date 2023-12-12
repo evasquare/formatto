@@ -20,6 +20,7 @@ export class FormattoCommand {
             {
                 id: "formatto-logo",
                 name: "Format Document",
+                icon: "formatto-logo",
                 editorCallback: (editor) => {
                     this.plugin.utils.formatDocument(editor);
                 },
