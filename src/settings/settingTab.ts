@@ -156,7 +156,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("0")
+                    .setPlaceholder("1")
                     .setValue(
                         this.plugin.settings.otherGaps
                             .beforeContentsAfterCodeBlocks
@@ -179,7 +179,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
             .setDesc("Decides gaps before code blocks.")
             .addText((text) =>
                 text
-                    .setPlaceholder("0")
+                    .setPlaceholder("1")
                     .setValue(this.plugin.settings.otherGaps.beforeCodeBlocks)
                     .onChange(async (value) => {
                         if (
