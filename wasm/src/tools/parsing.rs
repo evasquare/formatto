@@ -36,6 +36,7 @@ pub fn get_sections(input: &str) -> Result<Vec<MarkdownSection>, Box<dyn Error>>
     let mut md_content = String::new();
 
     for (index, line) in input_lines.enumerate() {
+        // "is_reading_md_content" gets updated in the previous iteration.
         if line.is_empty() && !is_reading_md_content && !is_reading_md_code_block {
             continue;
         }
@@ -153,8 +154,6 @@ pub fn get_sections(input: &str) -> Result<Vec<MarkdownSection>, Box<dyn Error>>
         if index == input_lines_vec.len() - 1 {
             push_content_section(&mut sections, &mut md_content);
         }
-
-        is_reading_md_content = false;
     }
 
     // Return an error if the document is invalid.
