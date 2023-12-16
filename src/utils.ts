@@ -2,9 +2,11 @@ import { Editor, Notice } from "obsidian";
 
 import { format_document } from "../wasm/pkg/formatto_wasm";
 import FormattoPlugin from "./main";
+import { FormattoPluginSettings } from "@settings/settingTypes";
 
 export class FormattoUtil {
     private plugin: FormattoPlugin;
+    settings: FormattoPluginSettings;
 
     constructor(plugin: FormattoPlugin) {
         this.plugin = plugin;
@@ -28,9 +30,15 @@ export class FormattoUtil {
 
         editor.setValue(formattedDocument);
         editor.setSelection(cursorPosition, cursorPosition);
+        
+        let differentNotify = this.plugin.settings.additionalSettings.notifyText;
 
-        if (originalDocument == editor.getValue()) {
-            new Notice("Document is already formatted!");
+        if (differentNotify) {
+            if (originalDocument == editor.getValue()) {
+                new Notice("Document is already formatted!");
+            } else {
+                new Notice("Document Formatted!");
+            }
         } else {
             new Notice("Document Formatted!");
         }
