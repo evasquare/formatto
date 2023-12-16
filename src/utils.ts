@@ -4,7 +4,7 @@ import { format_document } from "../wasm/pkg/formatto_wasm";
 import FormattoPlugin from "./main";
 
 export class FormattoUtil {
-    private plugin: FormattoPlugin;;
+    private plugin: FormattoPlugin;
 
     constructor(plugin: FormattoPlugin) {
         this.plugin = plugin;
