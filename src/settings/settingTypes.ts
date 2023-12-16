@@ -20,9 +20,14 @@ export interface OtherGaps {
     beforeCodeBlocksAfterHeadings: string;
 }
 
+export interface AdditionalSettings {
+    notifyText: boolean;
+}
+
 export interface FormattoPluginSettings {
     headingGaps: Partial<HeadingGaps>;
     otherGaps: Partial<OtherGaps>;
+    additionalSettings: Partial<AdditionalSettings>;
 }
 
 // `Partial<Type>` is a TypeScript utility that returns a type with all properties of Type set to optional.
@@ -43,7 +48,12 @@ export const DEFAULT_OTHER_GAPS: Partial<OtherGaps> = {
     beforeCodeBlocksAfterHeadings: "0",
 };
 
+export const DEFAULT_ADDITIONAL_SETTINGS: Partial<AdditionalSettings> = {
+    notifyText: true,
+};
+
 export const DEFAULT_SETTINGS: FormattoPluginSettings = {
     headingGaps: DEFAULT_HEADING_GAPS,
     otherGaps: DEFAULT_OTHER_GAPS,
+    additionalSettings: DEFAULT_ADDITIONAL_SETTINGS,
 };

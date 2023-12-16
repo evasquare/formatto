@@ -218,5 +218,26 @@ export class MainPluginSettingTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     })
             );
+        // Additional settings
+        containerEl.createEl("h2", {
+            text: "Additional settings",
+        });
+        new Setting(containerEl)
+            .setName("Notify when no changes are needed")
+            .setDesc(
+                "Display a different message when there's nothing to format."
+            )
+            .addToggle((text) =>
+                text
+                    .setValue(
+                        this.plugin.settings.additionalSettings
+                            .notifyText
+                    )
+                    .onChange(async (value) => {
+                        this.plugin.settings.additionalSettings.notifyText =
+                            value;
+                        await this.plugin.saveSettings();
+                    })
+            );
     }
 }
