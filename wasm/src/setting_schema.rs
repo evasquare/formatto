@@ -28,7 +28,14 @@ pub struct OtherGaps {
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
+pub struct AdditionalSettings {
+    pub add_empty_line: Option<bool>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct MainPluginSettings {
     pub heading_gaps: HeadingGaps,
     pub other_gaps: OtherGaps,
+    pub additional_settings: AdditionalSettings,
 }

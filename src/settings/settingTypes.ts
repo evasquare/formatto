@@ -22,6 +22,7 @@ export interface OtherGaps {
 
 export interface AdditionalSettings {
     notifyText: boolean;
+    addEmptyLine: boolean;
 }
 
 export interface FormattoPluginSettings {

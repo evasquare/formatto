@@ -239,5 +239,22 @@ export class MainPluginSettingTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     })
             );
+        new Setting(containerEl)
+            .setName("Add an empty line at the end of the document")
+            .setDesc(
+                "Leave an empty line at the end of a document"
+            )
+            .addToggle((text) =>
+                text
+                    .setValue(
+                        this.plugin.settings.additionalSettings
+                            .addEmptyLine
+                    )
+                    .onChange(async (value) => {
+                        this.plugin.settings.additionalSettings.addEmptyLine =
+                            value;
+                        await this.plugin.saveSettings();
+                    })
+            );
     }
 }
