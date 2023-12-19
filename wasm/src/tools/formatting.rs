@@ -121,9 +121,9 @@ pub fn get_formatted_string(
     }
 
     if settings.additional_settings.add_empty_line == Some(true) {
-        output.push_str("\n");
+        output.push('\n');
     }
-    
+
     Ok(output)
 }
 
