@@ -2,7 +2,7 @@ mod formatting {
     #[cfg(test)]
     mod get_formatted_string {
         use crate::{
-            setting_schema::{HeadingGaps, MainPluginSettings, OtherGaps},
+            setting_schema::{HeadingGaps, MainPluginSettings, OtherGaps, AdditionalSettings},
             tools::{formatting::get_formatted_string, parsing::get_sections},
         };
 
@@ -20,6 +20,9 @@ mod formatting {
                     before_code_blocks: Some("1".to_string()),
                     before_code_blocks_after_headings: Some("0".to_string()),
                 },
+                additional_settings: AdditionalSettings {
+                    add_empty_line: Some(false),
+                }
             }
         }
 
