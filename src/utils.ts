@@ -1,6 +1,10 @@
-import { Editor, Notice } from "obsidian";
+import { Editor, EditorPosition, Notice } from "obsidian";
 
-import { format_document } from "../wasm/pkg/formatto_wasm";
+import {
+    EditorPosition as WasmEditorPosition,
+    formatDocument,
+    FormattedDocument,
+} from "../wasm/pkg/formatto_wasm";
 import FormattoPlugin from "./main";
 
 export class FormattoUtil {
@@ -14,24 +18,30 @@ export class FormattoUtil {
         const cursorPosition = editor.getCursor();
         const originalDocument = editor.getValue();
 
-        let formattedDocument: string;
+        let formattedDocument: FormattedDocument;
+        const editorPosition: EditorPosition = {
+            line: cursorPosition.line,
+            ch: cursorPosition.ch,
+        };
+
         try {
-            formattedDocument = format_document(
+            formattedDocument = formatDocument(
                 originalDocument,
-                this.plugin.settings
+                this.plugin.settings,
+                new WasmEditorPosition(editorPosition.line, editorPosition.ch)
             );
         } catch (error) {
             new Notice(error);
         }
+        if (!formattedDocument.document) return;
 
-        if (formattedDocument === undefined) return;
+        editor.setValue(formattedDocument.document);
+        editor.setSelection(
+            formattedDocument.editorPosition,
+            formattedDocument.editorPosition
+        );
 
-        editor.setValue(formattedDocument);
-        editor.setSelection(cursorPosition, cursorPosition);
-        
-        const differentNotify = this.plugin.settings.additionalSettings.notifyText;
-
-        if (differentNotify && originalDocument === editor.getValue()) {
+        if (originalDocument === formattedDocument.document) {
             new Notice("Document is already formatted!");
         } else {
             new Notice("Document Formatted!");
