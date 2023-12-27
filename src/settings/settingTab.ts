@@ -221,7 +221,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
 
         // Format Settings
         containerEl.createEl("h2", {
-            text: "Format Settings",
+            text: "Format settings",
         });
         new Setting(containerEl)
             .setName("Newline at the end of a document")
@@ -238,7 +238,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
 
         // Other Settings
         containerEl.createEl("h2", {
-            text: "Other Settings",
+            text: "Other settings",
         });
         new Setting(containerEl)
             .setName("Notify when no change is needed")
