@@ -36,7 +36,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
         });
         new Setting(containerEl)
             .setName("Before top level headings")
-            .setDesc("Decides gaps before highest level of headings.")
+            .setDesc("Decides gaps before top level of headings.")
             .addText((text) =>
                 text
                     .setPlaceholder("3")
@@ -83,7 +83,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName("Before sub headings")
             .setDesc(
-                "Decides gaps before headings that are not in the highest level."
+                "Decides gaps before headings that are not in the top level."
             )
             .addText((text) =>
                 text
@@ -111,7 +111,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
         });
         new Setting(containerEl)
             .setName("After properties")
-            .setDesc("Decides the gap after a YAML properties.")
+            .setDesc("Decides the gap right after the property section.")
             .addText((text) =>
                 text
                     .setPlaceholder("2")
@@ -131,7 +131,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName("Before contents")
             .setDesc(
-                "Decides gaps before contents (ex: Text section right before headings)."
+                "Decides gaps before contents (ex: Text section before headings)."
             )
             .addText((text) =>
                 text
@@ -151,9 +151,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
             );
         new Setting(containerEl)
             .setName("Before contents after code blocks")
-            .setDesc(
-                "Decides gaps before contents that are right after code blocks."
-            )
+            .setDesc("Decides gaps before contents that are after code blocks.")
             .addText((text) =>
                 text
                     .setPlaceholder("1")
