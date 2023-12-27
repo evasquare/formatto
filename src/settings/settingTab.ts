@@ -218,40 +218,38 @@ export class MainPluginSettingTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     })
             );
-        // Additional settings
+
+        // Format Settings
         containerEl.createEl("h2", {
-            text: "Additional settings",
+            text: "Format Settings",
         });
         new Setting(containerEl)
-            .setName("Notify when no changes are needed")
-            .setDesc(
-                "Display a different message when there's nothing to format."
-            )
+            .setName("Newline at the end of a document")
+            .setDesc("Inserts a newline at the end of a document.")
             .addToggle((text) =>
                 text
-                    .setValue(
-                        this.plugin.settings.additionalSettings
-                            .notifyText
-                    )
+                    .setValue(this.plugin.settings.formatSettings.insertNewline)
                     .onChange(async (value) => {
-                        this.plugin.settings.additionalSettings.notifyText =
+                        this.plugin.settings.formatSettings.insertNewline =
                             value;
                         await this.plugin.saveSettings();
                     })
             );
+
+        // Other Settings
+        containerEl.createEl("h2", {
+            text: "Other Settings",
+        });
         new Setting(containerEl)
-            .setName("Add an empty line at the end of the document")
-            .setDesc(
-                "Leave an empty line at the end of a document"
-            )
+            .setName("Notify when no changes are needed")
+            .setDesc("Displays a different message when no changes were made.")
             .addToggle((text) =>
                 text
                     .setValue(
-                        this.plugin.settings.additionalSettings
-                            .addEmptyLine
+                        this.plugin.settings.otherSettings.notifyWhenUnchanged
                     )
                     .onChange(async (value) => {
-                        this.plugin.settings.additionalSettings.addEmptyLine =
+                        this.plugin.settings.otherSettings.notifyWhenUnchanged =
                             value;
                         await this.plugin.saveSettings();
                     })
