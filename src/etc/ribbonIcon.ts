@@ -15,7 +15,7 @@ export class RibbonIcon {
                 this.plugin.app.workspace.getActiveViewOfType(MarkdownView);
 
             if (!editor) {
-                new Notice("Please make sure you're editing a document.");
+                new Notice("No open document is found.");
                 return;
             }
             if (activeView.getMode() !== "source") {
