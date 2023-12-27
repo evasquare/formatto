@@ -120,7 +120,7 @@ pub fn get_formatted_string(
         }
     }
 
-    if settings.other_settings.notify_when_unchanged == Some(true) {
+    if settings.format_settings.insert_newline == Some(true) {
         output.push('\n');
     }
 
