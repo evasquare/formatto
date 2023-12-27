@@ -241,8 +241,8 @@ export class MainPluginSettingTab extends PluginSettingTab {
             text: "Other Settings",
         });
         new Setting(containerEl)
-            .setName("Notify when no changes are needed")
-            .setDesc("Displays a different message when no changes were made.")
+            .setName("Notify when no change is needed")
+            .setDesc("Displays a different message when no change was made.")
             .addToggle((text) =>
                 text
                     .setValue(

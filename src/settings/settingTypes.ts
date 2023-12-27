@@ -26,7 +26,7 @@ export interface FormatSettings {
 }
 
 export interface OtherSettings {
-    /** Displays a different message when no changes were made. */
+    /** Displays a different message when no change was made. */
     notifyWhenUnchanged: boolean;
 }
 
