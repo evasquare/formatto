@@ -20,9 +20,10 @@ export class RibbonIcon {
             }
             if (activeView.getMode() !== "source") {
                 new Notice("You can only format in editing mode.");
-            } else {
-                this.plugin.utils.formatDocument(editor);
+                return;
             }
+
+            this.plugin.utils.formatDocument(editor);
         });
     };
 }
