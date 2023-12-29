@@ -5,15 +5,20 @@ import type FormattoPlugin from "../main";
 
 export class MainPluginSettingTab extends PluginSettingTab {
     private plugin: FormattoPlugin;
-
-    private invalidNumberMessage =
-        "Please enter a valid number.\nIt should be at least 0.";
-    private notWholeNumberMessage =
-        "Please enter a valid number.\nIt should be a whole number.";
+    private noticeMessages = {
+        invalidNumberMessage:
+            "Please enter a valid number.\nIt should be at least 0.",
+        notWholeNumberMessage:
+            "Please enter a valid number.\nIt should be a whole number.",
+    };
 
     constructor(app: App, plugin: FormattoPlugin) {
         super(app, plugin);
         this.plugin = plugin;
+    }
+
+    private checkDecimal(value: string): boolean {
+        return value !== "0" && value !== "1" && parseFloat(value) % 1 !== 0;
     }
 
     display(): void {
@@ -21,17 +26,18 @@ export class MainPluginSettingTab extends PluginSettingTab {
         containerEl.empty();
 
         const debounceMsg = debounce(
-            (text: string, value: string) => {
-                if (
-                    value !== "" &&
-                    (isNaN(parseInt(value)) || parseInt(value) < 0)
-                ) {
-                    new Notice(this.invalidNumberMessage);
-                    return;
-                }
-                if (value !== "" && value != "0" && parseInt(value) % 1 === 0) {
-                    new Notice(this.notWholeNumberMessage);
-                    return;
+            (value: string) => {
+                if (value !== "") {
+                    // Check if the value is a valid number
+                    if (isNaN(parseInt(value)) || parseInt(value) < 0) {
+                        new Notice(this.noticeMessages.invalidNumberMessage);
+                        return;
+                    }
+                    // Check if the value is a whole number
+                    if (this.checkDecimal(value)) {
+                        new Notice(this.noticeMessages.notWholeNumberMessage);
+                        return;
+                    }
                 }
             },
             1000,
@@ -52,7 +58,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                         this.plugin.settings.headingGaps.beforeTopLevelHeadings
                     )
                     .onChange(async (value) => {
-                        debounceMsg(this.invalidNumberMessage, value);
+                        debounceMsg(value);
 
                         this.plugin.settings.headingGaps.beforeTopLevelHeadings =
                             value;
@@ -71,7 +77,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                         this.plugin.settings.headingGaps.beforeFirstSubHeading
                     )
                     .onChange(async (value) => {
-                        debounceMsg(this.invalidNumberMessage, value);
+                        debounceMsg(value);
 
                         this.plugin.settings.headingGaps.beforeFirstSubHeading =
                             value;
@@ -90,7 +96,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                         this.plugin.settings.headingGaps.beforeSubHeadings
                     )
                     .onChange(async (value) => {
-                        debounceMsg(this.invalidNumberMessage, value);
+                        debounceMsg(value);
 
                         this.plugin.settings.headingGaps.beforeSubHeadings =
                             value;
@@ -110,7 +116,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     .setPlaceholder("2")
                     .setValue(this.plugin.settings.otherGaps.afterProperties)
                     .onChange(async (value) => {
-                        debounceMsg(this.invalidNumberMessage, value);
+                        debounceMsg(value);
 
                         this.plugin.settings.otherGaps.afterProperties = value;
                         await this.plugin.saveSettings();
@@ -126,7 +132,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     .setPlaceholder("0")
                     .setValue(this.plugin.settings.otherGaps.beforeContents)
                     .onChange(async (value) => {
-                        debounceMsg(this.invalidNumberMessage, value);
+                        debounceMsg(value);
 
                         this.plugin.settings.otherGaps.beforeContents = value;
                         await this.plugin.saveSettings();
@@ -143,7 +149,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             .beforeContentsAfterCodeBlocks
                     )
                     .onChange(async (value) => {
-                        debounceMsg(this.invalidNumberMessage, value);
+                        debounceMsg(value);
 
                         this.plugin.settings.otherGaps.beforeContentsAfterCodeBlocks =
                             value;
@@ -158,7 +164,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     .setPlaceholder("1")
                     .setValue(this.plugin.settings.otherGaps.beforeCodeBlocks)
                     .onChange(async (value) => {
-                        debounceMsg(this.invalidNumberMessage, value);
+                        debounceMsg(value);
 
                         this.plugin.settings.otherGaps.beforeCodeBlocks = value;
                         await this.plugin.saveSettings();
@@ -177,7 +183,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             .beforeCodeBlocksAfterHeadings
                     )
                     .onChange(async (value) => {
-                        debounceMsg(this.invalidNumberMessage, value);
+                        debounceMsg(value);
 
                         this.plugin.settings.otherGaps.beforeCodeBlocksAfterHeadings =
                             value;
