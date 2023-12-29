@@ -8,8 +8,8 @@ export class MainPluginSettingTab extends PluginSettingTab {
 
     private invalidNumberMessage =
         "Please enter a valid number.\nIt should be at least 0.";
-    private notRoundNumberMessage =
-        "Please enter a valid number.\nIt should be a round number.";
+    private notWholeNumberMessage =
+        "Please enter a valid number.\nIt should be a whole number.";
 
     constructor(app: App, plugin: FormattoPlugin) {
         super(app, plugin);
@@ -29,8 +29,8 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     new Notice(this.invalidNumberMessage);
                     return;
                 }
-                if (value !== "" && parseInt(value) % 1 === 0) {
-                    new Notice(this.notRoundNumberMessage);
+                if (value !== "" && value != "0" && parseInt(value) % 1 === 0) {
+                    new Notice(this.notWholeNumberMessage);
                     return;
                 }
             },
