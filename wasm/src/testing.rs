@@ -3,7 +3,7 @@ mod formatting {
     mod get_formatted_string {
         use crate::{
             setting_schema::{
-                FormatSettings, HeadingGaps, MainPluginSettings, OtherGaps, OtherSettings,
+                FormatOptions, HeadingGaps, MainPluginSettings, OtherGaps, OtherOptions,
             },
             tools::{formatting::get_formatted_string, parsing::get_sections},
         };
@@ -22,10 +22,10 @@ mod formatting {
                     before_code_blocks: Some("1".to_string()),
                     before_code_blocks_after_headings: Some("0".to_string()),
                 },
-                format_settings: FormatSettings {
+                format_options: FormatOptions {
                     insert_newline: Some(false),
                 },
-                other_settings: OtherSettings {
+                other_options: OtherOptions {
                     notify_when_unchanged: Some(false),
                 },
             }

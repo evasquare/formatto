@@ -28,13 +28,15 @@ pub struct OtherGaps {
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct FormatSettings {
+pub struct FormatOptions {
+    /// Inserts a newline at the end of a document.
     pub insert_newline: Option<bool>,
 }
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct OtherSettings {
+pub struct OtherOptions {
+    /// Displays a different message when no change was made.
     pub notify_when_unchanged: Option<bool>,
 }
 
@@ -43,6 +45,6 @@ pub struct OtherSettings {
 pub struct MainPluginSettings {
     pub heading_gaps: HeadingGaps,
     pub other_gaps: OtherGaps,
-    pub format_settings: FormatSettings,
-    pub other_settings: OtherSettings,
+    pub format_options: FormatOptions,
+    pub other_options: OtherOptions,
 }

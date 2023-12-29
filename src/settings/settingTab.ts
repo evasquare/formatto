@@ -110,7 +110,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
         });
         new Setting(containerEl)
             .setName("After properties")
-            .setDesc("Decides the gap right after the property section.")
+            .setDesc("Decides the gap after the property section.")
             .addText((text) =>
                 text
                     .setPlaceholder("2")
@@ -140,7 +140,9 @@ export class MainPluginSettingTab extends PluginSettingTab {
             );
         new Setting(containerEl)
             .setName("Before contents after code blocks")
-            .setDesc("Decides gaps before contents that are after code blocks.")
+            .setDesc(
+                "Decides gaps before 'contents that are after code blocks'."
+            )
             .addText((text) =>
                 text
                     .setPlaceholder("1")
@@ -173,7 +175,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName("Before code blocks after headings")
             .setDesc(
-                "Decides gaps before code blocks that are right after headings."
+                "Decides gaps before 'code blocks that are after headings'."
             )
             .addText((text) =>
                 text
@@ -193,16 +195,16 @@ export class MainPluginSettingTab extends PluginSettingTab {
 
         // Format Settings
         containerEl.createEl("h2", {
-            text: "Format settings",
+            text: "Format options",
         });
         new Setting(containerEl)
             .setName("Newline at the end of a document")
             .setDesc("Inserts a newline at the end of a document.")
             .addToggle((text) =>
                 text
-                    .setValue(this.plugin.settings.formatSettings.insertNewline)
+                    .setValue(this.plugin.settings.formatOptions.insertNewline)
                     .onChange(async (value) => {
-                        this.plugin.settings.formatSettings.insertNewline =
+                        this.plugin.settings.formatOptions.insertNewline =
                             value;
                         await this.plugin.saveSettings();
                     })
@@ -210,7 +212,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
 
         // Other Settings
         containerEl.createEl("h2", {
-            text: "Other settings",
+            text: "Other options",
         });
         new Setting(containerEl)
             .setName("Notify when no change is needed")
@@ -218,10 +220,10 @@ export class MainPluginSettingTab extends PluginSettingTab {
             .addToggle((text) =>
                 text
                     .setValue(
-                        this.plugin.settings.otherSettings.notifyWhenUnchanged
+                        this.plugin.settings.otherOptions.notifyWhenUnchanged
                     )
                     .onChange(async (value) => {
-                        this.plugin.settings.otherSettings.notifyWhenUnchanged =
+                        this.plugin.settings.otherOptions.notifyWhenUnchanged =
                             value;
                         await this.plugin.saveSettings();
                     })

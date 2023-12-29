@@ -30,7 +30,7 @@ export class FormattoUtil {
         editor.setSelection(cursorPosition, cursorPosition);
 
         if (
-            this.plugin.settings.otherSettings.notifyWhenUnchanged &&
+            this.plugin.settings.otherOptions.notifyWhenUnchanged &&
             originalDocument === editor.getValue()
         ) {
             new Notice("Document is already formatted!");
