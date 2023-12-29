@@ -20,15 +20,21 @@ export interface OtherGaps {
     beforeCodeBlocksAfterHeadings: string;
 }
 
-export interface AdditionalSettings {
-    notifyText: boolean;
-    addEmptyLine: boolean;
+export interface FormatSettings {
+    /** Inserts a newline at the end of a document. */
+    insertNewline: boolean;
+}
+
+export interface OtherSettings {
+    /** Displays a different message when no change was made. */
+    notifyWhenUnchanged: boolean;
 }
 
 export interface FormattoPluginSettings {
     headingGaps: Partial<HeadingGaps>;
     otherGaps: Partial<OtherGaps>;
-    additionalSettings: Partial<AdditionalSettings>;
+    formatSettings: Partial<FormatSettings>;
+    otherSettings: Partial<OtherSettings>;
 }
 
 // `Partial<Type>` is a TypeScript utility that returns a type with all properties of Type set to optional.
@@ -49,12 +55,17 @@ export const DEFAULT_OTHER_GAPS: Partial<OtherGaps> = {
     beforeCodeBlocksAfterHeadings: "0",
 };
 
-export const DEFAULT_ADDITIONAL_SETTINGS: Partial<AdditionalSettings> = {
-    notifyText: true,
+export const DEFAULT_FORMAT_SETTINGS: Partial<FormatSettings> = {
+    insertNewline: true,
+};
+
+export const DEFAULT_OTHER_SETTINGS: Partial<OtherSettings> = {
+    notifyWhenUnchanged: true,
 };
 
 export const DEFAULT_SETTINGS: FormattoPluginSettings = {
     headingGaps: DEFAULT_HEADING_GAPS,
     otherGaps: DEFAULT_OTHER_GAPS,
-    additionalSettings: DEFAULT_ADDITIONAL_SETTINGS,
+    formatSettings: DEFAULT_FORMAT_SETTINGS,
+    otherSettings: DEFAULT_OTHER_SETTINGS,
 };

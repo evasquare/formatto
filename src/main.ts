@@ -52,7 +52,9 @@ export default class FormattoPlugin extends Plugin {
         this.eventsMenuCreator.registerEditorMenus();
         this.commandCreator.registerCommands();
 
-        console.log("Plugin Loaded: Formatto");
+        console.log(
+            "Plugin Loaded: Formatto\n(Error details are going to be displayed here.)"
+        );
     }
 
     /** Runs when the plugin is disabled. */

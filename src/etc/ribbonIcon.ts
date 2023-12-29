@@ -16,7 +16,9 @@ export class RibbonIcon {
 
             if (!editor) {
                 new Notice("No open document is found.");
-            } else if (activeView.getMode() !== "source") {
+                return;
+            }
+            if (activeView.getMode() !== "source") {
                 new Notice("You can only format in editing mode.");
             } else {
                 this.plugin.utils.formatDocument(editor);

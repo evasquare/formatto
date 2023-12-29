@@ -36,7 +36,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
         });
         new Setting(containerEl)
             .setName("Before top level headings")
-            .setDesc("Decides gaps before highest level of headings.")
+            .setDesc("Decides gaps before top level of headings.")
             .addText((text) =>
                 text
                     .setPlaceholder("3")
@@ -83,7 +83,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName("Before sub headings")
             .setDesc(
-                "Decides gaps before headings that are not in the highest level."
+                "Decides gaps before headings that are not in the top level."
             )
             .addText((text) =>
                 text
@@ -111,7 +111,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
         });
         new Setting(containerEl)
             .setName("After properties")
-            .setDesc("Decides the gap after a YAML properties.")
+            .setDesc("Decides the gap right after the property section.")
             .addText((text) =>
                 text
                     .setPlaceholder("2")
@@ -131,7 +131,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
         new Setting(containerEl)
             .setName("Before contents")
             .setDesc(
-                "Decides gaps before contents (ex: Text section right before headings)."
+                "Decides gaps before contents (ex: Text section before headings)."
             )
             .addText((text) =>
                 text
@@ -151,9 +151,7 @@ export class MainPluginSettingTab extends PluginSettingTab {
             );
         new Setting(containerEl)
             .setName("Before contents after code blocks")
-            .setDesc(
-                "Decides gaps before contents that are right after code blocks."
-            )
+            .setDesc("Decides gaps before contents that are after code blocks.")
             .addText((text) =>
                 text
                     .setPlaceholder("1")
@@ -218,40 +216,38 @@ export class MainPluginSettingTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     })
             );
-        // Additional settings
+
+        // Format Settings
         containerEl.createEl("h2", {
-            text: "Additional settings",
+            text: "Format settings",
         });
         new Setting(containerEl)
-            .setName("Notify when no changes are needed")
-            .setDesc(
-                "Display a different message when there's nothing to format."
-            )
+            .setName("Newline at the end of a document")
+            .setDesc("Inserts a newline at the end of a document.")
             .addToggle((text) =>
                 text
-                    .setValue(
-                        this.plugin.settings.additionalSettings
-                            .notifyText
-                    )
+                    .setValue(this.plugin.settings.formatSettings.insertNewline)
                     .onChange(async (value) => {
-                        this.plugin.settings.additionalSettings.notifyText =
+                        this.plugin.settings.formatSettings.insertNewline =
                             value;
                         await this.plugin.saveSettings();
                     })
             );
+
+        // Other Settings
+        containerEl.createEl("h2", {
+            text: "Other settings",
+        });
         new Setting(containerEl)
-            .setName("Add an empty line at the end of the document")
-            .setDesc(
-                "Leave an empty line at the end of a document"
-            )
+            .setName("Notify when no change is needed")
+            .setDesc("Displays a different message when no change was made.")
             .addToggle((text) =>
                 text
                     .setValue(
-                        this.plugin.settings.additionalSettings
-                            .addEmptyLine
+                        this.plugin.settings.otherSettings.notifyWhenUnchanged
                     )
                     .onChange(async (value) => {
-                        this.plugin.settings.additionalSettings.addEmptyLine =
+                        this.plugin.settings.otherSettings.notifyWhenUnchanged =
                             value;
                         await this.plugin.saveSettings();
                     })

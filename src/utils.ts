@@ -28,10 +28,11 @@ export class FormattoUtil {
 
         editor.setValue(formattedDocument);
         editor.setSelection(cursorPosition, cursorPosition);
-        
-        const differentNotify = this.plugin.settings.additionalSettings.notifyText;
 
-        if (differentNotify && originalDocument === editor.getValue()) {
+        if (
+            this.plugin.settings.otherSettings.notifyWhenUnchanged &&
+            originalDocument === editor.getValue()
+        ) {
             new Notice("Document is already formatted!");
         } else {
             new Notice("Document Formatted!");
