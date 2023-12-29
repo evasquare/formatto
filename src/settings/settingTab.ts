@@ -8,6 +8,9 @@ export class MainPluginSettingTab extends PluginSettingTab {
     private invalidNumberMessage =
         "Please enter a valid number.\nIt should be at least 0.";
 
+    private notRoundNumberMessage = 
+        "Please enter a valid number.\nIt should be a round number.";
+
     constructor(app: App, plugin: FormattoPlugin) {
         super(app, plugin);
         this.plugin = plugin;
@@ -22,6 +25,12 @@ export class MainPluginSettingTab extends PluginSettingTab {
                 if (
                     value !== "" &&
                     (isNaN(parseInt(value)) || parseInt(value) < 0)
+                ) {
+                    new Notice(text);
+                }
+                if (
+                    value !== "" &&
+                    parseInt(value) % 1 === 0
                 ) {
                     new Notice(text);
                 }
@@ -46,11 +55,17 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
+                            parseInt(value) % 1 === 0
+                        ) {
+                            debounceMsg(this.notRoundNumberMessage, value);
+                        }
+                        if (
+                            value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(this.invalidNumberMessage, value);
                         }
-
+                        
                         this.plugin.settings.headingGaps.beforeTopLevelHeadings =
                             value;
                         await this.plugin.saveSettings();
@@ -70,11 +85,17 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
+                            parseInt(value) % 1 === 0
+                        ) {
+                            debounceMsg(this.notRoundNumberMessage, value);
+                        }
+                        if (
+                            value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(this.invalidNumberMessage, value);
                         }
-
+                        
                         this.plugin.settings.headingGaps.beforeFirstSubHeading =
                             value;
                         await this.plugin.saveSettings();
@@ -94,11 +115,17 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
+                            parseInt(value) % 1 === 0
+                        ) {
+                            debounceMsg(this.notRoundNumberMessage, value);
+                        }
+                        if (
+                            value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(this.invalidNumberMessage, value);
                         }
-
+                        
                         this.plugin.settings.headingGaps.beforeSubHeadings =
                             value;
                         await this.plugin.saveSettings();
@@ -119,12 +146,19 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
+                            parseInt(value) % 1 === 0
+                        ) {
+                            debounceMsg(this.notRoundNumberMessage, value);
+                        }
+                        if (
+                            value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(this.invalidNumberMessage, value);
                         }
-
-                        this.plugin.settings.otherGaps.afterProperties = value;
+                        
+                        this.plugin.settings.otherGaps.afterProperties =
+                            value;
                         await this.plugin.saveSettings();
                     })
             );
@@ -140,12 +174,19 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
+                            parseInt(value) % 1 === 0
+                        ) {
+                            debounceMsg(this.notRoundNumberMessage, value);
+                        }
+                        if (
+                            value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(this.invalidNumberMessage, value);
                         }
-
-                        this.plugin.settings.otherGaps.beforeContents = value;
+                        
+                        this.plugin.settings.otherGaps.beforeContents =
+                            value;
                         await this.plugin.saveSettings();
                     })
             );
@@ -162,11 +203,17 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
+                            parseInt(value) % 1 === 0
+                        ) {
+                            debounceMsg(this.notRoundNumberMessage, value);
+                        }
+                        if (
+                            value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(this.invalidNumberMessage, value);
                         }
-
+                        
                         this.plugin.settings.otherGaps.beforeContentsAfterCodeBlocks =
                             value;
                         await this.plugin.saveSettings();
@@ -182,12 +229,19 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
+                            parseInt(value) % 1 === 0
+                        ) {
+                            debounceMsg(this.notRoundNumberMessage, value);
+                        }
+                        if (
+                            value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(this.invalidNumberMessage, value);
                         }
-
-                        this.plugin.settings.otherGaps.beforeCodeBlocks = value;
+                        
+                        this.plugin.settings.otherGaps.beforeCodeBlocks =
+                            value;
                         await this.plugin.saveSettings();
                     })
             );
@@ -206,11 +260,17 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     .onChange(async (value) => {
                         if (
                             value !== "" &&
+                            parseInt(value) % 1 === 0
+                        ) {
+                            debounceMsg(this.notRoundNumberMessage, value);
+                        }
+                        if (
+                            value !== "" &&
                             (isNaN(parseInt(value)) || parseInt(value) < 0)
                         ) {
                             debounceMsg(this.invalidNumberMessage, value);
                         }
-
+                        
                         this.plugin.settings.otherGaps.beforeCodeBlocksAfterHeadings =
                             value;
                         await this.plugin.saveSettings();
