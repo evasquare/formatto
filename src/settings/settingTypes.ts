@@ -55,17 +55,17 @@ export const DEFAULT_OTHER_GAPS: Partial<OtherGaps> = {
     beforeCodeBlocksAfterHeadings: "0",
 };
 
-export const DEFAULT_FORMAT_SETTINGS: Partial<FormatOptions> = {
+export const DEFAULT_FORMAT_OPTIONS: Partial<FormatOptions> = {
     insertNewline: true,
 };
 
-export const DEFAULT_OTHER_SETTINGS: Partial<OtherOptions> = {
+export const DEFAULT_OTHER_OPTIONS: Partial<OtherOptions> = {
     notifyWhenUnchanged: true,
 };
 
 export const DEFAULT_SETTINGS: FormattoPluginSettings = {
     headingGaps: DEFAULT_HEADING_GAPS,
     otherGaps: DEFAULT_OTHER_GAPS,
-    formatOptions: DEFAULT_FORMAT_SETTINGS,
-    otherOptions: DEFAULT_OTHER_SETTINGS,
+    formatOptions: DEFAULT_FORMAT_OPTIONS,
+    otherOptions: DEFAULT_OTHER_OPTIONS,
 };
