@@ -3,26 +3,26 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HeadingGaps {
-    /// Decides gaps before highest level of headings.
+    /// Decides gaps before top level of headings.
     pub before_top_level_headings: Option<String>,
     /// Decides the child heading gap right before a parent heading.
     pub before_first_sub_heading: Option<String>,
-    /// Decides gaps before headings that are not in the highest level.
+    /// Decides gaps before headings that are not in the top level.
     pub before_sub_headings: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct OtherGaps {
-    /// Decides the gap after a YAML properties.
+    /// Decides the gap after the property section.
     pub after_properties: Option<String>,
-    /// Decides gaps before contents (ex: Text section right before headings).
+    /// Decides gaps before contents (ex: Text section before headings).
     pub before_contents: Option<String>,
-    /// Decides gaps before contents that are right after code blocks.
+    /// Decides gaps before 'contents that are after code blocks'.
     pub before_contents_after_code_blocks: Option<String>,
     /// Decides gaps before code blocks.
     pub before_code_blocks: Option<String>,
-    /// Decides gaps before code blocks that are right after headings.
+    /// Decides gaps before 'code blocks that are after headings'.
     pub before_code_blocks_after_headings: Option<String>,
 }
 
