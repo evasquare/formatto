@@ -5,10 +5,10 @@ import type FormattoPlugin from "../main";
 
 export class MainPluginSettingTab extends PluginSettingTab {
     private plugin: FormattoPlugin;
+
     private invalidNumberMessage =
         "Please enter a valid number.\nIt should be at least 0.";
-
-    private notRoundNumberMessage = 
+    private notRoundNumberMessage =
         "Please enter a valid number.\nIt should be a round number.";
 
     constructor(app: App, plugin: FormattoPlugin) {
@@ -18,21 +18,20 @@ export class MainPluginSettingTab extends PluginSettingTab {
 
     display(): void {
         const { containerEl } = this;
-
         containerEl.empty();
+
         const debounceMsg = debounce(
             (text: string, value: string) => {
                 if (
                     value !== "" &&
                     (isNaN(parseInt(value)) || parseInt(value) < 0)
                 ) {
-                    new Notice(text);
+                    new Notice(this.invalidNumberMessage);
+                    return;
                 }
-                if (
-                    value !== "" &&
-                    parseInt(value) % 1 === 0
-                ) {
-                    new Notice(text);
+                if (value !== "" && parseInt(value) % 1 === 0) {
+                    new Notice(this.notRoundNumberMessage);
+                    return;
                 }
             },
             1000,
@@ -53,19 +52,8 @@ export class MainPluginSettingTab extends PluginSettingTab {
                         this.plugin.settings.headingGaps.beforeTopLevelHeadings
                     )
                     .onChange(async (value) => {
-                        if (
-                            value !== "" &&
-                            parseInt(value) % 1 === 0
-                        ) {
-                            debounceMsg(this.notRoundNumberMessage, value);
-                        }
-                        if (
-                            value !== "" &&
-                            (isNaN(parseInt(value)) || parseInt(value) < 0)
-                        ) {
-                            debounceMsg(this.invalidNumberMessage, value);
-                        }
-                        
+                        debounceMsg(this.invalidNumberMessage, value);
+
                         this.plugin.settings.headingGaps.beforeTopLevelHeadings =
                             value;
                         await this.plugin.saveSettings();
@@ -83,19 +71,8 @@ export class MainPluginSettingTab extends PluginSettingTab {
                         this.plugin.settings.headingGaps.beforeFirstSubHeading
                     )
                     .onChange(async (value) => {
-                        if (
-                            value !== "" &&
-                            parseInt(value) % 1 === 0
-                        ) {
-                            debounceMsg(this.notRoundNumberMessage, value);
-                        }
-                        if (
-                            value !== "" &&
-                            (isNaN(parseInt(value)) || parseInt(value) < 0)
-                        ) {
-                            debounceMsg(this.invalidNumberMessage, value);
-                        }
-                        
+                        debounceMsg(this.invalidNumberMessage, value);
+
                         this.plugin.settings.headingGaps.beforeFirstSubHeading =
                             value;
                         await this.plugin.saveSettings();
@@ -113,19 +90,8 @@ export class MainPluginSettingTab extends PluginSettingTab {
                         this.plugin.settings.headingGaps.beforeSubHeadings
                     )
                     .onChange(async (value) => {
-                        if (
-                            value !== "" &&
-                            parseInt(value) % 1 === 0
-                        ) {
-                            debounceMsg(this.notRoundNumberMessage, value);
-                        }
-                        if (
-                            value !== "" &&
-                            (isNaN(parseInt(value)) || parseInt(value) < 0)
-                        ) {
-                            debounceMsg(this.invalidNumberMessage, value);
-                        }
-                        
+                        debounceMsg(this.invalidNumberMessage, value);
+
                         this.plugin.settings.headingGaps.beforeSubHeadings =
                             value;
                         await this.plugin.saveSettings();
@@ -144,21 +110,9 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     .setPlaceholder("2")
                     .setValue(this.plugin.settings.otherGaps.afterProperties)
                     .onChange(async (value) => {
-                        if (
-                            value !== "" &&
-                            parseInt(value) % 1 === 0
-                        ) {
-                            debounceMsg(this.notRoundNumberMessage, value);
-                        }
-                        if (
-                            value !== "" &&
-                            (isNaN(parseInt(value)) || parseInt(value) < 0)
-                        ) {
-                            debounceMsg(this.invalidNumberMessage, value);
-                        }
-                        
-                        this.plugin.settings.otherGaps.afterProperties =
-                            value;
+                        debounceMsg(this.invalidNumberMessage, value);
+
+                        this.plugin.settings.otherGaps.afterProperties = value;
                         await this.plugin.saveSettings();
                     })
             );
@@ -172,21 +126,9 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     .setPlaceholder("0")
                     .setValue(this.plugin.settings.otherGaps.beforeContents)
                     .onChange(async (value) => {
-                        if (
-                            value !== "" &&
-                            parseInt(value) % 1 === 0
-                        ) {
-                            debounceMsg(this.notRoundNumberMessage, value);
-                        }
-                        if (
-                            value !== "" &&
-                            (isNaN(parseInt(value)) || parseInt(value) < 0)
-                        ) {
-                            debounceMsg(this.invalidNumberMessage, value);
-                        }
-                        
-                        this.plugin.settings.otherGaps.beforeContents =
-                            value;
+                        debounceMsg(this.invalidNumberMessage, value);
+
+                        this.plugin.settings.otherGaps.beforeContents = value;
                         await this.plugin.saveSettings();
                     })
             );
@@ -201,19 +143,8 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             .beforeContentsAfterCodeBlocks
                     )
                     .onChange(async (value) => {
-                        if (
-                            value !== "" &&
-                            parseInt(value) % 1 === 0
-                        ) {
-                            debounceMsg(this.notRoundNumberMessage, value);
-                        }
-                        if (
-                            value !== "" &&
-                            (isNaN(parseInt(value)) || parseInt(value) < 0)
-                        ) {
-                            debounceMsg(this.invalidNumberMessage, value);
-                        }
-                        
+                        debounceMsg(this.invalidNumberMessage, value);
+
                         this.plugin.settings.otherGaps.beforeContentsAfterCodeBlocks =
                             value;
                         await this.plugin.saveSettings();
@@ -227,21 +158,9 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     .setPlaceholder("1")
                     .setValue(this.plugin.settings.otherGaps.beforeCodeBlocks)
                     .onChange(async (value) => {
-                        if (
-                            value !== "" &&
-                            parseInt(value) % 1 === 0
-                        ) {
-                            debounceMsg(this.notRoundNumberMessage, value);
-                        }
-                        if (
-                            value !== "" &&
-                            (isNaN(parseInt(value)) || parseInt(value) < 0)
-                        ) {
-                            debounceMsg(this.invalidNumberMessage, value);
-                        }
-                        
-                        this.plugin.settings.otherGaps.beforeCodeBlocks =
-                            value;
+                        debounceMsg(this.invalidNumberMessage, value);
+
+                        this.plugin.settings.otherGaps.beforeCodeBlocks = value;
                         await this.plugin.saveSettings();
                     })
             );
@@ -258,19 +177,8 @@ export class MainPluginSettingTab extends PluginSettingTab {
                             .beforeCodeBlocksAfterHeadings
                     )
                     .onChange(async (value) => {
-                        if (
-                            value !== "" &&
-                            parseInt(value) % 1 === 0
-                        ) {
-                            debounceMsg(this.notRoundNumberMessage, value);
-                        }
-                        if (
-                            value !== "" &&
-                            (isNaN(parseInt(value)) || parseInt(value) < 0)
-                        ) {
-                            debounceMsg(this.invalidNumberMessage, value);
-                        }
-                        
+                        debounceMsg(this.invalidNumberMessage, value);
+
                         this.plugin.settings.otherGaps.beforeCodeBlocksAfterHeadings =
                             value;
                         await this.plugin.saveSettings();
