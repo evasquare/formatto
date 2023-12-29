@@ -15,15 +15,12 @@ export class RibbonIcon {
                 this.plugin.app.workspace.getActiveViewOfType(MarkdownView);
 
             if (!editor) {
-                new Notice("Please make sure that the editor is open.");
-                return;
-            }
-            if (activeView.getMode() !== "source") {
+                new Notice("No open document is found.");
+            } else if (activeView.getMode() !== "source") {
                 new Notice("You can only format in editing mode.");
-                return;
+            } else {
+                this.plugin.utils.formatDocument(editor);
             }
-
-            this.plugin.utils.formatDocument(editor);
         });
     };
 }
