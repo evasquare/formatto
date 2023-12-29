@@ -16,7 +16,7 @@ export interface OtherGaps {
     beforeContentsAfterCodeBlocks: string;
     /** Decides gaps before code blocks. */
     beforeCodeBlocks: string;
-    /** DDecides gaps before 'code blocks that are after headings'. */
+    /** Decides gaps before 'code blocks that are after headings'. */
     beforeCodeBlocksAfterHeadings: string;
 }
 
