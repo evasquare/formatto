@@ -15,7 +15,6 @@ export class RibbonIcon {
                 this.plugin.app.workspace.getActiveViewOfType(MarkdownView);
 
             if (!editor) {
-<<<<<<< HEAD
                 new Notice("No open document is found.");
                 return;
             }
@@ -23,17 +22,7 @@ export class RibbonIcon {
                 new Notice("You can only format in editing mode.");
             } else {
                 this.plugin.utils.formatDocument(editor);
-=======
-                new Notice("Please make sure that the editor is open.");
-                return;
->>>>>>> parent of 8c194da (simplify code)
             }
-            if (activeView.getMode() !== "source") {
-                new Notice("You can only format in editing mode.");
-                return;
-            }
-
-            this.plugin.utils.formatDocument(editor);
         });
     };
 }
