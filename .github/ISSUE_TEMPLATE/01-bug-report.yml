@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thank you for reporting an issue! It helps us make the plugin better.
+        Thank you for reporting an issue! It helps us improve the plugin.
 
   - type: input
     attributes:
@@ -15,7 +15,7 @@ body:
     attributes:
       label: Issue description
       description: |
-        The more details you provide, it will be easier to fix the issue.
+        The more details you provide, the easier it will be easier to fix the issue.
     validations:
       required: true
 
