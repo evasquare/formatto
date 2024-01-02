@@ -1,0 +1,23 @@
+name: Feature request
+description: Request a new feature
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for requesting a feature! It helps us make the plugin better.
+
+  - type: textarea
+    attributes:
+      label: What is the feature you would like to request?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: What is the problem you are trying to solve with the feature?
+
+  - type: textarea
+    attributes:
+      label: Additional information
+      description: |
+        Is there anything else you would like to add?

@@ -1,0 +1,26 @@
+name: Bug report
+description: Report an issue with the plugin
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting an issue! It helps us make the plugin better.
+
+  - type: input
+    attributes:
+      label: What version of the plugin are you having the issue with?
+      description: You can check the version in the Obsidian plugin option.
+  - type: textarea
+    attributes:
+      label: Issue description
+      description: |
+        The more details you provide, it will be easier to fix the issue.
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Additional information
+      description: |
+        Is there anything else you would like to add?
