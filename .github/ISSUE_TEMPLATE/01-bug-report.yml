@@ -15,7 +15,7 @@ body:
     attributes:
       label: Issue description
       description: |
-        The more details you provide, the easier it will be easier to fix the issue.
+        The more details you provide, it will be easier to fix the issue.
     validations:
       required: true
 
