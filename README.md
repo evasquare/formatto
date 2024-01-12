@@ -1,4 +1,4 @@
-<img src="./images/icon.png" width="64">
+<img src="./images/icon.png" alt="project-icon" width="64">
 
 # Formatto
 Formatto is a simple Rust-powered markdown formatter plugin for [Obsidian](https://obsidian.md). With user-customizable settings, it was designed to be simple, fast, and easy to use.
