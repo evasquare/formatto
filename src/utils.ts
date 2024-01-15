@@ -24,14 +24,15 @@ export class FormattoUtil {
             new Notice(error);
         }
 
-        if (formattedDocument === undefined) return;
+        if (!formattedDocument) return;
 
-        editor.setValue(formattedDocument);
-        editor.setSelection(cursorPosition, cursorPosition);
-
+        if (formattedDocument !== originalDocument) {
+            editor.setValue(formattedDocument);
+            editor.setSelection(cursorPosition, cursorPosition);
+        }
         if (
             this.plugin.settings.otherOptions.notifyWhenUnchanged &&
-            originalDocument === editor.getValue()
+            formattedDocument === originalDocument
         ) {
             new Notice("Document is already formatted!");
         } else {
