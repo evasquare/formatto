@@ -23,13 +23,13 @@ export class FormattoUtil {
         } catch (error) {
             new Notice(error);
         }
-
         if (!formattedDocument) return;
 
         if (formattedDocument !== originalDocument) {
             editor.setValue(formattedDocument);
             editor.setSelection(cursorPosition, cursorPosition);
         }
+
         if (
             this.plugin.settings.otherOptions.notifyWhenUnchanged &&
             formattedDocument === originalDocument
