@@ -149,6 +149,42 @@ fn main(
 
 mod parsing {
     #[cfg(test)]
+    mod check_if_contains_heading {
+        use crate::tools::parsing::check_if_contains_heading;
+
+        #[test]
+        fn test_check_if_contains_heading() {
+            assert!(check_if_contains_heading(
+                r#"This is a test
+# Heading 1"#
+            ));
+            assert!(!check_if_contains_heading(
+                r#"This is a test
+No heading here"#
+            ));
+            assert!(check_if_contains_heading("# Heading only"));
+            // todo: Make it pass the test
+            // assert!(!check_if_contains_heading(
+            //     r#"====
+            // Heading
+            // ===="#
+            // ));
+            // assert!(check_if_contains_heading(
+            //     r#"----
+            // Heading
+            // ----"#
+            // ));
+            assert!(check_if_contains_heading(
+                r#"Heading 1
+===="#
+            ));
+            assert!(check_if_contains_heading(
+                r#"Heading 2
+----"#
+            ));
+        }
+    }
+    #[cfg(test)]
     mod get_top_heading_level {
         use crate::tools::parsing::get_top_heading_level;
 

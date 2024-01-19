@@ -3,6 +3,30 @@ use std::{error::Error, vec};
 use crate::console_error;
 use crate::tools::tokens::{HeadingLevel, MarkdownSection};
 
+pub fn check_if_contains_heading(input: &str) -> bool {
+    let splitted_vec: Vec<&str> = input.split('\n').collect();
+    let mut returning_value = false;
+
+    for (index, line) in splitted_vec.iter().enumerate() {
+        if !line.is_empty() && (line.contains("# ") || line.chars().all(|char| char == '#')) {
+            returning_value = true;
+            break;
+        }
+
+        if line.chars().all(|char| char == '-') {
+            returning_value = true;
+            break;
+        }
+
+        if line.chars().all(|char| char == '=') {
+            returning_value = true;
+            break;
+        }
+    }
+
+    returning_value
+}
+
 pub fn get_sections(input: &str) -> Result<Vec<MarkdownSection>, Box<dyn Error>> {
     if input.is_empty() {
         return Ok(vec![]);
@@ -13,14 +37,13 @@ pub fn get_sections(input: &str) -> Result<Vec<MarkdownSection>, Box<dyn Error>>
     let input_lines_vec = input_lines.clone().collect::<Vec<&str>>();
 
     let mut md_top_heading_level: usize = 0;
-    let mut md_top_heading_literal = String::from("");
+    let mut md_top_heading_hash_literal = String::from("");
 
-    let contains_heading = input.split('\n').any(|line| {
-        !line.is_empty() && (line.contains("# ") || line.chars().all(|item| item == '#'))
-    });
+    let contains_heading = check_if_contains_heading(input);
+
     if contains_heading {
         md_top_heading_level = get_top_heading_level(&input_lines_vec);
-        md_top_heading_literal = "#".repeat(md_top_heading_level);
+        md_top_heading_hash_literal = "#".repeat(md_top_heading_level);
     }
 
     let mut md_properties = String::new();
@@ -110,8 +133,8 @@ pub fn get_sections(input: &str) -> Result<Vec<MarkdownSection>, Box<dyn Error>>
         // * Read headings.
         let only_contains_header_symbols = line.chars().all(|item| item == '#');
         if line.starts_with('#') && (line.contains("# ") || only_contains_header_symbols) {
-            let is_top_heading = line.starts_with(&md_top_heading_literal)
-                && !line.starts_with(format!("{}#", md_top_heading_literal).as_str());
+            let is_top_heading = line.starts_with(&md_top_heading_hash_literal)
+                && !line.starts_with(format!("{}#", md_top_heading_hash_literal).as_str());
 
             if is_top_heading {
                 is_reading_md_content = false;
