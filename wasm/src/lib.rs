@@ -34,7 +34,10 @@ pub fn status() -> bool {
 }
 
 #[wasm_bindgen]
+/// This function is called from the TypeScript side.
 pub fn format_document(input: &str, js_settings: JsValue) -> String {
+    utils::set_panic_hook();
+
     let settings = match read_settings(js_settings) {
         Ok(settings) => settings,
         Err(e) => {

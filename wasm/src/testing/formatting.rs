@@ -2,6 +2,7 @@
 mod get_formatted_string {
     use crate::{
         setting_schema::{FormatOptions, HeadingGaps, MainPluginSettings, OtherGaps, OtherOptions},
+        testing::setup,
         tools::{formatting::get_formatted_string, parsing::get_sections},
     };
 
@@ -30,6 +31,8 @@ mod get_formatted_string {
 
     #[test]
     fn multiple_headings() {
+        setup();
+
         let input = r#"## Heading 2
 ### Heading 3
 #### Heading 4"#;
@@ -46,6 +49,8 @@ mod get_formatted_string {
 
     #[test]
     fn non_headings() {
+        setup();
+
         let input = r#"##Heading 2
 ###Heading 3
 ####Heading 4"#;
@@ -60,6 +65,8 @@ mod get_formatted_string {
 
     #[test]
     fn properties_1() {
+        setup();
+
         let input = r#"---
 aliases:
     - Test
@@ -100,6 +107,8 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 
     #[test]
     fn properties_2() {
+        setup();
+
         let input = r#"---
 aliases:
   - Test
@@ -117,6 +126,8 @@ aliases:
 
     #[test]
     fn code_blocks() {
+        setup();
+
         let input = r#"## Heading 2
 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 

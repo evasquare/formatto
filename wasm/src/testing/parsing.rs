@@ -1,12 +1,17 @@
 #[cfg(test)]
 mod get_sections {
-    use crate::tools::{
-        parsing::get_sections,
-        tokens::{HeadingLevel, MarkdownSection},
+    use crate::{
+        testing::setup,
+        tools::{
+            parsing::get_sections,
+            tokens::{HeadingLevel, MarkdownSection},
+        },
     };
 
     #[test]
     fn invalid_input() {
+        setup();
+
         let input = r#"```
 code
 SPACE```"#;
@@ -16,6 +21,8 @@ SPACE```"#;
 
     #[test]
     fn non_headings() {
+        setup();
+
         let input = r#"##Heading 2
 ###Heading 3
 ####Heading 4"#;
@@ -32,6 +39,8 @@ SPACE```"#;
 
     #[test]
     fn only_headings_1() {
+        setup();
+
         let input = r#"## Heading 2
 ## Heading 2
 ## Heading 2"#;
@@ -47,6 +56,8 @@ SPACE```"#;
 
     #[test]
     fn only_headings_2() {
+        setup();
+
         let input = r#"## Heading 2
 ### Heading 3
 #### Heading 4"#;
@@ -62,6 +73,8 @@ SPACE```"#;
 
     #[test]
     fn only_content() {
+        setup();
+
         let input = r#"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
@@ -78,6 +91,8 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#
 
     #[test]
     fn sub_heading() {
+        setup();
+
         let input = r#"## Heading 2
 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 
@@ -110,6 +125,8 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
 
     #[test]
     fn properties_1() {
+        setup();
+
         let input = r#"---
 aliases:
 - Test
@@ -146,6 +163,8 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 
     #[test]
     fn properties_2() {
+        setup();
+
         let input = r#"---
 aliases:
 - Test
@@ -161,6 +180,8 @@ aliases:
 
     #[test]
     fn random_line_breaks() {
+        setup();
+
         let input = r#"## Heading 2
 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 
@@ -191,6 +212,8 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 
     #[test]
     fn no_subheadings() {
+        setup();
+
         let input = r#"## Heading 2
 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 ## Heading 2"#;
@@ -209,6 +232,8 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 
     #[test]
     fn two_headings_with_each_content() {
+        setup();
+
         let input = r#"## Heading 2
 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 ### Heading 3
@@ -232,8 +257,9 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
 
     #[test]
     fn empty_input() {
-        let input = "";
+        setup();
 
+        let input = "";
         let expected_output = vec![];
 
         assert_eq!(get_sections(input).unwrap(), expected_output);
@@ -241,6 +267,8 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
 
     #[test]
     fn code_block() {
+        setup();
+
         let input = r#"## Heading 2
 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 
@@ -273,6 +301,8 @@ println!(\"Hello World\");
 
     #[test]
     fn headings_without_letters() {
+        setup();
+
         let input = r#"#
 ##
 ##
@@ -305,6 +335,8 @@ println!(\"Hello World\");
 
     #[test]
     fn contents_with_line_breaks() {
+        setup();
+
         let input = r#"## Heading 2
 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 
