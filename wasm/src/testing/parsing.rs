@@ -72,7 +72,7 @@ SPACE```"#;
     }
 
     #[test]
-    fn only_content() {
+    fn only_contents() {
         setup();
 
         let input = r#"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -90,7 +90,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#
     }
 
     #[test]
-    fn sub_heading() {
+    fn sub_headings() {
         setup();
 
         let input = r#"## Heading 2
@@ -211,7 +211,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
     }
 
     #[test]
-    fn no_subheadings() {
+    fn single_level_headings() {
         setup();
 
         let input = r#"## Heading 2
@@ -231,7 +231,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
     }
 
     #[test]
-    fn two_headings_with_each_content() {
+    fn two_different_levels_of_headings_and_contents() {
         setup();
 
         let input = r#"## Heading 2
@@ -300,7 +300,7 @@ println!(\"Hello World\");
     }
 
     #[test]
-    fn headings_without_letters() {
+    fn headings_without_names() {
         setup();
 
         let input = r#"#
@@ -334,7 +334,7 @@ println!(\"Hello World\");
     }
 
     #[test]
-    fn contents_with_line_breaks() {
+    fn contents_with_line_break_syntax() {
         setup();
 
         let input = r#"## Heading 2
@@ -364,5 +364,93 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#
         ];
 
         assert_eq!(get_sections(input).unwrap(), expected_output);
+    }
+}
+
+#[cfg(test)]
+mod get_top_heading_level {
+    use crate::{testing::setup, tools::parsing::get_top_heading_level};
+
+    #[test]
+    fn only_hash_heading() {
+        setup();
+
+        let input: Vec<&str> = r#"## Heading 2
+## Heading 2
+## Heading 2"#
+            .split('\n')
+            .collect();
+
+        let expected_output = 2;
+
+        assert_eq!(get_top_heading_level(&input).unwrap(), expected_output);
+    }
+
+    #[test]
+    fn hash_headings_and_alternative_headings() {
+        setup();
+
+        let input: Vec<&str> = r#"## Heading 2
+## Heading 2
+## Heading 2
+
+Heading1
+====
+
+Heading2
+---
+"#
+        .split('\n')
+        .collect();
+
+        let expected_output = 1;
+
+        assert_eq!(get_top_heading_level(&input).unwrap(), expected_output);
+    }
+
+    #[test]
+    fn invalid_alternative_headings_1() {
+        setup();
+
+        let input: Vec<&str> = r#"## Heading 2
+## Heading 2
+## Heading 2
+
+====
+INVALID
+
+---
+INVALID
+"#
+        .split('\n')
+        .collect();
+
+        let expected_output = 2;
+
+        assert_eq!(get_top_heading_level(&input).unwrap(), expected_output);
+    }
+
+    #[test]
+    fn invalid_alternative_headings_2() {
+        setup();
+
+        let input: Vec<&str> = r#"## Heading 2
+## Heading 2
+## Heading 2
+
+INVALID
+====
+INVALID
+
+INVALID
+---
+INVALID
+"#
+        .split('\n')
+        .collect();
+
+        let expected_output = 2;
+
+        assert_eq!(get_top_heading_level(&input).unwrap(), expected_output);
     }
 }

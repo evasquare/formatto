@@ -224,7 +224,7 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
     let mut top_heading_level: usize = usize::MAX;
     let mut is_reading_code_block = false;
 
-    for line in input_lines {
+    for (index, &line) in input_lines.iter().enumerate() {
         // Skip code blocks.
         if line.starts_with("```") {
             is_reading_code_block = !is_reading_code_block;
@@ -233,6 +233,7 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
             continue;
         }
 
+        // Parse hash headings.
         let valid_hash_heading =
             line.starts_with('#') && (line.contains("# ") || line.chars().all(|char| char == '#'));
 
@@ -240,6 +241,37 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
             let heading_level = line.chars().take_while(|&c| c == '#').count();
             if heading_level < top_heading_level {
                 top_heading_level = heading_level;
+            }
+
+            if heading_level == 1 {
+                break;
+            }
+
+            continue;
+        }
+
+        let previous_line = if index > 0 {
+            input_lines.get(index - 1)
+        } else {
+            None
+        };
+        let next_line = if index < input_lines.len() - 1 {
+            input_lines.get(index + 1)
+        } else {
+            None
+        };
+
+        // Parse alternative headings.
+        if let (Some(&previous_line), Some(&next_line)) = (previous_line, next_line) {
+            if !previous_line.is_empty() && next_line.is_empty() {
+                let valid_alternative_heading_1 = line.chars().all(|char| char == '=');
+                let valid_alternative_heading_2 = line.chars().all(|char| char == '-');
+
+                if valid_alternative_heading_1 && 1 < top_heading_level {
+                    top_heading_level = 1;
+                } else if valid_alternative_heading_2 && 2 < top_heading_level {
+                    top_heading_level = 2;
+                }
             }
         }
     }
