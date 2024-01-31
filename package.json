@@ -11,7 +11,7 @@
         "build:ts": "rollup -c",
         "build:wasm": "cd ./wasm && wasm-pack build --target web --release && cd ../ && npm i",
         "test:ts": "vitest",
-        "test:rust": "nodemon --config ./nodemon-configs/nodemon-test-wasm.json",
+        "test:rust": "nodemon --config ./nodemon-configs/nodemon-test-rust.json",
         "lint:ts": "eslint . --ext .ts --ignore-pattern '**/*.d.ts'"
     },
     "repository": {
