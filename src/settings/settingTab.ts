@@ -228,5 +228,20 @@ export class MainPluginSettingTab extends PluginSettingTab {
                         await this.plugin.saveSettings();
                     })
             );
+        new Setting(containerEl)
+            .setName("Show more detailed error messages")
+            .setDesc("Displays additional information when parsing fails.")
+            .addToggle((text) =>
+                text
+                    .setValue(
+                        this.plugin.settings.otherOptions
+                            .showMoreDetailedErrorMessages
+                    )
+                    .onChange(async (value) => {
+                        this.plugin.settings.otherOptions.showMoreDetailedErrorMessages =
+                            value;
+                        await this.plugin.saveSettings();
+                    })
+            );
     }
 }

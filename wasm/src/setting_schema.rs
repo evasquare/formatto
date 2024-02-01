@@ -38,6 +38,8 @@ pub struct FormatOptions {
 pub struct OtherOptions {
     /// Displays a different message when no change was made.
     pub notify_when_unchanged: Option<bool>,
+    /// Displays additional information when parsing fails.
+    pub show_more_detailed_error_messages: Option<bool>,
 }
 
 #[derive(Debug, Deserialize)]

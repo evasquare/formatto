@@ -1,9 +1,18 @@
 use std::{error::Error, vec};
 
 use crate::console_error;
+use crate::setting_schema::MainPluginSettings;
 use crate::tools::tokens::{HeadingLevel, MarkdownSection};
 
-pub fn get_sections(input: &str) -> Result<Vec<MarkdownSection>, Box<dyn Error>> {
+#[derive(Debug)]
+struct ErrorInformation {
+    reading_section_starting_line: usize,
+}
+
+pub fn get_sections(
+    input: &str,
+    settings: &MainPluginSettings,
+) -> Result<Vec<MarkdownSection>, Box<dyn Error>> {
     if input.is_empty() {
         return Ok(vec![]);
     }
@@ -34,6 +43,10 @@ pub fn get_sections(input: &str) -> Result<Vec<MarkdownSection>, Box<dyn Error>>
     let mut temp_content_section = String::new();
     let mut is_reading_content_section: bool = false;
 
+    let mut error_information = ErrorInformation {
+        reading_section_starting_line: 0,
+    };
+
     for (index, &line) in input_lines.iter().enumerate() {
         // "is_reading_content_section" should be updated in the previous iteration.
         if line.is_empty() && !is_reading_content_section && !is_reading_code_block {
@@ -53,6 +66,7 @@ pub fn get_sections(input: &str) -> Result<Vec<MarkdownSection>, Box<dyn Error>>
             if line == "---" {
                 if is_first_property_line {
                     // Enter a property section.
+                    error_information.reading_section_starting_line = index;
                     temp_properties.push_str(line);
                     is_reading_property_block = true;
                     continue;
@@ -88,6 +102,7 @@ pub fn get_sections(input: &str) -> Result<Vec<MarkdownSection>, Box<dyn Error>>
             if line.starts_with("```") {
                 if !is_reading_code_block {
                     // Enter a code block.
+                    error_information.reading_section_starting_line = index;
                     temp_code_block.push_str(line);
                     is_reading_code_block = true;
                     continue;
@@ -160,6 +175,7 @@ pub fn get_sections(input: &str) -> Result<Vec<MarkdownSection>, Box<dyn Error>>
 
         // * Read contents.
         if is_reading_content_section {
+            error_information.reading_section_starting_line = index;
             append_string_with_line_break(&mut temp_content_section, line);
         }
 
@@ -175,7 +191,17 @@ pub fn get_sections(input: &str) -> Result<Vec<MarkdownSection>, Box<dyn Error>>
 
     // Return an error if the document is invalid.
     if is_reading_code_block || is_reading_property_block {
-        return Err(String::from("Failed to parse the document.").into());
+        let error_message =
+            if let Some(true) = settings.other_options.show_more_detailed_error_messages {
+                format!(
+                    "Failed to parse the document.\n(Starting at: {})",
+                    error_information.reading_section_starting_line
+                )
+            } else {
+                String::from("Failed to parse the document.")
+            };
+
+        return Err(error_message.into());
     }
 
     Ok(sections)

@@ -65,7 +65,7 @@ fn read_settings(settings: JsValue) -> Result<MainPluginSettings, Box<dyn Error>
 }
 
 fn parse_input(input: &str, settings: MainPluginSettings) -> Result<String, Box<dyn Error>> {
-    let sections = tools::parsing::get_sections(input)?;
+    let sections = tools::parsing::get_sections(input, &settings)?;
     let output = tools::formatting::get_formatted_string(sections, &settings)?;
 
     Ok(output)

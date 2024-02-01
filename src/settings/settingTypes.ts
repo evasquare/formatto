@@ -28,6 +28,8 @@ export interface FormatOptions {
 export interface OtherOptions {
     /** Displays a different message when no change was made. */
     notifyWhenUnchanged: boolean;
+    /** Displays additional information when parsing fails. */
+    showMoreDetailedErrorMessages: boolean;
 }
 
 export interface FormattoPluginSettings {
@@ -61,6 +63,7 @@ export const DEFAULT_FORMAT_OPTIONS: Partial<FormatOptions> = {
 
 export const DEFAULT_OTHER_OPTIONS: Partial<OtherOptions> = {
     notifyWhenUnchanged: true,
+    showMoreDetailedErrorMessages: false,
 };
 
 export const DEFAULT_SETTINGS: FormattoPluginSettings = {
