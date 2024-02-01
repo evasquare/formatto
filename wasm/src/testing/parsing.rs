@@ -1,7 +1,7 @@
 #[cfg(test)]
 mod get_sections {
     use crate::{
-        testing::setup,
+        testing::{get_example_settings, setup},
         tools::{
             parsing::get_sections,
             tokens::{HeadingLevel, MarkdownSection},
@@ -15,7 +15,7 @@ mod get_sections {
         let input = r#"```
 code
 SPACE```"#;
-        let sections = get_sections(input);
+        let sections = get_sections(input, &get_example_settings());
         assert!(sections.is_err());
     }
 
@@ -34,7 +34,10 @@ SPACE```"#;
                 .to_string(),
         )];
 
-        assert_eq!(get_sections(input).unwrap(), expected_output);
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
     }
 
     #[test]
@@ -51,7 +54,10 @@ SPACE```"#;
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
         ];
 
-        assert_eq!(get_sections(input).unwrap(), expected_output);
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
     }
 
     #[test]
@@ -68,7 +74,10 @@ SPACE```"#;
             MarkdownSection::Heading(HeadingLevel::FirstSub("#### Heading 4".to_string())),
         ];
 
-        assert_eq!(get_sections(input).unwrap(), expected_output);
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
     }
 
     #[test]
@@ -86,7 +95,10 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#
                 .to_string(),
         )];
 
-        assert_eq!(get_sections(input).unwrap(), expected_output);
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
     }
 
     #[test]
@@ -120,7 +132,10 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
             ),
         ];
 
-        assert_eq!(get_sections(input).unwrap(), expected_output);
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
     }
 
     #[test]
@@ -158,7 +173,10 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
         ];
 
-        assert_eq!(get_sections(input).unwrap(), expected_output);
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
     }
 
     #[test]
@@ -175,7 +193,10 @@ aliases:
             "---\naliases:\n- Test\n---".to_string(),
         )];
 
-        assert_eq!(get_sections(input).unwrap(), expected_output);
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
     }
 
     #[test]
@@ -207,7 +228,10 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
         ];
 
-        assert_eq!(get_sections(input).unwrap(), expected_output);
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
     }
 
     #[test]
@@ -227,7 +251,10 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
         ];
 
-        assert_eq!(get_sections(input).unwrap(), expected_output);
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
     }
 
     #[test]
@@ -252,7 +279,10 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
             ),
         ];
 
-        assert_eq!(get_sections(input).unwrap(), expected_output);
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
     }
 
     #[test]
@@ -262,7 +292,10 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
         let input = "";
         let expected_output = vec![];
 
-        assert_eq!(get_sections(input).unwrap(), expected_output);
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
     }
 
     #[test]
@@ -296,7 +329,10 @@ println!(\"Hello World\");
             ),
         ];
 
-        assert_eq!(get_sections(input).unwrap(), expected_output);
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
     }
 
     #[test]
@@ -330,7 +366,10 @@ println!(\"Hello World\");
             MarkdownSection::Heading(HeadingLevel::Top("#".to_string())),
         ];
 
-        assert_eq!(get_sections(input).unwrap(), expected_output);
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
     }
 
     #[test]
@@ -363,7 +402,10 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#
             ),
         ];
 
-        assert_eq!(get_sections(input).unwrap(), expected_output);
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
     }
 }
 
