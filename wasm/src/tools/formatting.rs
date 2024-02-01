@@ -11,6 +11,7 @@ pub fn get_formatted_string(
 ) -> Result<String, Box<dyn Error>> {
     let mut output = String::new();
 
+    // Check the type of the last parsed section.
     let mut right_after_properties = false;
     let mut right_after_heading = false;
     let mut right_after_code_block = false;
@@ -130,9 +131,9 @@ pub fn get_formatted_string(
 }
 
 /// Insert line breaks before and after an input.
-pub fn insert_line_breaks(input: &str, before: usize, after: usize) -> String {
-    let line_breaks_before = "\n".repeat(before);
-    let line_breaks_after = "\n".repeat(after);
+pub fn insert_line_breaks(input: &str, before_count: usize, after_count: usize) -> String {
+    let line_breaks_before = "\n".repeat(before_count);
+    let line_breaks_after = "\n".repeat(after_count);
 
     format!("{}{}{}", line_breaks_before, input, line_breaks_after)
 }
