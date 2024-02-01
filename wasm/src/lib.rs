@@ -29,11 +29,6 @@ mod macro_rules {
 }
 
 #[wasm_bindgen]
-pub fn status() -> bool {
-    true
-}
-
-#[wasm_bindgen]
 /// This function is called from the TypeScript side.
 pub fn format_document(input: &str, js_settings: JsValue) -> String {
     utils::set_panic_hook();
