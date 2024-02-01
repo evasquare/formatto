@@ -194,7 +194,7 @@ pub fn get_sections(
         let error_message =
             if let Some(true) = settings.other_options.show_more_detailed_error_messages {
                 format!(
-                    "Failed to parse the document.\n(Starting at: {})",
+                    "Failed to parse the document.\n[Starting at: {}]",
                     error_information.reading_section_starting_line
                 )
             } else {
