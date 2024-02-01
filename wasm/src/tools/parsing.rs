@@ -1,6 +1,5 @@
 use std::{error::Error, vec};
 
-use crate::console_error;
 use crate::setting_schema::MainPluginSettings;
 use crate::tools::tokens::{HeadingLevel, MarkdownSection};
 
@@ -207,44 +206,6 @@ pub fn get_sections(
     Ok(sections)
 }
 
-// Functions for parsing hash symbol headings.
-fn check_top_hash_heading(line: &str, top_heading_hash_literal: &str) -> bool {
-    line.starts_with(top_heading_hash_literal)
-        && !line.starts_with(format!("{}#", top_heading_hash_literal).as_str())
-}
-fn check_sub_hash_heading(line: &str, only_contains_header_symbols: bool) -> bool {
-    line.contains("# ") || only_contains_header_symbols
-}
-
-// Functions for reading "content" sections.
-/// Append a line with a line break.
-fn append_string_with_line_break(string: &mut String, line: &str) {
-    // Break lines unless it's the first line.
-    if !string.is_empty() {
-        string.push('\n');
-    }
-    string.push_str(line);
-}
-/// Finish reading the current "content" section and push it to the "sections" vector.
-fn finish_current_content_section(
-    is_reading_content_section: &mut bool,
-    sections: &mut Vec<MarkdownSection>,
-    temp_content_section: &mut String,
-) {
-    *is_reading_content_section = false;
-
-    // Check if "content" is empty.
-    // Because this function is also called with empty values.
-    if temp_content_section.is_empty() {
-        return;
-    }
-
-    sections.push(MarkdownSection::Content(
-        temp_content_section.trim_end().to_string(),
-    ));
-    temp_content_section.clear();
-}
-
 /// Receive lines of a markdown document and return the top heading level.
 pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
     let mut top_heading_level: usize = usize::MAX;
@@ -309,29 +270,40 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
     Some(top_heading_level)
 }
 
-/// Parse a usize value from a &str type argument.
-/// Also return an `Error` to handle exceptions.
-pub fn parse_str_to_usize(input: &Option<String>) -> Result<usize, Box<dyn Error>> {
-    if let Some(input) = input {
-        if input.is_empty() {
-            return Err(String::from(
-                "Failed to read settings. Please make sure there is no option with an empty value.",
-            )
-            .into());
-        }
+// Functions for reading "content" sections.
+/// Finish reading the current "content" section and push it to the "sections" vector.
+fn finish_current_content_section(
+    is_reading_content_section: &mut bool,
+    sections: &mut Vec<MarkdownSection>,
+    temp_content_section: &mut String,
+) {
+    *is_reading_content_section = false;
+
+    // Check if "content" is empty.
+    // Because this function is also called with empty values.
+    if temp_content_section.is_empty() {
+        return;
     }
 
-    match input {
-        Some(input) => match input.parse::<usize>() {
-            Ok(num) => Ok(num),
-            Err(err) => {
-                console_error!("{}", err);
-                Err(String::from(
-                    "Failed to read settings. Some of them are possibly not positive number values.",
-                )
-                .into())
-            }
-        },
-        None => Err(String::from("Failed to access setting properties.").into()),
+    sections.push(MarkdownSection::Content(
+        temp_content_section.trim_end().to_string(),
+    ));
+    temp_content_section.clear();
+}
+/// Append a line with a line break.
+fn append_string_with_line_break(string: &mut String, line: &str) {
+    // Break lines unless it's the first line.
+    if !string.is_empty() {
+        string.push('\n');
     }
+    string.push_str(line);
+}
+
+// Functions for parsing hash symbol headings.
+fn check_top_hash_heading(line: &str, top_heading_hash_literal: &str) -> bool {
+    line.starts_with(top_heading_hash_literal)
+        && !line.starts_with(format!("{}#", top_heading_hash_literal).as_str())
+}
+fn check_sub_hash_heading(line: &str, only_contains_header_symbols: bool) -> bool {
+    line.contains("# ") || only_contains_header_symbols
 }

@@ -1,10 +1,8 @@
 use std::error::Error;
 
+use crate::console_error;
 use crate::setting_schema::MainPluginSettings;
-use crate::tools::{
-    parsing::parse_str_to_usize,
-    tokens::{HeadingLevel, MarkdownSection},
-};
+use crate::tools::tokens::{HeadingLevel, MarkdownSection};
 
 /// Return a String value that is replacing the entire document.
 pub fn get_formatted_string(
@@ -34,9 +32,9 @@ pub fn get_formatted_string(
                             if output.is_empty() {
                                 0
                             } else if right_after_properties {
-                                parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
+                                parse_string_to_usize(&settings.other_gaps.after_properties)? + 1
                             } else {
-                                parse_str_to_usize(
+                                parse_string_to_usize(
                                     &settings.heading_gaps.before_top_level_headings,
                                 )? + 1
                             },
@@ -49,10 +47,11 @@ pub fn get_formatted_string(
                             if output.is_empty() {
                                 0
                             } else if right_after_properties {
-                                parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
+                                parse_string_to_usize(&settings.other_gaps.after_properties)? + 1
                             } else {
-                                parse_str_to_usize(&settings.heading_gaps.before_first_sub_heading)?
-                                    + 1
+                                parse_string_to_usize(
+                                    &settings.heading_gaps.before_first_sub_heading,
+                                )? + 1
                             },
                             0,
                         );
@@ -64,9 +63,10 @@ pub fn get_formatted_string(
                             if output.is_empty() {
                                 0
                             } else if right_after_properties {
-                                parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
+                                parse_string_to_usize(&settings.other_gaps.after_properties)? + 1
                             } else {
-                                parse_str_to_usize(&settings.heading_gaps.before_sub_headings)? + 1
+                                parse_string_to_usize(&settings.heading_gaps.before_sub_headings)?
+                                    + 1
                             },
                             0,
                         ));
@@ -83,12 +83,13 @@ pub fn get_formatted_string(
                     if output.is_empty() {
                         0
                     } else if right_after_properties {
-                        parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
+                        parse_string_to_usize(&settings.other_gaps.after_properties)? + 1
                     } else if right_after_code_block {
-                        parse_str_to_usize(&settings.other_gaps.before_contents_after_code_blocks)?
-                            + 1
+                        parse_string_to_usize(
+                            &settings.other_gaps.before_contents_after_code_blocks,
+                        )? + 1
                     } else {
-                        parse_str_to_usize(&settings.other_gaps.before_contents)? + 1
+                        parse_string_to_usize(&settings.other_gaps.before_contents)? + 1
                     },
                     0,
                 ));
@@ -103,12 +104,13 @@ pub fn get_formatted_string(
                     if output.is_empty() {
                         0
                     } else if right_after_properties {
-                        parse_str_to_usize(&settings.other_gaps.after_properties)? + 1
+                        parse_string_to_usize(&settings.other_gaps.after_properties)? + 1
                     } else if right_after_heading {
-                        parse_str_to_usize(&settings.other_gaps.before_code_blocks_after_headings)?
-                            + 1
+                        parse_string_to_usize(
+                            &settings.other_gaps.before_code_blocks_after_headings,
+                        )? + 1
                     } else {
-                        parse_str_to_usize(&settings.other_gaps.before_code_blocks)? + 1
+                        parse_string_to_usize(&settings.other_gaps.before_code_blocks)? + 1
                     },
                     0,
                 ));
@@ -133,4 +135,31 @@ pub fn insert_line_breaks(input: &str, before: usize, after: usize) -> String {
     let line_breaks_after = "\n".repeat(after);
 
     format!("{}{}{}", line_breaks_before, input, line_breaks_after)
+}
+
+/// Parse a usize value from a &str type argument.
+/// Also return an `Error` to handle exceptions.
+pub fn parse_string_to_usize(input: &Option<String>) -> Result<usize, Box<dyn Error>> {
+    if let Some(input) = input {
+        if input.is_empty() {
+            return Err(String::from(
+                "Failed to read settings. Please make sure there is no option with an empty value.",
+            )
+            .into());
+        }
+    }
+
+    match input {
+        Some(input) => match input.parse::<usize>() {
+            Ok(num) => Ok(num),
+            Err(err) => {
+                console_error!("{}", err);
+                Err(String::from(
+                    "Failed to read settings. Some of them are possibly not positive number values.",
+                )
+                .into())
+            }
+        },
+        None => Err(String::from("Failed to access setting properties.").into()),
+    }
 }
