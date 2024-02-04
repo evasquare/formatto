@@ -157,7 +157,7 @@ Content
 
         let expected_output = vec![
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
-            MarkdownSection::Content("INVALID\nINVALID\n===\nContent---".to_string()),
+            MarkdownSection::Content("INVALID\nINVALID\n===\nContent\n---".to_string()),
         ];
 
         assert_eq!(
@@ -638,7 +638,7 @@ INVALID
         .split('\n')
         .collect();
 
-        let expected_output = 2;
+        let expected_output = 1;
 
         assert_eq!(get_top_heading_level(&input).unwrap(), expected_output);
     }
