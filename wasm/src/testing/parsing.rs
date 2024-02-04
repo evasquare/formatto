@@ -73,6 +73,40 @@ Heading 2
     }
 
     #[test]
+    fn alternative_headings_edge_case_1() {
+        setup();
+
+        let input = r#"## Heading 2
+
+### heading 3
+```ts
+console.log("Hello World");
+```
+
+
+
+Content
+===
+Content
+--
+
+## Heading 2
+"#;
+
+        let expected_output = vec![
+            MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
+            MarkdownSection::Heading(HeadingLevel::Top("### Heading 3".to_string())),
+            MarkdownSection::Code("```ts\n\nconsole.log(\"Hello World\");\n\n```".to_string()),
+            MarkdownSection::Content("\n===\nContent\n--".to_string()),
+            MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
+        ];
+
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
+    }
+    #[test]
     fn non_headings() {
         setup();
 
