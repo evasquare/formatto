@@ -70,11 +70,8 @@ pub fn get_sections(
         } else {
             None
         };
-        let alternative_heading_level: Option<usize> = get_alternative_heading_level(
-            [previous_first_line, previous_second_line],
-            next_line,
-            line,
-        );
+        let alternative_heading_level: Option<usize> =
+            get_alternative_heading_level(&input_lines, index);
 
         // * Read Properties.
         if sections.is_empty() && (line == "---" || is_reading_property_block) {
@@ -201,6 +198,7 @@ pub fn get_sections(
         }
 
         // * Read alternative headings.
+        println!("{}: {:#?}", line, alternative_heading_level);
         if let Some(alternative_heading_level) = alternative_heading_level {
             if is_reading_code_block || is_reading_property_block {
                 continue;
@@ -210,18 +208,10 @@ pub fn get_sections(
             temp_content_section.clear();
 
             if let Some(document_top_heading_level) = document_top_heading_level {
-                let is_top_heading = check_alternative_top_heading(
-                    [previous_first_line, previous_second_line],
-                    next_line,
-                    line,
-                    document_top_heading_level,
-                );
-                let is_sub_heading = check_alternative_sub_heading(
-                    [previous_first_line, previous_second_line],
-                    next_line,
-                    line,
-                    document_top_heading_level,
-                );
+                let is_top_heading =
+                    check_alternative_top_heading(&input_lines, index, document_top_heading_level);
+                let is_sub_heading =
+                    check_alternative_sub_heading(&input_lines, index, document_top_heading_level);
 
                 if let Some(previous_first_line) = previous_first_line {
                     if is_top_heading {
@@ -315,8 +305,7 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
         }
 
         // Parse hash headings.
-        let valid_hash_heading =
-            line.starts_with('#') && (line.contains("# ") || line.chars().all(|char| char == '#'));
+        let valid_hash_heading = check_hash_heading_syntax(input_lines[index]);
 
         if valid_hash_heading {
             let heading_level = line.chars().take_while(|&c| c == '#').count();
@@ -327,34 +316,13 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
             if heading_level == 1 {
                 break;
             }
-
-            continue;
         }
 
-        let previous_first_line: Option<&str> = if index > 0 {
-            input_lines.get(index - 1).copied()
-        } else {
-            None
-        };
-        let previous_second_line: Option<&str> = if index > 1 {
-            input_lines.get(index - 2).copied()
-        } else {
-            None
-        };
-        let next_line: Option<&str> = if index < input_lines.len() - 1 {
-            input_lines.get(index + 1).copied()
-        } else {
-            None
-        };
-
         // Parse alternative headings.
-        let alternative_heading_level_option = get_alternative_heading_level(
-            [previous_first_line, previous_second_line],
-            next_line,
-            line,
-        );
+        let alternative_heading_level: Option<usize> =
+            get_alternative_heading_level(input_lines, index);
 
-        if let Some(alternative_heading_level) = alternative_heading_level_option {
+        if let Some(alternative_heading_level) = alternative_heading_level {
             if alternative_heading_level == 1 && 1 < top_heading_level {
                 top_heading_level = 1;
             } else if alternative_heading_level == 2 && 2 < top_heading_level {
@@ -370,6 +338,10 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
     Some(top_heading_level)
 }
 
+fn check_hash_heading_syntax(line: &str) -> bool {
+    line.starts_with('#') && (line.contains("# ") || line.chars().all(|char| char == '#'))
+}
+
 fn check_alternative_heading_level(line: &str) -> Option<usize> {
     let valid_alternative_heading_1 = line.chars().all(|char| char == '=');
     let valid_alternative_heading_2 = line.chars().all(|char| char == '-');
@@ -382,45 +354,71 @@ fn check_alternative_heading_level(line: &str) -> Option<usize> {
         None
     }
 }
-fn get_alternative_heading_level(
-    previous_lines: [Option<&str>; 2],
-    next_line: Option<&str>,
-    line: &str,
-) -> Option<usize> {
-    if line.is_empty() {
+fn get_alternative_heading_level(input_lines: &[&str], reading_index: usize) -> Option<usize> {
+    if reading_index > input_lines.len() - 1 {
+        return None;
+    }
+    if input_lines[reading_index].is_empty() {
         return None;
     }
 
-    match (previous_lines[0], previous_lines[1], next_line) {
-        (Some(previous_first_line), Some(previous_second_line), Some(next_line)) => {
-            let valid_alternative_heading = previous_second_line.is_empty()
-                && !previous_first_line.is_empty()
-                && next_line.is_empty();
+    let previous_lines = {
+        let first_line: Option<&str> = if reading_index > 0 {
+            input_lines.get(reading_index - 1).copied()
+        } else {
+            None
+        };
+        let second_line: Option<&str> = if reading_index > 1 {
+            input_lines.get(reading_index - 2).copied()
+        } else {
+            None
+        };
+        let third_line: Option<&str> = if reading_index > 2 {
+            input_lines.get(reading_index - 3).copied()
+        } else {
+            None
+        };
+
+        (first_line, second_line, third_line)
+    };
+
+    let next_line: Option<&str> = if reading_index < input_lines.len() - 2 {
+        input_lines.get(reading_index + 1).copied()
+    } else {
+        None
+    };
+
+    match (previous_lines.0, previous_lines.1, next_line) {
+        (Some(previous_first_line), Some(previous_second_line), Some(_)) => {
+            let valid_alternative_heading = (previous_second_line.is_empty()
+                || check_hash_heading_syntax(previous_second_line))
+                && !previous_first_line.is_empty();
 
             if !valid_alternative_heading {
                 return None;
             }
 
-            check_alternative_heading_level(line)
+            check_alternative_heading_level(input_lines[reading_index])
         }
-        (Some(previous_first_line), None, Some(next_line)) => {
-            let valid_alternative_heading = !previous_first_line.is_empty() && next_line.is_empty();
+        (Some(previous_first_line), None, Some(_)) => {
+            let valid_alternative_heading = !previous_first_line.is_empty();
 
             if !valid_alternative_heading {
                 return None;
             }
 
-            check_alternative_heading_level(line)
+            check_alternative_heading_level(input_lines[reading_index])
         }
         (Some(previous_first_line), Some(previous_second_line), None) => {
-            let valid_alternative_heading =
-                previous_second_line.is_empty() && !previous_first_line.is_empty();
+            let valid_alternative_heading = (previous_second_line.is_empty()
+                || check_hash_heading_syntax(previous_second_line))
+                && !previous_first_line.is_empty();
 
             if !valid_alternative_heading {
                 return None;
             }
 
-            check_alternative_heading_level(line)
+            check_alternative_heading_level(input_lines[reading_index])
         }
         (Some(previous_first_line), None, None) => {
             let valid_alternative_heading = !previous_first_line.is_empty();
@@ -428,7 +426,7 @@ fn get_alternative_heading_level(
                 return None;
             }
 
-            check_alternative_heading_level(line)
+            check_alternative_heading_level(input_lines[reading_index])
         }
         _ => None,
     }
@@ -465,13 +463,11 @@ fn append_string_with_line_break(string: &mut String, line: &str) {
 
 // Functions for parsing heading sections.
 fn check_alternative_sub_heading(
-    previous_lines: [Option<&str>; 2],
-    next_line: Option<&str>,
-    line: &str,
+    lines: &[&str],
+    reading_index: usize,
     top_heading_level: usize,
 ) -> bool {
-    let heading_level: Option<usize> =
-        get_alternative_heading_level(previous_lines, next_line, line);
+    let heading_level: Option<usize> = get_alternative_heading_level(lines, reading_index);
 
     if let Some(heading_level) = heading_level {
         heading_level > top_heading_level
@@ -480,13 +476,11 @@ fn check_alternative_sub_heading(
     }
 }
 fn check_alternative_top_heading(
-    previous_lines: [Option<&str>; 2],
-    next_line: Option<&str>,
-    line: &str,
+    lines: &[&str],
+    reading_index: usize,
     top_heading_level: usize,
 ) -> bool {
-    let heading_level: Option<usize> =
-        get_alternative_heading_level(previous_lines, next_line, line);
+    let heading_level: Option<usize> = get_alternative_heading_level(lines, reading_index);
 
     if let Some(heading_level) = heading_level {
         heading_level == top_heading_level
