@@ -200,7 +200,6 @@ pub fn get_sections(
             }
         }
 
-        println!("{} / {:#?}", index, alternative_heading_level);
         // * Read alternative headings.
         if let Some(alternative_heading_level) = alternative_heading_level {
             if is_reading_code_block || is_reading_property_block {
@@ -217,7 +216,6 @@ pub fn get_sections(
                     line,
                     document_top_heading_level,
                 );
-
                 let is_sub_heading = check_alternative_sub_heading(
                     [previous_first_line, previous_second_line],
                     next_line,
@@ -238,6 +236,7 @@ pub fn get_sections(
                         }
 
                         sections.push(MarkdownSection::Heading(HeadingLevel::Top(pushing_value)));
+
                         current_heading_level = document_top_heading_level;
                         continue;
                     } else if is_sub_heading {
@@ -371,6 +370,18 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
     Some(top_heading_level)
 }
 
+fn check_alternative_heading_level(line: &str) -> Option<usize> {
+    let valid_alternative_heading_1 = line.chars().all(|char| char == '=');
+    let valid_alternative_heading_2 = line.chars().all(|char| char == '-');
+
+    if valid_alternative_heading_1 {
+        Some(1)
+    } else if valid_alternative_heading_2 {
+        Some(2)
+    } else {
+        None
+    }
+}
 fn get_alternative_heading_level(
     previous_lines: [Option<&str>; 2],
     next_line: Option<&str>,
@@ -386,16 +397,7 @@ fn get_alternative_heading_level(
                 return None;
             }
 
-            let valid_alternative_heading_1 = line.chars().all(|char| char == '=');
-            let valid_alternative_heading_2 = line.chars().all(|char| char == '-');
-
-            if valid_alternative_heading_1 {
-                Some(1)
-            } else if valid_alternative_heading_2 {
-                Some(2)
-            } else {
-                None
-            }
+            check_alternative_heading_level(line)
         }
         (Some(previous_first_line), None, Some(next_line)) => {
             let valid_alternative_heading = !previous_first_line.is_empty() && next_line.is_empty();
@@ -404,16 +406,25 @@ fn get_alternative_heading_level(
                 return None;
             }
 
-            let valid_alternative_heading_1 = line.chars().all(|char| char == '=');
-            let valid_alternative_heading_2 = line.chars().all(|char| char == '-');
+            check_alternative_heading_level(line)
+        }
+        (Some(previous_first_line), Some(previous_second_line), None) => {
+            let valid_alternative_heading =
+                previous_second_line.is_empty() && !previous_first_line.is_empty();
 
-            if valid_alternative_heading_1 {
-                Some(1)
-            } else if valid_alternative_heading_2 {
-                Some(2)
-            } else {
-                None
+            if !valid_alternative_heading {
+                return None;
             }
+
+            check_alternative_heading_level(line)
+        }
+        (Some(previous_first_line), None, None) => {
+            let valid_alternative_heading = !previous_first_line.is_empty();
+            if !valid_alternative_heading {
+                return None;
+            }
+
+            check_alternative_heading_level(line)
         }
         (None, None, Some(next_line)) => {
             let valid_alternative_heading = next_line.is_empty();
@@ -422,16 +433,7 @@ fn get_alternative_heading_level(
                 return None;
             }
 
-            let valid_alternative_heading_1 = line.chars().all(|char| char == '=');
-            let valid_alternative_heading_2 = line.chars().all(|char| char == '-');
-
-            if valid_alternative_heading_1 {
-                Some(1)
-            } else if valid_alternative_heading_2 {
-                Some(2)
-            } else {
-                None
-            }
+            check_alternative_heading_level(line)
         }
         _ => None,
     }
