@@ -430,15 +430,6 @@ fn get_alternative_heading_level(
 
             check_alternative_heading_level(line)
         }
-        // // (None, None, Some(next_line)) => {
-        // //     let valid_alternative_heading = next_line.is_empty();
-
-        // //     if !valid_alternative_heading {
-        // //         return None;
-        // //     }
-
-        // //     check_alternative_heading_level(line)
-        // // }
         _ => None,
     }
 }
