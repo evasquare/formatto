@@ -558,7 +558,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#
 
 #[cfg(test)]
 mod get_top_heading_level {
-    use crate::{testing::setup, tools::parsing::get_top_heading_level};
+    use crate::{testing::setup, tools::parsing::headings::get_top_heading_level};
 
     #[test]
     fn only_hash_heading() {

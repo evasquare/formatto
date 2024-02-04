@@ -12,6 +12,16 @@ pub fn get_sections(
     input: &str,
     settings: &MainPluginSettings,
 ) -> Result<Vec<MarkdownSection>, Box<dyn Error>> {
+    use crate::tools::parsing::contents::{
+        append_string_with_line_break, finish_current_content_section,
+    };
+    use crate::tools::parsing::headings::{
+        alternative_headings::check_alternative_sub_heading,
+        alternative_headings::{check_alternative_top_heading, get_alternative_heading_level},
+        get_top_heading_level,
+        hash_headings::{check_sub_hash_heading, check_top_hash_heading},
+    };
+
     if input.is_empty() {
         return Ok(vec![]);
     }
@@ -198,7 +208,6 @@ pub fn get_sections(
         }
 
         // * Read alternative headings.
-        println!("{}: {:#?}", line, alternative_heading_level);
         if let Some(alternative_heading_level) = alternative_heading_level {
             if is_reading_code_block || is_reading_property_block {
                 continue;
@@ -290,208 +299,38 @@ pub fn get_sections(
     Ok(sections)
 }
 
-/// Receive lines of a markdown document and return the top heading level.
-pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
-    let mut top_heading_level: usize = usize::MAX;
-    let mut is_reading_code_block = false;
+/// Module for parsing heading sections.
+mod contents {
+    use crate::tools::tokens::MarkdownSection;
 
-    for (index, &line) in input_lines.iter().enumerate() {
-        // Skip code blocks.
-        if line.starts_with("```") {
-            is_reading_code_block = !is_reading_code_block;
-        }
-        if is_reading_code_block {
-            continue;
-        }
+    /// Finish reading the current "content" section and push it to the "sections" vector.
+    pub fn finish_current_content_section(
+        is_reading_content_section: &mut bool,
+        sections: &mut Vec<MarkdownSection>,
+        temp_content_section: &mut String,
+    ) {
+        *is_reading_content_section = false;
 
-        // Parse hash headings.
-        let valid_hash_heading = check_hash_heading_syntax(input_lines[index]);
-
-        if valid_hash_heading {
-            let heading_level = line.chars().take_while(|&c| c == '#').count();
-            if heading_level < top_heading_level {
-                top_heading_level = heading_level;
-            }
-
-            if heading_level == 1 {
-                break;
-            }
+        // Check if "content" is empty.
+        // Because this function is also called with empty values.
+        if temp_content_section.is_empty() {
+            return;
         }
 
-        // Parse alternative headings.
-        let alternative_heading_level: Option<usize> =
-            get_alternative_heading_level(input_lines, index);
+        sections.push(MarkdownSection::Content(
+            temp_content_section.trim_end().to_string(),
+        ));
+        temp_content_section.clear();
+    }
 
-        if let Some(alternative_heading_level) = alternative_heading_level {
-            if alternative_heading_level == 1 && 1 < top_heading_level {
-                top_heading_level = 1;
-            } else if alternative_heading_level == 2 && 2 < top_heading_level {
-                top_heading_level = 2;
-            }
+    /// Append a line with a line break.
+    pub fn append_string_with_line_break(string: &mut String, line: &str) {
+        // Break lines unless it's the first line.
+        if !string.is_empty() {
+            string.push('\n');
         }
-    }
-
-    if top_heading_level == usize::MAX {
-        return None;
-    }
-
-    Some(top_heading_level)
-}
-
-fn check_hash_heading_syntax(line: &str) -> bool {
-    line.starts_with('#') && (line.contains("# ") || line.chars().all(|char| char == '#'))
-}
-
-fn check_alternative_heading_level(line: &str) -> Option<usize> {
-    let valid_alternative_heading_1 = line.chars().all(|char| char == '=');
-    let valid_alternative_heading_2 = line.chars().all(|char| char == '-');
-
-    if valid_alternative_heading_1 {
-        Some(1)
-    } else if valid_alternative_heading_2 {
-        Some(2)
-    } else {
-        None
-    }
-}
-fn get_alternative_heading_level(input_lines: &[&str], reading_index: usize) -> Option<usize> {
-    if reading_index > input_lines.len() - 1 {
-        return None;
-    }
-    if input_lines[reading_index].is_empty() {
-        return None;
-    }
-
-    let previous_lines = {
-        let first_line: Option<&str> = if reading_index > 0 {
-            input_lines.get(reading_index - 1).copied()
-        } else {
-            None
-        };
-        let second_line: Option<&str> = if reading_index > 1 {
-            input_lines.get(reading_index - 2).copied()
-        } else {
-            None
-        };
-        let third_line: Option<&str> = if reading_index > 2 {
-            input_lines.get(reading_index - 3).copied()
-        } else {
-            None
-        };
-
-        (first_line, second_line, third_line)
-    };
-
-    let next_line: Option<&str> = if reading_index < input_lines.len() - 2 {
-        input_lines.get(reading_index + 1).copied()
-    } else {
-        None
-    };
-
-    match (previous_lines.0, previous_lines.1, next_line) {
-        (Some(previous_first_line), Some(previous_second_line), Some(_)) => {
-            let valid_alternative_heading = (previous_second_line.is_empty()
-                || check_hash_heading_syntax(previous_second_line))
-                && !previous_first_line.is_empty();
-
-            if !valid_alternative_heading {
-                return None;
-            }
-
-            check_alternative_heading_level(input_lines[reading_index])
-        }
-        (Some(previous_first_line), None, Some(_)) => {
-            let valid_alternative_heading = !previous_first_line.is_empty();
-
-            if !valid_alternative_heading {
-                return None;
-            }
-
-            check_alternative_heading_level(input_lines[reading_index])
-        }
-        (Some(previous_first_line), Some(previous_second_line), None) => {
-            let valid_alternative_heading = (previous_second_line.is_empty()
-                || check_hash_heading_syntax(previous_second_line))
-                && !previous_first_line.is_empty();
-
-            if !valid_alternative_heading {
-                return None;
-            }
-
-            check_alternative_heading_level(input_lines[reading_index])
-        }
-        (Some(previous_first_line), None, None) => {
-            let valid_alternative_heading = !previous_first_line.is_empty();
-            if !valid_alternative_heading {
-                return None;
-            }
-
-            check_alternative_heading_level(input_lines[reading_index])
-        }
-        _ => None,
+        string.push_str(line);
     }
 }
 
-// Functions for reading "content" sections.
-/// Finish reading the current "content" section and push it to the "sections" vector.
-fn finish_current_content_section(
-    is_reading_content_section: &mut bool,
-    sections: &mut Vec<MarkdownSection>,
-    temp_content_section: &mut String,
-) {
-    *is_reading_content_section = false;
-
-    // Check if "content" is empty.
-    // Because this function is also called with empty values.
-    if temp_content_section.is_empty() {
-        return;
-    }
-
-    sections.push(MarkdownSection::Content(
-        temp_content_section.trim_end().to_string(),
-    ));
-    temp_content_section.clear();
-}
-/// Append a line with a line break.
-fn append_string_with_line_break(string: &mut String, line: &str) {
-    // Break lines unless it's the first line.
-    if !string.is_empty() {
-        string.push('\n');
-    }
-    string.push_str(line);
-}
-
-// Functions for parsing heading sections.
-fn check_alternative_sub_heading(
-    lines: &[&str],
-    reading_index: usize,
-    top_heading_level: usize,
-) -> bool {
-    let heading_level: Option<usize> = get_alternative_heading_level(lines, reading_index);
-
-    if let Some(heading_level) = heading_level {
-        heading_level > top_heading_level
-    } else {
-        false
-    }
-}
-fn check_alternative_top_heading(
-    lines: &[&str],
-    reading_index: usize,
-    top_heading_level: usize,
-) -> bool {
-    let heading_level: Option<usize> = get_alternative_heading_level(lines, reading_index);
-
-    if let Some(heading_level) = heading_level {
-        heading_level == top_heading_level
-    } else {
-        false
-    }
-}
-fn check_top_hash_heading(line: &str, top_heading_hash_literal: &str) -> bool {
-    line.starts_with(top_heading_hash_literal)
-        && !line.starts_with(format!("{}#", top_heading_hash_literal).as_str())
-}
-fn check_sub_hash_heading(line: &str, only_contains_header_symbols: bool) -> bool {
-    line.contains("# ") || only_contains_header_symbols
-}
+pub mod headings;
