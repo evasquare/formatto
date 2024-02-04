@@ -20,6 +20,59 @@ SPACE```"#;
     }
 
     #[test]
+    fn alternative_headings_1() {
+        setup();
+
+        let input = r#"Heading 1
+====
+
+### Heading 3
+#### Heading 4"#;
+
+        let expected_output = vec![
+            MarkdownSection::Heading(HeadingLevel::Top("Heading 1\n====".to_string())),
+            MarkdownSection::Heading(HeadingLevel::FirstSub("### Heading 3".to_string())),
+            MarkdownSection::Heading(HeadingLevel::FirstSub("#### Heading 4".to_string())),
+        ];
+
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
+    }
+
+    #[test]
+    fn alternative_headings_2() {
+        setup();
+
+        let input = r#"Heading 1
+====
+
+Heading 2
+-------
+
+### Heading 3
+#### Heading 4
+# Heading 1
+## Heading 2
+"#;
+
+        let expected_output = vec![
+            MarkdownSection::Heading(HeadingLevel::Top("Heading 1\n====".to_string())),
+            MarkdownSection::Heading(HeadingLevel::FirstSub("Heading 2\n-------".to_string())),
+            MarkdownSection::Heading(HeadingLevel::FirstSub("### Heading 3".to_string())),
+            MarkdownSection::Heading(HeadingLevel::FirstSub("#### Heading 4".to_string())),
+            MarkdownSection::Heading(HeadingLevel::Top("# Heading 1".to_string())),
+            MarkdownSection::Heading(HeadingLevel::FirstSub("## Heading 2".to_string())),
+        ];
+
+        assert_eq!(
+            get_sections(input, &get_example_settings()).unwrap(),
+            expected_output
+        );
+    }
+
+    #[test]
     fn non_headings() {
         setup();
 

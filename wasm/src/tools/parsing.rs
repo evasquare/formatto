@@ -21,9 +21,9 @@ pub fn get_sections(
 
     // Get the top heading level and its hash literal.
     let mut top_heading_hash_literal = String::from("");
-    let top_heading_level: Option<usize> = get_top_heading_level(&input_lines);
-    if let Some(top_heading_level) = top_heading_level {
-        top_heading_hash_literal = "#".repeat(top_heading_level);
+    let document_top_heading_level_option: Option<usize> = get_top_heading_level(&input_lines);
+    if let Some(document_top_heading_level) = document_top_heading_level_option {
+        top_heading_hash_literal = "#".repeat(document_top_heading_level);
     }
 
     let mut current_heading_level = 0;
@@ -127,10 +127,10 @@ pub fn get_sections(
             }
         }
 
-        // * Read headings.
+        // * Read hash headings.
         let only_contains_header_symbols = line.chars().all(|item| item == '#');
         if line.starts_with('#') && (line.contains("# ") || only_contains_header_symbols) {
-            if let Some(top_heading_level) = top_heading_level {
+            if let Some(document_top_heading_level) = document_top_heading_level_option {
                 let is_top_heading = check_top_hash_heading(line, &top_heading_hash_literal);
 
                 if is_top_heading {
@@ -144,7 +144,7 @@ pub fn get_sections(
                         line.to_string(),
                     )));
 
-                    current_heading_level = top_heading_level;
+                    current_heading_level = document_top_heading_level;
                 } else {
                     let is_sub_heading = check_sub_hash_heading(line, only_contains_header_symbols);
                     let heading_level = line.chars().take_while(|&c| c == '#').count();
@@ -167,6 +167,90 @@ pub fn get_sections(
                         }
 
                         current_heading_level = heading_level;
+                    }
+                }
+            }
+        }
+
+        // * Read alternative headings.
+        if !(is_reading_code_block || is_reading_property_block) {
+            let previous_line_option = if index > 0 {
+                input_lines.get(index - 1).copied()
+            } else {
+                None
+            };
+            let next_line_option = if index < input_lines.len() - 1 {
+                input_lines.get(index + 1).copied()
+            } else {
+                None
+            };
+
+            let alternative_heading_level =
+                get_alternative_heading_level(previous_line_option, next_line_option, line);
+
+            if alternative_heading_level != usize::MAX {
+                finish_current_content_section(
+                    &mut is_reading_content_section,
+                    &mut sections,
+                    &mut temp_content_section,
+                );
+
+                if let (Some(document_top_heading_level), Some(previous_line)) =
+                    (document_top_heading_level_option, previous_line_option)
+                {
+                    let is_top_heading = check_alternative_top_heading(
+                        previous_line_option,
+                        next_line_option,
+                        line,
+                        document_top_heading_level,
+                    );
+
+                    if is_top_heading {
+                        let mut pushing_value = previous_line.to_string();
+                        pushing_value.push('\n');
+                        pushing_value.push_str(line);
+
+                        if sections.last()
+                            == Some(&MarkdownSection::Content(previous_line.to_string()))
+                        {
+                            sections.pop();
+                        }
+
+                        if !pushing_value.is_empty() {
+                            sections
+                                .push(MarkdownSection::Heading(HeadingLevel::Top(pushing_value)));
+                        }
+                    } else {
+                        let is_sub_heading = check_alternative_sub_heading(
+                            previous_line_option,
+                            next_line_option,
+                            line,
+                            document_top_heading_level,
+                        );
+
+                        if is_sub_heading {
+                            let mut pushing_value = previous_line.to_string();
+                            pushing_value.push('\n');
+                            pushing_value.push_str(line);
+
+                            if sections.last()
+                                == Some(&MarkdownSection::Content(previous_line.to_string()))
+                            {
+                                sections.pop();
+                            }
+
+                            if !pushing_value.is_empty()
+                                && alternative_heading_level > current_heading_level
+                            {
+                                sections.push(MarkdownSection::Heading(HeadingLevel::FirstSub(
+                                    pushing_value,
+                                )));
+                            } else {
+                                sections.push(MarkdownSection::Heading(HeadingLevel::Sub(
+                                    pushing_value,
+                                )));
+                            }
+                        }
                     }
                 }
             }
@@ -238,28 +322,24 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
         }
 
         let previous_line = if index > 0 {
-            input_lines.get(index - 1)
+            input_lines.get(index - 1).copied()
         } else {
             None
         };
         let next_line = if index < input_lines.len() - 1 {
-            input_lines.get(index + 1)
+            input_lines.get(index + 1).copied()
         } else {
             None
         };
 
         // Parse alternative headings.
-        if let (Some(&previous_line), Some(&next_line)) = (previous_line, next_line) {
-            if !previous_line.is_empty() && next_line.is_empty() {
-                let valid_alternative_heading_1 = line.chars().all(|char| char == '=');
-                let valid_alternative_heading_2 = line.chars().all(|char| char == '-');
+        let alternative_heading_level =
+            get_alternative_heading_level(previous_line, next_line, line);
 
-                if valid_alternative_heading_1 && 1 < top_heading_level {
-                    top_heading_level = 1;
-                } else if valid_alternative_heading_2 && 2 < top_heading_level {
-                    top_heading_level = 2;
-                }
-            }
+        if alternative_heading_level == 1 && 1 < top_heading_level {
+            top_heading_level = 1;
+        } else if alternative_heading_level == 2 && 2 < top_heading_level {
+            top_heading_level = 2;
         }
     }
 
@@ -268,6 +348,29 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
     }
 
     Some(top_heading_level)
+}
+
+fn get_alternative_heading_level(
+    previous_line: Option<&str>,
+    next_line: Option<&str>,
+    line: &str,
+) -> usize {
+    if let (Some(previous_line), Some(next_line)) = (previous_line, next_line) {
+        if !previous_line.is_empty() && next_line.is_empty() {
+            let valid_alternative_heading_1 = line.chars().all(|char| char == '=');
+            let valid_alternative_heading_2 = line.chars().all(|char| char == '-');
+
+            if valid_alternative_heading_1 {
+                return 1;
+            } else if valid_alternative_heading_2 {
+                return 2;
+            } else {
+                return usize::MAX;
+            }
+        }
+    }
+
+    usize::MAX
 }
 
 // Functions for reading "content" sections.
@@ -299,7 +402,25 @@ fn append_string_with_line_break(string: &mut String, line: &str) {
     string.push_str(line);
 }
 
-// Functions for parsing hash symbol headings.
+// Functions for parsing heading sections.
+fn check_alternative_sub_heading(
+    previous_line: Option<&str>,
+    next_line: Option<&str>,
+    line: &str,
+    top_heading_level: usize,
+) -> bool {
+    let heading_level = get_alternative_heading_level(previous_line, next_line, line);
+    heading_level != usize::MAX && heading_level > top_heading_level
+}
+fn check_alternative_top_heading(
+    previous_line: Option<&str>,
+    next_line: Option<&str>,
+    line: &str,
+    top_heading_level: usize,
+) -> bool {
+    let heading_level = get_alternative_heading_level(previous_line, next_line, line);
+    heading_level != usize::MAX && heading_level == top_heading_level
+}
 fn check_top_hash_heading(line: &str, top_heading_hash_literal: &str) -> bool {
     line.starts_with(top_heading_hash_literal)
         && !line.starts_with(format!("{}#", top_heading_hash_literal).as_str())
