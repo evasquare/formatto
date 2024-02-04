@@ -387,6 +387,10 @@ fn get_alternative_heading_level(
     next_line: Option<&str>,
     line: &str,
 ) -> Option<usize> {
+    if line.is_empty() {
+        return None;
+    }
+
     match (previous_lines[0], previous_lines[1], next_line) {
         (Some(previous_first_line), Some(previous_second_line), Some(next_line)) => {
             let valid_alternative_heading = previous_second_line.is_empty()
@@ -426,15 +430,15 @@ fn get_alternative_heading_level(
 
             check_alternative_heading_level(line)
         }
-        (None, None, Some(next_line)) => {
-            let valid_alternative_heading = next_line.is_empty();
+        // // (None, None, Some(next_line)) => {
+        // //     let valid_alternative_heading = next_line.is_empty();
 
-            if !valid_alternative_heading {
-                return None;
-            }
+        // //     if !valid_alternative_heading {
+        // //         return None;
+        // //     }
 
-            check_alternative_heading_level(line)
-        }
+        // //     check_alternative_heading_level(line)
+        // // }
         _ => None,
     }
 }

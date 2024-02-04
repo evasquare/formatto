@@ -78,26 +78,34 @@ Heading 2
 
         let input = r#"## Heading 2
 
-### heading 3
+### Heading 3
 ```ts
 console.log("Hello World");
 ```
 
-
+aaabbbccc
 
 Content
 ===
 Content
---
+---
+
 
 ## Heading 2
-"#;
+
+
+## Heading 2
+
+
+## Heading 2"#;
 
         let expected_output = vec![
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
-            MarkdownSection::Heading(HeadingLevel::Top("### Heading 3".to_string())),
-            MarkdownSection::Code("```ts\n\nconsole.log(\"Hello World\");\n\n```".to_string()),
-            MarkdownSection::Content("\n===\nContent\n--".to_string()),
+            MarkdownSection::Heading(HeadingLevel::FirstSub("### Heading 3".to_string())),
+            MarkdownSection::Code("```ts\nconsole.log(\"Hello World\");\n```".to_string()),
+            MarkdownSection::Content("aaabbbccc\n\nContent\n===\nContent\n---".to_string()),
+            MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
+            MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
             MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
         ];
 
