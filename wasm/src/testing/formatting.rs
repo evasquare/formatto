@@ -6,6 +6,39 @@ mod get_formatted_string {
     };
 
     #[test]
+    fn alternative_headings_1() {
+        setup();
+
+        let input = r#"## heading 2
+
+### heading 3
+```ts
+console.log("Hello World");
+```
+
+Heading 1
+===
+"#;
+        let sections = get_sections(input, &get_example_settings()).unwrap();
+
+        let output = get_formatted_string(sections, &get_example_settings()).unwrap();
+        println!("{:#?}", output);
+        let expected_output = r#"## heading 2
+
+### heading 3
+```ts
+console.log("Hello World");
+```
+
+
+
+Heading 1
+===
+"#;
+
+        assert_eq!(output, expected_output);
+    }
+    #[test]
     fn multiple_headings() {
         setup();
 
