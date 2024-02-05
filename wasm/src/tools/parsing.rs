@@ -1,7 +1,9 @@
 use std::{error::Error, vec};
 
-use crate::setting_schema::MainPluginSettings;
-use crate::tools::tokens::{HeadingLevel, MarkdownSection};
+use crate::{
+    setting_schema::MainPluginSettings,
+    tools::tokens::{HeadingLevel, MarkdownSection},
+};
 
 #[derive(Debug)]
 struct ErrorInformation {
@@ -12,10 +14,8 @@ pub fn get_sections(
     input: &str,
     settings: &MainPluginSettings,
 ) -> Result<Vec<MarkdownSection>, Box<dyn Error>> {
-    use crate::tools::parsing::contents::{
-        append_string_with_line_break, finish_current_content_section,
-    };
-    use crate::tools::parsing::headings::{
+    use super::parsing::contents::{append_string_with_line_break, finish_current_content_section};
+    use super::parsing::headings::{
         alternative_headings::check_alternative_sub_heading,
         alternative_headings::{check_alternative_top_heading, get_alternative_heading_level},
         get_top_heading_level,
@@ -213,8 +213,22 @@ pub fn get_sections(
                 continue;
             }
 
-            is_reading_content_section = false;
+            let mut new_temp_content_section: Vec<String> = {
+                let cloned_temp_content_section = temp_content_section.clone();
+                cloned_temp_content_section
+                    .split('\n')
+                    .map(|s| s.to_string())
+                    .collect()
+            };
+            new_temp_content_section.pop();
             temp_content_section.clear();
+            temp_content_section = new_temp_content_section.join("\n");
+
+            finish_current_content_section(
+                &mut is_reading_content_section,
+                &mut sections,
+                &mut temp_content_section,
+            );
 
             if let Some(document_top_heading_level) = document_top_heading_level {
                 let is_top_heading =
@@ -301,7 +315,7 @@ pub fn get_sections(
 
 /// Module for parsing heading sections.
 mod contents {
-    use crate::tools::tokens::MarkdownSection;
+    use super::super::tokens::MarkdownSection;
 
     /// Finish reading the current "content" section and push it to the "sections" vector.
     pub fn finish_current_content_section(

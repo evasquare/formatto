@@ -1,7 +1,7 @@
 /// Return the top heading level of a document.
 pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
-    use crate::tools::parsing::headings::alternative_headings::get_alternative_heading_level;
-    use crate::tools::parsing::headings::hash_headings::check_hash_heading_syntax;
+    use self::alternative_headings::get_alternative_heading_level;
+    use self::hash_headings::check_hash_heading_syntax;
 
     let mut top_heading_level: usize = usize::MAX;
     let mut is_reading_code_block = false;
@@ -68,6 +68,8 @@ pub mod hash_headings {
 }
 
 pub mod alternative_headings {
+    use super::hash_headings::check_hash_heading_syntax;
+
     /// Check which level of alternative heading is being read.]
     /// (ex: heading-1 or heading-2)
     pub fn check_alternative_heading_level(line: &str) -> Option<usize> {
@@ -82,14 +84,40 @@ pub mod alternative_headings {
             None
         }
     }
+    /// Validate alternative sub heading.
+    pub fn check_alternative_sub_heading(
+        lines: &[&str],
+        reading_index: usize,
+        top_heading_level: usize,
+    ) -> bool {
+        let heading_level: Option<usize> = get_alternative_heading_level(lines, reading_index);
+
+        if let Some(heading_level) = heading_level {
+            heading_level > top_heading_level
+        } else {
+            false
+        }
+    }
+    /// Validate alternative top heading.
+    pub fn check_alternative_top_heading(
+        lines: &[&str],
+        reading_index: usize,
+        top_heading_level: usize,
+    ) -> bool {
+        let heading_level: Option<usize> = get_alternative_heading_level(lines, reading_index);
+
+        if let Some(heading_level) = heading_level {
+            heading_level == top_heading_level
+        } else {
+            false
+        }
+    }
 
     /// Return the level of an alternative heading being read.
     pub fn get_alternative_heading_level(
         input_lines: &[&str],
         reading_index: usize,
     ) -> Option<usize> {
-        use crate::tools::parsing::headings::hash_headings::check_hash_heading_syntax;
-
         if reading_index > input_lines.len() - 1 {
             return None;
         }
@@ -97,26 +125,48 @@ pub mod alternative_headings {
             return None;
         }
 
-        let previous_lines = {
-            let first_line: Option<&str> = if reading_index > 0 {
-                input_lines.get(reading_index - 1).copied()
-            } else {
-                None
-            };
-            let second_line: Option<&str> = if reading_index > 1 {
-                input_lines.get(reading_index - 2).copied()
-            } else {
-                None
-            };
-            let third_line: Option<&str> = if reading_index > 2 {
-                input_lines.get(reading_index - 3).copied()
-            } else {
-                None
-            };
+        // TODO: Complete the function.
+        // if !validate_previous_alternative_headings(input_lines, reading_index) {
+        //     return None;
+        // }
 
-            (first_line, second_line, third_line)
+        validate_alternative_top_heading(input_lines, reading_index)
+    }
+
+    // TODO: Complete this enum.
+    enum ValidatingLine {
+        Todo,
+    }
+
+    // TODO: Complete this function.
+    fn validate_previous_alternative_headings(input_lines: &[&str], reading_index: usize) -> bool {
+        todo!()
+    }
+
+    /// Return last 2 lines of a reading document.
+    fn get_previous_lines<'a>(
+        input_lines: &'a [&str],
+        reading_index: usize,
+    ) -> (Option<&'a str>, Option<&'a str>) {
+        let first_line: Option<&str> = if reading_index > 0 {
+            input_lines.get(reading_index - 1).copied()
+        } else {
+            None
+        };
+        let second_line: Option<&str> = if reading_index > 1 {
+            input_lines.get(reading_index - 2).copied()
+        } else {
+            None
         };
 
+        (first_line, second_line)
+    }
+
+    fn validate_alternative_top_heading(
+        input_lines: &[&str],
+        reading_index: usize,
+    ) -> Option<usize> {
+        let previous_lines = get_previous_lines(input_lines, reading_index);
         let next_line: Option<&str> = if reading_index < input_lines.len() - 2 {
             input_lines.get(reading_index + 1).copied()
         } else {
@@ -164,36 +214,6 @@ pub mod alternative_headings {
                 check_alternative_heading_level(input_lines[reading_index])
             }
             _ => None,
-        }
-    }
-
-    /// Validate alternative heading syntax. (Sub level heading)
-    pub fn check_alternative_sub_heading(
-        lines: &[&str],
-        reading_index: usize,
-        top_heading_level: usize,
-    ) -> bool {
-        let heading_level: Option<usize> = get_alternative_heading_level(lines, reading_index);
-
-        if let Some(heading_level) = heading_level {
-            heading_level > top_heading_level
-        } else {
-            false
-        }
-    }
-
-    /// Validate alternative heading syntax. (Top level heading)
-    pub fn check_alternative_top_heading(
-        lines: &[&str],
-        reading_index: usize,
-        top_heading_level: usize,
-    ) -> bool {
-        let heading_level: Option<usize> = get_alternative_heading_level(lines, reading_index);
-
-        if let Some(heading_level) = heading_level {
-            heading_level == top_heading_level
-        } else {
-            false
         }
     }
 }
