@@ -122,7 +122,7 @@ Content
         setup();
 
         let input = r#"## Heading 2
-aaabbbccc
+aabbcc
 ===
 Content
 ---
