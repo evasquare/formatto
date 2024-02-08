@@ -4,9 +4,11 @@ use wasm_bindgen::prelude::*;
 use crate::setting_schema::MainPluginSettings;
 
 mod setting_schema;
-mod testing;
 mod tools;
 mod utils;
+
+#[cfg(test)]
+mod testing;
 
 #[wasm_bindgen]
 extern "C" {
