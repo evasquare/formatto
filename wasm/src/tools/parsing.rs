@@ -16,10 +16,12 @@ pub fn get_sections(
 ) -> Result<Vec<MarkdownSection>, Box<dyn Error>> {
     use super::parsing::contents::{append_string_with_line_break, finish_current_content_section};
     use super::parsing::headings::{
-        alternative_headings::check_alternative_sub_heading,
-        alternative_headings::{check_alternative_top_heading, get_alternative_heading_level},
+        alternative_headings::get_alternative_heading_level,
+        alternative_headings::validation::{
+            validate_alternative_sub_heading, validate_alternative_top_heading,
+        },
         get_top_heading_level,
-        hash_headings::{check_sub_hash_heading, check_top_hash_heading},
+        hash_headings::validation::{validate_sub_hash_heading, validate_top_hash_heading},
     };
 
     if input.is_empty() {
@@ -164,7 +166,7 @@ pub fn get_sections(
         let only_contains_header_symbols = line.chars().all(|item| item == '#');
         if line.starts_with('#') && (line.contains("# ") || only_contains_header_symbols) {
             if let Some(document_top_heading_level) = document_top_heading_level {
-                let is_top_heading = check_top_hash_heading(line, &top_heading_hash_literal);
+                let is_top_heading = validate_top_hash_heading(line, &top_heading_hash_literal);
 
                 if is_top_heading {
                     finish_current_content_section(
@@ -180,7 +182,8 @@ pub fn get_sections(
                     current_heading_level = document_top_heading_level;
                     continue;
                 } else {
-                    let is_sub_heading = check_sub_hash_heading(line, only_contains_header_symbols);
+                    let is_sub_heading =
+                        validate_sub_hash_heading(line, only_contains_header_symbols);
                     let heading_level = line.chars().take_while(|&c| c == '#').count();
 
                     if is_sub_heading {
@@ -231,10 +234,16 @@ pub fn get_sections(
             );
 
             if let Some(document_top_heading_level) = document_top_heading_level {
-                let is_top_heading =
-                    check_alternative_top_heading(&input_lines, index, document_top_heading_level);
-                let is_sub_heading =
-                    check_alternative_sub_heading(&input_lines, index, document_top_heading_level);
+                let is_top_heading = validate_alternative_top_heading(
+                    &input_lines,
+                    index,
+                    document_top_heading_level,
+                );
+                let is_sub_heading = validate_alternative_sub_heading(
+                    &input_lines,
+                    index,
+                    document_top_heading_level,
+                );
 
                 if let Some(previous_first_line) = previous_first_line {
                     if is_top_heading {
