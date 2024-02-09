@@ -1,5 +1,5 @@
 {
     "watch": ["wasm/src"],
     "ext": "rs",
-    "exec": "cd ./wasm && cargo test --features development"
+    "exec": "cd ./wasm && cargo test"
 }
