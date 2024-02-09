@@ -74,24 +74,65 @@ pub mod alternative_headings {
         input_lines: &[&str],
         reading_index: usize,
     ) -> Option<usize> {
-        use validation::get_valid_alternative_top_heading_level::get_valid_alternative_top_heading_level;
+        use validation::{
+            get_valid_alternative_top_heading_level::get_valid_alternative_top_heading_level,
+            validate_previous_alternative_headings,
+        };
 
         if reading_index > input_lines.len() - 1 {
             return None;
         }
-        if input_lines[reading_index].is_empty() {
+        if input_lines[reading_index].is_empty()
+            || !input_lines[reading_index]
+                .chars()
+                .all(|char| char == '-' || char == '=')
+        {
             return None;
         }
 
-        // TODO: Complete the function.
-        // if !validate_previous_alternative_headings(input_lines, reading_index) {
-        //     return None;
-        // }
+        if !validate_previous_alternative_headings(input_lines, reading_index) {
+            return None;
+        }
 
         get_valid_alternative_top_heading_level(input_lines, reading_index)
     }
 
     pub mod validation {
+        pub fn validate_previous_alternative_headings(
+            input_lines: &[&str],
+            reading_index: usize,
+        ) -> bool {
+            use self::get_valid_alternative_top_heading_level::get_alternative_heading_level;
+
+            let mut is_reading_syntax = true;
+            let mut is_reading_title = false;
+
+            for &line in input_lines[0..=reading_index].iter().rev() {
+                if line.is_empty() && is_reading_syntax && !is_reading_title {
+                    return true;
+                }
+
+                if is_reading_syntax {
+                    if get_alternative_heading_level(line).is_some() {
+                        is_reading_syntax = false;
+                        is_reading_title = true;
+                        continue;
+                    }
+                    return false;
+                } else if is_reading_title {
+                    if !line.is_empty() {
+                        is_reading_syntax = true;
+                        is_reading_title = false;
+                        continue;
+                    }
+
+                    return false;
+                }
+            }
+
+            false // Fallback.
+        }
+
         pub mod get_valid_alternative_top_heading_level {
             pub fn get_valid_alternative_top_heading_level(
                 input_lines: &[&str],
@@ -150,6 +191,25 @@ pub mod alternative_headings {
                 }
             }
 
+            /// Check which level of alternative heading is being read.
+            /// EXAMPLE: heading-1 or heading-2
+            pub fn get_alternative_heading_level(line: &str) -> Option<usize> {
+                if line.is_empty() {
+                    return None;
+                }
+
+                let valid_alternative_heading_1 = line.chars().all(|char| char == '=');
+                let valid_alternative_heading_2 = line.chars().all(|char| char == '-');
+
+                if valid_alternative_heading_1 {
+                    Some(1)
+                } else if valid_alternative_heading_2 {
+                    Some(2)
+                } else {
+                    None
+                }
+            }
+
             /// Get the last 2 lines before the currently reading line.
             fn get_previous_lines<'a>(
                 input_lines: &'a [&str],
@@ -167,21 +227,6 @@ pub mod alternative_headings {
                 };
 
                 (first_line, second_line)
-            }
-
-            /// Check which level of alternative heading is being read.
-            /// EXAMPLE: heading-1 or heading-2
-            fn get_alternative_heading_level(line: &str) -> Option<usize> {
-                let valid_alternative_heading_1 = line.chars().all(|char| char == '=');
-                let valid_alternative_heading_2 = line.chars().all(|char| char == '-');
-
-                if valid_alternative_heading_1 {
-                    Some(1)
-                } else if valid_alternative_heading_2 {
-                    Some(2)
-                } else {
-                    None
-                }
             }
         }
 

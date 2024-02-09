@@ -6,8 +6,6 @@ use crate::{
     },
 };
 
-mod invalid_input;
-
 #[test]
 fn code_blocks_1() {
     setup();
@@ -43,4 +41,15 @@ println!(\"Hello World\");
         get_sections(input, &get_example_settings()).unwrap(),
         expected_output
     );
+}
+
+#[test]
+fn invalid_input_1() {
+    setup();
+
+    let input = r#"```
+code
+SPACE```"#;
+    let sections = get_sections(input, &get_example_settings());
+    assert!(sections.is_err());
 }

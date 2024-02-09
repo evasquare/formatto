@@ -6,8 +6,6 @@ use crate::{
     },
 };
 
-mod get_top_heading_level;
-
 #[test]
 fn same_level_hash_headings() {
     setup();

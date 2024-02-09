@@ -14,7 +14,7 @@ pub fn get_sections(
     input: &str,
     settings: &MainPluginSettings,
 ) -> Result<Vec<MarkdownSection>, Box<dyn Error>> {
-    use super::parsing::contents::{append_string_with_line_break, finish_current_content_section};
+    use super::parsing::contents::{append_line_break, finish_current_content_section};
     use super::parsing::headings::{
         alternative_headings::get_alternative_heading_level,
         alternative_headings::validation::{
@@ -291,7 +291,7 @@ pub fn get_sections(
         // * Read contents.
         if is_reading_content_section {
             error_information.reading_section_starting_line = index;
-            append_string_with_line_break(&mut temp_content_section, line);
+            append_line_break(&mut temp_content_section, line);
         }
 
         // Run this when it's the last line.
@@ -323,37 +323,6 @@ pub fn get_sections(
 }
 
 /// Module for parsing heading sections.
-mod contents {
-    use super::super::tokens::MarkdownSection;
-
-    /// Finish reading the current "content" section and push it to the "sections" vector.
-    pub fn finish_current_content_section(
-        is_reading_content_section: &mut bool,
-        sections: &mut Vec<MarkdownSection>,
-        temp_content_section: &mut String,
-    ) {
-        *is_reading_content_section = false;
-
-        // Check if "content" is empty.
-        // Because this function is also called with empty values.
-        if temp_content_section.is_empty() {
-            return;
-        }
-
-        sections.push(MarkdownSection::Content(
-            temp_content_section.trim_end().to_string(),
-        ));
-        temp_content_section.clear();
-    }
-
-    /// Append a line with a line break.
-    pub fn append_string_with_line_break(string: &mut String, line: &str) {
-        // Break lines unless it's the first line.
-        if !string.is_empty() {
-            string.push('\n');
-        }
-        string.push_str(line);
-    }
-}
+mod contents;
 
 pub mod headings;
