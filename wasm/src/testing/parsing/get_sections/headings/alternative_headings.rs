@@ -105,7 +105,7 @@ Content
 }
 
 #[test]
-fn alternative_headings_edge_case_2() {
+fn edge_case_1() {
     setup();
 
     let input = r#"## Heading 2
@@ -131,7 +131,7 @@ Content
 }
 
 #[test]
-fn alternative_headings_edge_case_3() {
+fn edge_case_2() {
     setup();
 
     let input = r#"## Heading 2
@@ -145,6 +145,57 @@ Content
     let expected_output = vec![
         MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
         MarkdownSection::Content("INVALID\nINVALID\n===\nContent\n---".to_string()),
+    ];
+
+    assert_eq!(
+        get_sections(input, &get_example_settings()).unwrap(),
+        expected_output
+    );
+}
+
+#[test]
+fn edge_case_3() {
+    setup();
+
+    let input = r#"## Heading 2
+
+### Heading 3
+```ts
+console.log("Hello World");
+```
+
+aaabbbccc
+Content
+===
+Content
+---
+--–
+Content
+===
+
+
+
+## Heading 2
+
+
+
+## Heading 2
+
+
+
+## Heading 2
+"#;
+
+    let expected_output = vec![
+        MarkdownSection::Heading(HeadingLevel::Top(String::from("## Heading 2"))),
+        MarkdownSection::Heading(HeadingLevel::FirstSub(String::from("### Heading 3"))),
+        MarkdownSection::Code(String::from("```ts\nconsole.log(\"Hello World\");\n```")),
+        MarkdownSection::Content(String::from(
+            "aaabbbccc\nContent\n===\nContent\n---\n--–\nContent\n===",
+        )),
+        MarkdownSection::Heading(HeadingLevel::Top(String::from("## Heading 2"))),
+        MarkdownSection::Heading(HeadingLevel::Top(String::from("## Heading 2"))),
+        MarkdownSection::Heading(HeadingLevel::Top(String::from("## Heading 2"))),
     ];
 
     assert_eq!(

@@ -68,3 +68,30 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
         expected_output
     );
 }
+
+/// Invalid property syntax.
+#[test]
+fn invalid_input_1() {
+    setup();
+
+    let input = r#"---INVALID
+aliases:
+---
+- Test
+---INVALID
+---INVALID
+---INVALID
+
+## Heading 2
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+
+### Heading 3
+
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+
+#### Heading 4
+## Heading 2"#;
+
+    println!("{}", get_sections(input, &get_example_settings()).is_err());
+    assert!(get_sections(input, &get_example_settings()).is_err())
+}

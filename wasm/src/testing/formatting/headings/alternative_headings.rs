@@ -33,3 +33,30 @@ Heading 1
 
     assert_eq!(output, expected_output);
 }
+
+#[test]
+fn case_2() {
+    setup();
+
+    let input = r#"Heading 1
+==
+
+Heading 1
+===
+
+### Heading 3"#;
+
+    let sections = get_sections(input, &get_example_settings()).unwrap();
+    let output = get_formatted_string(sections, &get_example_settings()).unwrap();
+    let expected_output = r#"Heading 1
+==
+
+
+
+Heading 1
+===
+
+### Heading 3"#;
+
+    assert_eq!(output, expected_output);
+}
