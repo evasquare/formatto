@@ -10,7 +10,7 @@
         "build": "npm run build:wasm && npm run build:ts",
         "build:ts": "rollup -c",
         "build:wasm": "cd ./wasm && wasm-pack build --target web --release && cd ../ && npm i",
-        "test:ts": "vitest",
+        "test:ts": "nodemon --config ./nodemon-configs/nodemon-test-ts.json",
         "test:rust": "nodemon --config ./nodemon-configs/nodemon-test-rust.json",
         "lint:ts": "eslint . --ext .ts --ignore-pattern '**/*.d.ts'"
     },
