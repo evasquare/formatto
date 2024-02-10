@@ -19,7 +19,7 @@ pub fn get_sections(
 ) -> Result<Vec<MarkdownSection>, Box<dyn Error>> {
     use super::parsing::contents::{append_line_break, finish_current_content_section};
     use super::parsing::headings::{
-        alternative_headings::get_alternative_heading_level,
+        alternative_headings::get_valid_alternative_heading_level,
         alternative_headings::validation::{
             validate_alternative_sub_heading, validate_alternative_top_heading,
         },
@@ -68,38 +68,20 @@ pub fn get_sections(
         }
         is_reading_content_section = true;
 
-        // Get alternative heading information.
-        // Skip parsing the property section when it's detected.
-        let previous_first_line: Option<&str> = if index > 0 {
-            input_lines.get(index - 1).copied()
-        } else {
-            None
-        };
-        let previous_second_line: Option<&str> = if index > 1 {
-            input_lines.get(index - 2).copied()
-        } else {
-            None
-        };
-        let next_line: Option<&str> = if index < input_lines.len() - 1 {
-            input_lines.get(index + 1).copied()
-        } else {
-            None
-        };
         let alternative_heading_level: Option<usize> =
-            get_alternative_heading_level(&input_lines, index);
+            get_valid_alternative_heading_level(&input_lines, index);
 
         // * Read Properties.
-        if sections.is_empty() && (line == "---" || is_reading_property_block) {
+        if sections.is_empty()
+            && ((alternative_heading_level.is_none() && line == "---") || is_reading_property_block)
+        {
             finish_current_content_section(
                 &mut is_reading_content_section,
                 &mut sections,
                 &mut temp_content_section,
             );
 
-            let is_first_property_line = temp_properties.is_empty()
-                && previous_first_line.is_none()
-                && previous_second_line.is_none()
-                && next_line.is_some();
+            let is_first_property_line = temp_properties.is_empty();
             if line == "---" {
                 if is_first_property_line {
                     // Enter a property section.
@@ -247,6 +229,14 @@ pub fn get_sections(
                     index,
                     document_top_heading_level,
                 );
+
+                // Get alternative heading information.
+                // Skip parsing the property section when it's detected.
+                let previous_first_line: Option<&str> = if index > 0 {
+                    input_lines.get(index - 1).copied()
+                } else {
+                    None
+                };
 
                 if let Some(previous_first_line) = previous_first_line {
                     if is_top_heading {

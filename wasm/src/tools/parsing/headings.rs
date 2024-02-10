@@ -1,6 +1,6 @@
 /// Return the top heading level of a document.
 pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
-    use self::alternative_headings::get_alternative_heading_level;
+    use self::alternative_headings::get_valid_alternative_heading_level;
     use self::hash_headings::validation::validate_hash_heading;
 
     let mut top_heading_level = usize::MAX;
@@ -31,7 +31,7 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
 
         // Parse alternative headings.
         let alternative_heading_level: Option<usize> =
-            get_alternative_heading_level(input_lines, index);
+            get_valid_alternative_heading_level(input_lines, index);
 
         if let Some(alternative_heading_level) = alternative_heading_level {
             if alternative_heading_level == 1 && 1 < top_heading_level {
@@ -69,15 +69,13 @@ pub mod hash_headings {
 }
 
 pub mod alternative_headings {
-    /// Get the level of an alternative heading being read.
-    pub fn get_alternative_heading_level(
+    /// Get the level of a valid alternative heading being read.
+    pub fn get_valid_alternative_heading_level(
         input_lines: &[&str],
         reading_index: usize,
     ) -> Option<usize> {
-        use validation::{
-            get_valid_alternative_top_heading_level::get_valid_alternative_top_heading_level,
-            validate_previous_alternative_headings,
-        };
+        use validation::get_valid_alternative_top_heading_level::get_alternative_heading_level;
+        use validation::validate_previous_alternative_headings;
 
         if reading_index > input_lines.len() - 1 {
             return None;
@@ -90,11 +88,12 @@ pub mod alternative_headings {
             return None;
         }
 
-        if !validate_previous_alternative_headings(input_lines, reading_index) {
+        let heading_level = validate_previous_alternative_headings(input_lines, reading_index);
+        if !heading_level {
             return None;
         }
 
-        get_valid_alternative_top_heading_level(input_lines, reading_index)
+        get_alternative_heading_level(input_lines[reading_index])
     }
 
     pub mod validation {
@@ -113,6 +112,10 @@ pub mod alternative_headings {
                 }
 
                 if is_reading_syntax {
+                    if super::super::hash_headings::validation::validate_hash_heading(line) {
+                        return true;
+                    }
+
                     if get_alternative_heading_level(line).is_some() {
                         is_reading_syntax = false;
                         is_reading_title = true;
@@ -139,63 +142,6 @@ pub mod alternative_headings {
         }
 
         pub mod get_valid_alternative_top_heading_level {
-            pub fn get_valid_alternative_top_heading_level(
-                input_lines: &[&str],
-                reading_index: usize,
-            ) -> Option<usize> {
-                use super::super::super::hash_headings::validation::validate_hash_heading;
-
-                let previous_lines = get_previous_lines(input_lines, reading_index);
-                let next_line: Option<&str> = if reading_index < input_lines.len() - 2 {
-                    input_lines.get(reading_index + 1).copied()
-                } else {
-                    None
-                };
-
-                match (previous_lines.0, previous_lines.1, next_line) {
-                    (Some(previous_first_line), Some(previous_second_line), Some(_)) => {
-                        let valid_alternative_heading = (previous_second_line.is_empty()
-                            || validate_hash_heading(previous_second_line))
-                            && !previous_first_line.is_empty();
-
-                        if !valid_alternative_heading {
-                            return None;
-                        }
-
-                        get_alternative_heading_level(input_lines[reading_index])
-                    }
-                    (Some(previous_first_line), None, Some(_)) => {
-                        let valid_alternative_heading = !previous_first_line.is_empty();
-
-                        if !valid_alternative_heading {
-                            return None;
-                        }
-
-                        get_alternative_heading_level(input_lines[reading_index])
-                    }
-                    (Some(previous_first_line), Some(previous_second_line), None) => {
-                        let valid_alternative_heading = (previous_second_line.is_empty()
-                            || validate_hash_heading(previous_second_line))
-                            && !previous_first_line.is_empty();
-
-                        if !valid_alternative_heading {
-                            return None;
-                        }
-
-                        get_alternative_heading_level(input_lines[reading_index])
-                    }
-                    (Some(previous_first_line), None, None) => {
-                        let valid_alternative_heading = !previous_first_line.is_empty();
-                        if !valid_alternative_heading {
-                            return None;
-                        }
-
-                        get_alternative_heading_level(input_lines[reading_index])
-                    }
-                    _ => None,
-                }
-            }
-
             /// Check which level of alternative heading is being read.
             /// EXAMPLE: heading-1 or heading-2
             pub fn get_alternative_heading_level(line: &str) -> Option<usize> {
@@ -214,25 +160,6 @@ pub mod alternative_headings {
                     None
                 }
             }
-
-            /// Get the last 2 lines before the currently reading line.
-            fn get_previous_lines<'a>(
-                input_lines: &'a [&str],
-                reading_index: usize,
-            ) -> (Option<&'a str>, Option<&'a str>) {
-                let first_line: Option<&str> = if reading_index > 0 {
-                    input_lines.get(reading_index - 1).copied()
-                } else {
-                    None
-                };
-                let second_line: Option<&str> = if reading_index > 1 {
-                    input_lines.get(reading_index - 2).copied()
-                } else {
-                    None
-                };
-
-                (first_line, second_line)
-            }
         }
 
         /// Validate alternative top heading.
@@ -241,9 +168,10 @@ pub mod alternative_headings {
             reading_index: usize,
             top_heading_level: usize,
         ) -> bool {
-            use super::get_alternative_heading_level;
+            use super::get_valid_alternative_heading_level;
 
-            let heading_level: Option<usize> = get_alternative_heading_level(lines, reading_index);
+            let heading_level: Option<usize> =
+                get_valid_alternative_heading_level(lines, reading_index);
             if let Some(heading_level) = heading_level {
                 heading_level == top_heading_level
             } else {
@@ -256,9 +184,10 @@ pub mod alternative_headings {
             reading_index: usize,
             top_heading_level: usize,
         ) -> bool {
-            use super::get_alternative_heading_level;
+            use super::get_valid_alternative_heading_level;
 
-            let heading_level: Option<usize> = get_alternative_heading_level(lines, reading_index);
+            let heading_level: Option<usize> =
+                get_valid_alternative_heading_level(lines, reading_index);
             if let Some(heading_level) = heading_level {
                 heading_level > top_heading_level
             } else {
