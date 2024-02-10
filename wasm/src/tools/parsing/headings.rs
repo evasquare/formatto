@@ -104,10 +104,10 @@ pub mod alternative_headings {
         ) -> bool {
             use self::get_valid_alternative_top_heading_level::get_alternative_heading_level;
 
-            let mut is_reading_syntax = true;
-            let mut is_reading_title = false;
+            let mut is_reading_syntax = true; // true
+            let mut is_reading_title = false; // false
 
-            for &line in input_lines[0..=reading_index].iter().rev() {
+            for (index, &line) in input_lines[0..=reading_index].iter().enumerate().rev() {
                 if line.is_empty() && is_reading_syntax && !is_reading_title {
                     return true;
                 }
@@ -118,8 +118,13 @@ pub mod alternative_headings {
                         is_reading_title = true;
                         continue;
                     }
+
                     return false;
                 } else if is_reading_title {
+                    if index == 0 {
+                        return true;
+                    }
+
                     if !line.is_empty() {
                         is_reading_syntax = true;
                         is_reading_title = false;
