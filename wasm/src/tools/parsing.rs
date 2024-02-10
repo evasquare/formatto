@@ -5,6 +5,9 @@ use crate::{
     tools::tokens::{HeadingLevel, MarkdownSection},
 };
 
+mod contents;
+pub mod headings;
+
 #[derive(Debug)]
 struct ErrorInformation {
     reading_section_starting_line: usize,
@@ -321,8 +324,3 @@ pub fn get_sections(
 
     Ok(sections)
 }
-
-/// Module for parsing heading sections.
-mod contents;
-
-pub mod headings;
