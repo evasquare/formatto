@@ -4,7 +4,7 @@ use crate::{
 };
 
 #[test]
-fn properties_1() {
+fn case_1() {
     setup();
 
     let input = r#"---
@@ -46,7 +46,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 }
 
 #[test]
-fn properties_2() {
+fn case_2() {
     setup();
 
     let input = r#"---

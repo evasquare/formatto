@@ -7,7 +7,7 @@ use crate::{
 };
 
 #[test]
-fn code_blocks_1() {
+fn case_1() {
     setup();
 
     let input = r#"## Heading 2

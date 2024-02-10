@@ -7,7 +7,7 @@ use crate::{
 };
 
 #[test]
-fn alternative_headings_1() {
+fn case_1() {
     setup();
 
     let input = r#"Heading 1
@@ -29,7 +29,7 @@ fn alternative_headings_1() {
 }
 
 #[test]
-fn alternative_headings_2() {
+fn case_2() {
     setup();
 
     let input = r#"Heading 1
@@ -60,7 +60,7 @@ Heading 2
 }
 
 #[test]
-fn alternative_headings_edge_case_1() {
+fn case_3() {
     setup();
 
     let input = r#"## Heading 2

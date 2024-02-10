@@ -6,8 +6,9 @@ use crate::{
     },
 };
 
+/// Contents only.
 #[test]
-fn contents_only() {
+fn case_1() {
     setup();
 
     let input = r#"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
@@ -27,8 +28,9 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#
     );
 }
 
+/// Contents with escape character line break syntax.
 #[test]
-fn contents_with_line_break_syntax() {
+fn case_2() {
     setup();
 
     let input = r#"## Heading 2

@@ -1,7 +1,8 @@
 use crate::{testing::setup, tools::parsing::headings::get_top_heading_level};
 
+/// Hash headings only.
 #[test]
-fn only_hash_heading() {
+fn case_1() {
     setup();
 
     let input: Vec<&str> = r#"## Heading 2
@@ -15,18 +16,19 @@ fn only_hash_heading() {
     assert_eq!(get_top_heading_level(&input).unwrap(), expected_output);
 }
 
+/// Hash headings and alternative headings are mixed.
 #[test]
-fn hash_headings_and_alternative_headings() {
+fn case_2() {
     setup();
 
     let input: Vec<&str> = r#"## Heading 2
 ## Heading 2
 ## Heading 2
 
-Heading1
-====
+Heading 1
+===
 
-Heading2
+Heading 2
 ---
 "#
     .split('\n')
@@ -38,14 +40,14 @@ Heading2
 }
 
 #[test]
-fn invalid_alternative_headings_1() {
+fn invalid_input_1() {
     setup();
 
     let input: Vec<&str> = r#"## Heading 2
 ## Heading 2
 ## Heading 2
 
-====
+===
 INVALID
 
 ---
@@ -60,7 +62,7 @@ INVALID
 }
 
 #[test]
-fn invalid_alternative_headings_2() {
+fn invalid_input_2() {
     setup();
 
     let input: Vec<&str> = r#"## Heading 2

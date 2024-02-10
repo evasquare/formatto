@@ -3,8 +3,9 @@ use crate::{
     tools::{formatting::get_formatted_string, parsing::get_sections},
 };
 
+/// Multiple hash headings.
 #[test]
-fn multiple_hash_headings_1() {
+fn case_1() {
     setup();
 
     let input = r#"## Heading 2
@@ -22,7 +23,7 @@ fn multiple_hash_headings_1() {
 }
 
 #[test]
-fn non_hash_headings() {
+fn invalid_input_1() {
     setup();
 
     let input = r#"##Heading 2

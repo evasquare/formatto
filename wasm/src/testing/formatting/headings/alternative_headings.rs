@@ -4,7 +4,7 @@ use crate::{
 };
 
 #[test]
-fn alternative_headings_1() {
+fn case_1() {
     setup();
 
     let input = r#"## Heading 2

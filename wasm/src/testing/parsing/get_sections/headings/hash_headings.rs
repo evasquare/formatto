@@ -6,8 +6,9 @@ use crate::{
     },
 };
 
+// Only one level of headings.
 #[test]
-fn same_level_hash_headings() {
+fn case_1() {
     setup();
 
     let input = r#"## Heading 2
@@ -30,28 +31,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 }
 
 #[test]
-fn invalid_hash_headings() {
-    setup();
-
-    let input = r#"##Heading 2
-###Heading 3
-####Heading 4"#;
-
-    let expected_output = vec![MarkdownSection::Content(
-        r#"##Heading 2
-###Heading 3
-####Heading 4"#
-            .to_string(),
-    )];
-
-    assert_eq!(
-        get_sections(input, &get_example_settings()).unwrap(),
-        expected_output
-    );
-}
-
-#[test]
-fn hash_headings_only_1() {
+fn case_2() {
     setup();
 
     let input = r#"## Heading 2
@@ -71,7 +51,7 @@ fn hash_headings_only_1() {
 }
 
 #[test]
-fn hash_headings_only_2() {
+fn case_3() {
     setup();
 
     let input = r#"## Heading 2
@@ -91,7 +71,7 @@ fn hash_headings_only_2() {
 }
 
 #[test]
-fn sub_hash_headings() {
+fn case_4() {
     setup();
 
     let input = r#"## Heading 2
@@ -127,8 +107,9 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
     );
 }
 
+/// Random line breaks.
 #[test]
-fn random_line_breaks() {
+fn case_5() {
     setup();
 
     let input = r#"## Heading 2
@@ -162,8 +143,9 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
     );
 }
 
+// Two levels of hash headings.
 #[test]
-fn two_levels_of_hash_headings() {
+fn case_6() {
     setup();
 
     let input = r#"## Heading 2
@@ -220,6 +202,27 @@ fn hash_headings_without_title_names() {
         MarkdownSection::Heading(HeadingLevel::Sub("##".to_string())),
         MarkdownSection::Heading(HeadingLevel::Top("#".to_string())),
     ];
+
+    assert_eq!(
+        get_sections(input, &get_example_settings()).unwrap(),
+        expected_output
+    );
+}
+
+#[test]
+fn invalid_input_1() {
+    setup();
+
+    let input = r#"##Heading 2
+###Heading 3
+####Heading 4"#;
+
+    let expected_output = vec![MarkdownSection::Content(
+        r#"##Heading 2
+###Heading 3
+####Heading 4"#
+            .to_string(),
+    )];
 
     assert_eq!(
         get_sections(input, &get_example_settings()).unwrap(),
