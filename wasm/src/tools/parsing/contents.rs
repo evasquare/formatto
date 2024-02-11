@@ -26,5 +26,6 @@ pub fn append_line_break(string: &mut String, line: &str) {
     if !string.is_empty() {
         string.push('\n');
     }
+
     string.push_str(line);
 }
