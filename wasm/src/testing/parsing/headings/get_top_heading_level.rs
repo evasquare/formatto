@@ -16,7 +16,7 @@ fn case_1() {
     assert_eq!(get_top_heading_level(&input).unwrap(), expected_output);
 }
 
-/// Hash headings and alternative headings are mixed.
+/// Hash headings and alternate headings are mixed.
 #[test]
 fn case_2() {
     setup();

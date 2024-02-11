@@ -1,2 +1,0 @@
-mod get_valid_alternative_top_heading_level;
-mod validate_previous_alternative_headings;

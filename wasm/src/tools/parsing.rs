@@ -19,9 +19,9 @@ pub fn get_sections(
 ) -> Result<Vec<MarkdownSection>, Box<dyn Error>> {
     use super::parsing::contents::{append_line_break, finish_current_content_section};
     use super::parsing::headings::{
-        alternative_headings::get_valid_alternative_heading_level,
-        alternative_headings::validation::{
-            validate_alternative_sub_heading, validate_alternative_top_heading,
+        alternate_headings::get_valid_alternate_heading_level,
+        alternate_headings::validation::{
+            validate_alternate_sub_heading, validate_alternate_top_heading,
         },
         get_top_heading_level,
         hash_headings::validation::{validate_sub_hash_heading, validate_top_hash_heading},
@@ -68,12 +68,12 @@ pub fn get_sections(
         }
         is_reading_content_section = true;
 
-        let alternative_heading_level: Option<usize> =
-            get_valid_alternative_heading_level(&input_lines, index);
+        let alternate_heading_level: Option<usize> =
+            get_valid_alternate_heading_level(&input_lines, index);
 
         // * Read Properties.
         if sections.is_empty()
-            && ((alternative_heading_level.is_none() && line == "---") || is_reading_property_block)
+            && ((alternate_heading_level.is_none() && line == "---") || is_reading_property_block)
         {
             finish_current_content_section(
                 &mut is_reading_content_section,
@@ -195,8 +195,8 @@ pub fn get_sections(
             }
         }
 
-        // * Read alternative headings.
-        if let Some(alternative_heading_level) = alternative_heading_level {
+        // * Read alternate headings.
+        if let Some(alternate_heading_level) = alternate_heading_level {
             if is_reading_code_block || is_reading_property_block {
                 continue;
             }
@@ -219,18 +219,12 @@ pub fn get_sections(
             );
 
             if let Some(document_top_heading_level) = document_top_heading_level {
-                let is_top_heading = validate_alternative_top_heading(
-                    &input_lines,
-                    index,
-                    document_top_heading_level,
-                );
-                let is_sub_heading = validate_alternative_sub_heading(
-                    &input_lines,
-                    index,
-                    document_top_heading_level,
-                );
+                let is_top_heading =
+                    validate_alternate_top_heading(&input_lines, index, document_top_heading_level);
+                let is_sub_heading =
+                    validate_alternate_sub_heading(&input_lines, index, document_top_heading_level);
 
-                // Get alternative heading information.
+                // Get alternate heading information.
                 // Skip parsing the property section when it's detected.
                 let previous_first_line: Option<&str> = if index > 0 {
                     input_lines.get(index - 1).copied()
@@ -265,7 +259,7 @@ pub fn get_sections(
                             sections.pop();
                         }
 
-                        if alternative_heading_level > current_heading_level {
+                        if alternate_heading_level > current_heading_level {
                             sections.push(MarkdownSection::Heading(HeadingLevel::FirstSub(
                                 pushing_value,
                             )));
@@ -274,7 +268,7 @@ pub fn get_sections(
                                 .push(MarkdownSection::Heading(HeadingLevel::Sub(pushing_value)));
                         }
 
-                        current_heading_level = alternative_heading_level;
+                        current_heading_level = alternate_heading_level;
                         continue;
                     }
                 }

@@ -1,4 +1,4 @@
-use crate::tools::parsing::headings::alternative_headings::validation::validate_previous_alternative_headings;
+use crate::tools::parsing::headings::alternate_headings::validation::validate_previous_alternate_headings;
 
 #[test]
 fn case_1() {
@@ -18,7 +18,7 @@ Content
         .split('\n')
         .collect();
 
-    let left = validate_previous_alternative_headings(&input_lines, 12);
+    let left = validate_previous_alternate_headings(&input_lines, 12);
     let right = true;
 
     assert_eq!(left, right);
@@ -35,7 +35,7 @@ Content"#
         .split('\n')
         .collect();
 
-    let left = validate_previous_alternative_headings(&input_lines, 1);
+    let left = validate_previous_alternate_headings(&input_lines, 1);
     let right = true;
 
     assert_eq!(left, right);
@@ -60,7 +60,7 @@ Content
         .split('\n')
         .collect();
 
-    let left = validate_previous_alternative_headings(&input_lines, 12);
+    let left = validate_previous_alternate_headings(&input_lines, 12);
     let right = false;
 
     assert_eq!(left, right);

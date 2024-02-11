@@ -5,12 +5,12 @@ mod get_sections {
     mod properties;
 
     mod headings {
-        mod alternative_headings;
+        mod alternate_headings;
         mod hash_headings;
     }
 }
 
 mod headings {
-    mod alternative_headings;
+    mod alternate_headings;
     mod get_top_heading_level;
 }

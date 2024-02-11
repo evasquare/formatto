@@ -1,6 +1,6 @@
 /// Return the top heading level of a document.
 pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
-    use self::alternative_headings::get_valid_alternative_heading_level;
+    use self::alternate_headings::get_valid_alternate_heading_level;
     use self::hash_headings::validation::validate_hash_heading;
 
     let mut top_heading_level = usize::MAX;
@@ -29,14 +29,14 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
             }
         }
 
-        // Parse alternative headings.
-        let alternative_heading_level: Option<usize> =
-            get_valid_alternative_heading_level(input_lines, index);
+        // Parse alternate headings.
+        let alternate_heading_level: Option<usize> =
+            get_valid_alternate_heading_level(input_lines, index);
 
-        if let Some(alternative_heading_level) = alternative_heading_level {
-            if alternative_heading_level == 1 && 1 < top_heading_level {
+        if let Some(alternate_heading_level) = alternate_heading_level {
+            if alternate_heading_level == 1 && 1 < top_heading_level {
                 top_heading_level = 1;
-            } else if alternative_heading_level == 2 && 2 < top_heading_level {
+            } else if alternate_heading_level == 2 && 2 < top_heading_level {
                 top_heading_level = 2;
             }
         }
@@ -68,14 +68,14 @@ pub mod hash_headings {
     }
 }
 
-pub mod alternative_headings {
-    /// Get the level of a valid alternative heading being read.
-    pub fn get_valid_alternative_heading_level(
+pub mod alternate_headings {
+    /// Get the level of a valid alternate heading being read.
+    pub fn get_valid_alternate_heading_level(
         input_lines: &[&str],
         reading_index: usize,
     ) -> Option<usize> {
-        use validation::get_valid_alternative_top_heading_level::get_alternative_heading_level;
-        use validation::validate_previous_alternative_headings;
+        use validation::get_valid_alternate_top_heading_level::get_alternate_heading_level;
+        use validation::validate_previous_alternate_headings;
 
         if reading_index > input_lines.len() - 1 {
             return None;
@@ -88,20 +88,20 @@ pub mod alternative_headings {
             return None;
         }
 
-        let heading_level = validate_previous_alternative_headings(input_lines, reading_index);
+        let heading_level = validate_previous_alternate_headings(input_lines, reading_index);
         if !heading_level {
             return None;
         }
 
-        get_alternative_heading_level(input_lines[reading_index])
+        get_alternate_heading_level(input_lines[reading_index])
     }
 
     pub mod validation {
-        pub fn validate_previous_alternative_headings(
+        pub fn validate_previous_alternate_headings(
             input_lines: &[&str],
             reading_index: usize,
         ) -> bool {
-            use self::get_valid_alternative_top_heading_level::get_alternative_heading_level;
+            use self::get_valid_alternate_top_heading_level::get_alternate_heading_level;
 
             let mut is_reading_syntax = true; // true
             let mut is_reading_title = false; // false
@@ -116,7 +116,7 @@ pub mod alternative_headings {
                         return true;
                     }
 
-                    if get_alternative_heading_level(line).is_some() {
+                    if get_alternate_heading_level(line).is_some() {
                         is_reading_syntax = false;
                         is_reading_title = true;
                         continue;
@@ -141,20 +141,20 @@ pub mod alternative_headings {
             false // Fallback.
         }
 
-        pub mod get_valid_alternative_top_heading_level {
-            /// Check which level of alternative heading is being read.
+        pub mod get_valid_alternate_top_heading_level {
+            /// Check which level of alternate heading is being read.
             /// EXAMPLE: heading-1 or heading-2
-            pub fn get_alternative_heading_level(line: &str) -> Option<usize> {
+            pub fn get_alternate_heading_level(line: &str) -> Option<usize> {
                 if line.is_empty() {
                     return None;
                 }
 
-                let valid_alternative_heading_1 = line.chars().all(|char| char == '=');
-                let valid_alternative_heading_2 = line.chars().all(|char| char == '-');
+                let valid_alternate_heading_1 = line.chars().all(|char| char == '=');
+                let valid_alternate_heading_2 = line.chars().all(|char| char == '-');
 
-                if valid_alternative_heading_1 {
+                if valid_alternate_heading_1 {
                     Some(1)
-                } else if valid_alternative_heading_2 {
+                } else if valid_alternate_heading_2 {
                     Some(2)
                 } else {
                     None
@@ -162,32 +162,32 @@ pub mod alternative_headings {
             }
         }
 
-        /// Validate alternative top heading.
-        pub fn validate_alternative_top_heading(
+        /// Validate alternate top heading.
+        pub fn validate_alternate_top_heading(
             lines: &[&str],
             reading_index: usize,
             top_heading_level: usize,
         ) -> bool {
-            use super::get_valid_alternative_heading_level;
+            use super::get_valid_alternate_heading_level;
 
             let heading_level: Option<usize> =
-                get_valid_alternative_heading_level(lines, reading_index);
+                get_valid_alternate_heading_level(lines, reading_index);
             if let Some(heading_level) = heading_level {
                 heading_level == top_heading_level
             } else {
                 false
             }
         }
-        /// Validate alternative sub heading.
-        pub fn validate_alternative_sub_heading(
+        /// Validate alternate sub heading.
+        pub fn validate_alternate_sub_heading(
             lines: &[&str],
             reading_index: usize,
             top_heading_level: usize,
         ) -> bool {
-            use super::get_valid_alternative_heading_level;
+            use super::get_valid_alternate_heading_level;
 
             let heading_level: Option<usize> =
-                get_valid_alternative_heading_level(lines, reading_index);
+                get_valid_alternate_heading_level(lines, reading_index);
             if let Some(heading_level) = heading_level {
                 heading_level > top_heading_level
             } else {
