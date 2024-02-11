@@ -284,6 +284,13 @@ pub fn get_sections(
         // * Read contents.
         if is_reading_content_section {
             error_information.reading_section_starting_line = index;
+
+            check_parsing_error(
+                is_reading_code_block,
+                is_reading_property_block,
+                settings,
+                &error_information,
+            )?;
             append_line_break(&mut temp_content_section, line);
         }
 
@@ -297,7 +304,23 @@ pub fn get_sections(
         }
     }
 
-    // Return an error if the document is invalid.
+    check_parsing_error(
+        is_reading_code_block,
+        is_reading_property_block,
+        settings,
+        &error_information,
+    )?;
+
+    Ok(sections)
+}
+
+/// Return an error if the document is invalid.
+fn check_parsing_error(
+    is_reading_code_block: bool,
+    is_reading_property_block: bool,
+    settings: &MainPluginSettings,
+    error_information: &ErrorInformation,
+) -> Result<(), Box<dyn Error>> {
     if is_reading_code_block || is_reading_property_block {
         let error_message =
             if let Some(true) = settings.other_options.show_more_detailed_error_messages {
@@ -312,5 +335,5 @@ pub fn get_sections(
         return Err(error_message.into());
     }
 
-    Ok(sections)
+    Ok(())
 }
