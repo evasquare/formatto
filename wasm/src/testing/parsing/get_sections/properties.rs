@@ -92,6 +92,5 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 #### Heading 4
 ## Heading 2"#;
 
-    println!("{}", get_sections(input, &get_example_settings()).is_err());
     assert!(get_sections(input, &get_example_settings()).is_err())
 }
