@@ -10,6 +10,7 @@ mod utils;
 #[cfg(test)]
 mod testing;
 
+#[cfg(target_arch = "wasm32")]
 #[wasm_bindgen]
 extern "C" {
     #[wasm_bindgen(js_namespace = console)]
@@ -18,12 +19,20 @@ extern "C" {
     pub fn error(s: &str);
 }
 
+#[cfg(not(target_arch = "wasm32"))]
+pub fn log(s: &str) {
+    println!("{}", s);
+}
+#[cfg(not(target_arch = "wasm32"))]
+pub fn error(s: &str) {
+    eprintln!("{}", s);
+}
+
 mod macro_rules {
     #[macro_export]
     macro_rules! console_log {
         ($($arg:tt)*) => ($crate::log(&format!($($arg)*)));
     }
-
     #[macro_export]
     macro_rules! console_error {
         ($($arg:tt)*) => ($crate::error(&format!($($arg)*)));
