@@ -12,7 +12,6 @@ import { RibbonIcon } from "./etc/ribbonIcon";
 import { FormattoUtil } from "./utils";
 
 import type { FormattoPluginSettings } from "@settings/settingTypes";
-
 /** Entry Point. */
 export default class FormattoPlugin extends Plugin {
     settings: FormattoPluginSettings;

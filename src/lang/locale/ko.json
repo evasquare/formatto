@@ -1,0 +1,77 @@
+{
+    "commands": {
+        "Format Document": "문서 포맷하기"
+    },
+    "noticeMessages": [
+        {
+            "Document Formatted!": "포맷 완료!",
+            "Document is already formatted!": "문서가 이미 포맷돼 있습니다."
+        },
+        {
+            "No open document is found.": "열려있는 문서를 찾지 못했습니다.",
+            "You can only format in editing mode.": "편집 모드에서만 포맷할수 있습니다."
+        },
+        {
+            "Please enter a valid number.\nIt should be at least 0.": "유효한 숫자를 입력해주세요.\n0 이상만 입력할수 있습니다.",
+            "Please enter a valid number.\nIt should be a whole number.": "유효한 숫자를 입력해주세요.\n자연수만 입력할 수 있습니다."
+        }
+    ],
+    "settingSections": {
+        "Heading gaps": "제목 줄바꿈",
+        "Other gaps": "기타 줄바꿈",
+        "Format options": "포맷 옵션",
+        "Other options": "기타 옵션"
+    },
+    "headingGaps": [
+        {
+            "Before top level headings": "",
+            "Decides gaps before top level of headings.": ""
+        },
+        {
+            "Before first sub heading": "",
+            "Decides the child heading gap right before a parent heading.": ""
+        },
+        {
+            "Before sub headings": "",
+            "Decides gaps before headings that are not in the top level.": ""
+        }
+    ],
+    "otherGaps": [
+        {
+            "After properties": "",
+            "Decides the gap after the property section.": ""
+        },
+        {
+            "Before contents": "",
+            "Decides gaps before contents (ex: Text section before headings).": ""
+        },
+        {
+            "Before contents after code blocks": "",
+            "Decides gaps before 'contents that are after code blocks'.": ""
+        },
+        {
+            "Before code blocks": "",
+            "Decides gaps before code blocks.": ""
+        },
+        {
+            "Before code blocks after headings": "",
+            "Decides gaps before 'code blocks that are after headings'.": ""
+        }
+    ],
+    "formatOptions": [
+        {
+            "Newline at the end of a document": "",
+            "Inserts a newline at the end of a document.": ""
+        }
+    ],
+    "otherOptions": [
+        {
+            "Notify when no change is needed": "",
+            "Displays a different message when no change was made.": ""
+        },
+        {
+            "Show more detailed error messages": "",
+            "Displays additional information when parsing fails.": ""
+        }
+    ]
+}

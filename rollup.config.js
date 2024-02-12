@@ -1,9 +1,10 @@
 import alias from "@rollup/plugin-alias";
 import commonjs from "@rollup/plugin-commonjs";
+import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
+import svg from "rollup-plugin-svg";
 import typescript from "@rollup/plugin-typescript";
 import wasm from "@rollup/plugin-wasm";
-import svg from "rollup-plugin-svg";
 
 export default {
     input: "src/main.ts",
@@ -32,5 +33,6 @@ export default {
             include: "node_modules/**",
         }),
         svg(),
+        json(),
     ],
 };

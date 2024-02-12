@@ -31,10 +31,10 @@
         "@rollup/plugin-typescript": "^11.1.5",
         "@rollup/plugin-wasm": "^6.2.2",
         "@types/node": "^20.8.10",
-        "eslint": "^8.52.0",
-        "eslint-config-prettier": "^9.0.0",
         "@typescript-eslint/eslint-plugin": "^6.12.0",
         "@typescript-eslint/parser": "^6.12.0",
+        "eslint": "^8.52.0",
+        "eslint-config-prettier": "^9.0.0",
         "nodemon": "^3.0.1",
         "obsidian": "latest",
         "rollup": "^4.3.0",
@@ -42,5 +42,8 @@
         "typescript": "^5.2.2",
         "vitest": "^0.34.6",
         "wasm-pack": "^0.12.1"
+    },
+    "dependencies": {
+        "@rollup/plugin-json": "^6.1.0"
     }
 }

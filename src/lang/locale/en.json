@@ -1,0 +1,77 @@
+{
+    "commands": {
+        "Format Document": "Format Document"
+    },
+    "noticeMessages": [
+        {
+            "Document Formatted!": "Document Formatted!",
+            "Document is already formatted!": "Document is already formatted!"
+        },
+        {
+            "No open document is found.": "No open document is found.",
+            "You can only format in editing mode.": "You can only format in editing mode."
+        },
+        {
+            "Please enter a valid number.\nIt should be at least 0.": "Please enter a valid number.\nIt should be at least 0.",
+            "Please enter a valid number.\nIt should be a whole number.": "Please enter a valid number.\nIt should be a whole number."
+        }
+    ],
+    "settingSections": {
+        "Heading gaps": "Heading gaps",
+        "Other gaps": "Other gaps",
+        "Format options": "Format options",
+        "Other options": "Other options"
+    },
+    "headingGaps": [
+        {
+            "Before top level headings": "Before top level headings",
+            "Decides gaps before top level of headings.": "Decides gaps before top level of headings."
+        },
+        {
+            "Before first sub heading": "Before first sub heading",
+            "Decides the child heading gap right before a parent heading.": "Decides the child heading gap right before a parent heading."
+        },
+        {
+            "Before sub headings": "Before sub headings",
+            "Decides gaps before headings that are not in the top level.": "Decides gaps before headings that are not in the top level."
+        }
+    ],
+    "otherGaps": [
+        {
+            "After properties": "After properties",
+            "Decides the gap after the property section.": "Decides the gap after the property section."
+        },
+        {
+            "Before contents": "Before contents",
+            "Decides gaps before contents (ex: Text section before headings).": "Decides gaps before contents (ex: Text section before headings)."
+        },
+        {
+            "Before contents after code blocks": "Before contents after code blocks",
+            "Decides gaps before 'contents that are after code blocks'.": "Decides gaps before 'contents that are after code blocks'."
+        },
+        {
+            "Before code blocks": "Before code blocks",
+            "Decides gaps before code blocks.": "Decides gaps before code blocks."
+        },
+        {
+            "Before code blocks after headings": "Before code blocks after headings",
+            "Decides gaps before 'code blocks that are after headings'.": "Decides gaps before 'code blocks that are after headings'."
+        }
+    ],
+    "formatOptions": [
+        {
+            "Newline at the end of a document": "Newline at the end of a document",
+            "Inserts a newline at the end of a document.": "Inserts a newline at the end of a document."
+        }
+    ],
+    "otherOptions": [
+        {
+            "Notify when no change is needed": "Notify when no change is needed",
+            "Displays a different message when no change was made.": "Displays a different message when no change was made."
+        },
+        {
+            "Show more detailed error messages": "Show more detailed error messages",
+            "Displays additional information when parsing fails.": "Displays additional information when parsing fails."
+        }
+    ]
+}
