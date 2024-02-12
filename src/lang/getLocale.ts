@@ -17,24 +17,14 @@ export const LOCALE_CATEGORY = {
 type ObjectValues<T> = T[keyof T];
 type LocaleCategory = ObjectValues<typeof LOCALE_CATEGORY>;
 
+const locales: { [key: string]: typeof en } = {
+    de: de,
+    en: en,
+    ko: ko,
+};
+
 /** @example getLocale(LOCALE_CATEGORY.COMMANDS, "Format Document") */
 export const getLocale = (category: LocaleCategory, key: string) => {
-    let usingLocale: typeof en = en;
-    switch (detectedLanguage) {
-        case "de":
-            usingLocale = de;
-            break;
-        case "en":
-            usingLocale = en;
-            break;
-        case "ko":
-            usingLocale = ko;
-            break;
-
-        default:
-            usingLocale = en;
-            break;
-    }
-
+    const usingLocale = locales[detectedLanguage] ?? locales.en;
     return usingLocale[category][key];
 };
