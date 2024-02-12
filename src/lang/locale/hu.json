@@ -1,0 +1,77 @@
+{
+    "commands": {
+        "Format Document": ""
+    },
+    "noticeMessages": [
+        {
+            "Document Formatted!": "",
+            "Document is already formatted!": ""
+        },
+        {
+            "No open document is found.": "",
+            "You can only format in editing mode.": ""
+        },
+        {
+            "Please enter a valid number.\nIt should be at least 0.": "",
+            "Please enter a valid number.\nIt should be a whole number.": ""
+        }
+    ],
+    "settingSections": {
+        "Heading gaps": "",
+        "Other gaps": "",
+        "Format options": "",
+        "Other options": ""
+    },
+    "headingGaps": [
+        {
+            "Before top level headings": "",
+            "Decides gaps before top level of headings.": ""
+        },
+        {
+            "Before first sub heading": "",
+            "Decides the child heading gap right before a parent heading.": ""
+        },
+        {
+            "Before sub headings": "",
+            "Decides gaps before headings that are not in the top level.": ""
+        }
+    ],
+    "otherGaps": [
+        {
+            "After properties": "",
+            "Decides the gap after the property section.": ""
+        },
+        {
+            "Before contents": "",
+            "Decides gaps before contents (ex: Text section before headings).": ""
+        },
+        {
+            "Before contents after code blocks": "",
+            "Decides gaps before 'contents that are after code blocks'.": ""
+        },
+        {
+            "Before code blocks": "",
+            "Decides gaps before code blocks.": ""
+        },
+        {
+            "Before code blocks after headings": "",
+            "Decides gaps before 'code blocks that are after headings'.": ""
+        }
+    ],
+    "formatOptions": [
+        {
+            "Newline at the end of a document": "",
+            "Inserts a newline at the end of a document.": ""
+        }
+    ],
+    "otherOptions": [
+        {
+            "Notify when no change is needed": "",
+            "Displays a different message when no change was made.": ""
+        },
+        {
+            "Show more detailed error messages": "",
+            "Displays additional information when parsing fails.": ""
+        }
+    ]
+}
