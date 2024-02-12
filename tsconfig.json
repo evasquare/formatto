@@ -12,7 +12,7 @@
         "noUncheckedIndexedAccess": true,
         "moduleResolution": "node10",
         "module": "ESNext",
-        "lib": ["ES2022"],
+        "lib": ["ES2022", "DOM"],
         "baseUrl": "./",
         "paths": {
             "@events/*": ["./src/events/*"],
