@@ -43,7 +43,7 @@
         },
         {
             "Before contents": "Before contents",
-            "Decides gaps before contents (ex: Text section before headings).": "Decides gaps before contents (ex: Text section before headings)."
+            "Decides gaps before contents. (ex: Text section before headings)": "Decides gaps before contents. (ex: Text section before headings)"
         },
         {
             "Before contents after code blocks": "Before contents after code blocks",
