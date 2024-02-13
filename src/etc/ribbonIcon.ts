@@ -1,4 +1,5 @@
 import { MarkdownView, Notice } from "obsidian";
+import { getLocale, LOCALE_CATEGORY } from "src/lang/getLocale";
 import FormattoPlugin from "src/main";
 
 export class RibbonIcon {
@@ -15,11 +16,21 @@ export class RibbonIcon {
                 this.plugin.app.workspace.getActiveViewOfType(MarkdownView);
 
             if (!editor) {
-                new Notice("No open document is found.");
+                new Notice(
+                    getLocale(
+                        LOCALE_CATEGORY.NOTICE_MESSAGES,
+                        "No open document is found."
+                    )
+                );
                 return;
             }
             if (activeView.getMode() !== "source") {
-                new Notice("You can only format in editing mode.");
+                new Notice(
+                    getLocale(
+                        LOCALE_CATEGORY.NOTICE_MESSAGES,
+                        "You can only format in editing mode."
+                    )
+                );
                 return;
             }
 

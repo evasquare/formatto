@@ -1,3 +1,5 @@
+import { getLocale, LOCALE_CATEGORY } from "src/lang/getLocale";
+
 import FormattoPlugin from "../main";
 
 export class FormattoEditorMenu {
@@ -18,7 +20,12 @@ export class FormattoEditorMenu {
             this.plugin.app.workspace.on("editor-menu", (menu, editor) => {
                 menu.addItem((item) =>
                     item
-                        .setTitle("Format Document")
+                        .setTitle(
+                            getLocale(
+                                LOCALE_CATEGORY.EDITOR_MENU,
+                                "Format Document"
+                            )
+                        )
                         .setIcon("formatto-logo")
                         .onClick(() => {
                             this.plugin.utils.formatDocument(editor);

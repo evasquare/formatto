@@ -1,15 +1,19 @@
 import { debounce, Notice, PluginSettingTab, Setting } from "obsidian";
+import { getLocale, LOCALE_CATEGORY } from "src/lang/getLocale";
 
 import type { App } from "obsidian";
 import type FormattoPlugin from "../main";
-
 export class MainPluginSettingTab extends PluginSettingTab {
     private plugin: FormattoPlugin;
     private noticeMessages = {
-        invalidNumberMessage:
-            "Please enter a valid number.\nIt should be at least 0.",
-        notWholeNumberMessage:
-            "Please enter a valid number.\nIt should be a whole number.",
+        invalidNumberMessage: getLocale(
+            LOCALE_CATEGORY.NOTICE_MESSAGES,
+            "Please enter a valid number.\nIt should be at least 0."
+        ),
+        notWholeNumberMessage: getLocale(
+            LOCALE_CATEGORY.NOTICE_MESSAGES,
+            "Please enter a valid number.\nIt should be a whole number."
+        ),
     };
 
     constructor(app: App, plugin: FormattoPlugin) {
@@ -46,11 +50,21 @@ export class MainPluginSettingTab extends PluginSettingTab {
 
         // Heading Gaps
         containerEl.createEl("h2", {
-            text: "Heading gaps",
+            text: getLocale(LOCALE_CATEGORY.SETTING_SECTIONS, "Heading gaps"),
         });
         new Setting(containerEl)
-            .setName("Before top level headings")
-            .setDesc("Decides gaps before top level of headings.")
+            .setName(
+                getLocale(
+                    LOCALE_CATEGORY.HEADING_GAPS,
+                    "Before top level headings"
+                )
+            )
+            .setDesc(
+                getLocale(
+                    LOCALE_CATEGORY.HEADING_GAPS,
+                    "Decides gaps before top level of headings."
+                )
+            )
             .addText((text) =>
                 text
                     .setPlaceholder("3")
@@ -66,9 +80,17 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
         new Setting(containerEl)
-            .setName("Before first sub heading")
+            .setName(
+                getLocale(
+                    LOCALE_CATEGORY.HEADING_GAPS,
+                    "Before first sub heading"
+                )
+            )
             .setDesc(
-                "Decides the child heading gap right before a parent heading."
+                getLocale(
+                    LOCALE_CATEGORY.HEADING_GAPS,
+                    "Decides the child heading gap right before a parent heading."
+                )
             )
             .addText((text) =>
                 text
@@ -85,9 +107,14 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
         new Setting(containerEl)
-            .setName("Before sub headings")
+            .setName(
+                getLocale(LOCALE_CATEGORY.HEADING_GAPS, "Before sub headings")
+            )
             .setDesc(
-                "Decides gaps before headings that are not in the top level."
+                getLocale(
+                    LOCALE_CATEGORY.HEADING_GAPS,
+                    "Decides gaps before headings that are not in the top level."
+                )
             )
             .addText((text) =>
                 text
@@ -106,11 +133,16 @@ export class MainPluginSettingTab extends PluginSettingTab {
 
         // Other Gaps
         containerEl.createEl("h2", {
-            text: "Other gaps",
+            text: getLocale(LOCALE_CATEGORY.SETTING_SECTIONS, "Other gaps"),
         });
         new Setting(containerEl)
-            .setName("After properties")
-            .setDesc("Decides the gap after the property section.")
+            .setName(getLocale(LOCALE_CATEGORY.OTHER_GAPS, "After properties"))
+            .setDesc(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_GAPS,
+                    "Decides the gap after the property section."
+                )
+            )
             .addText((text) =>
                 text
                     .setPlaceholder("2")
@@ -123,9 +155,12 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
         new Setting(containerEl)
-            .setName("Before contents")
+            .setName(getLocale(LOCALE_CATEGORY.OTHER_GAPS, "Before contents"))
             .setDesc(
-                "Decides gaps before contents (ex: Text section before headings)."
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_GAPS,
+                    "Decides gaps before contents. (ex: Text section before headings)"
+                )
             )
             .addText((text) =>
                 text
@@ -139,9 +174,17 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
         new Setting(containerEl)
-            .setName("Before contents after code blocks")
+            .setName(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_GAPS,
+                    "Before contents after code blocks"
+                )
+            )
             .setDesc(
-                "Decides gaps before 'contents that are after code blocks'."
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_GAPS,
+                    "Decides gaps before 'contents that are after code blocks'."
+                )
             )
             .addText((text) =>
                 text
@@ -159,8 +202,15 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
         new Setting(containerEl)
-            .setName("Before code blocks")
-            .setDesc("Decides gaps before code blocks.")
+            .setName(
+                getLocale(LOCALE_CATEGORY.OTHER_GAPS, "Before code blocks")
+            )
+            .setDesc(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_GAPS,
+                    "Decides gaps before code blocks."
+                )
+            )
             .addText((text) =>
                 text
                     .setPlaceholder("1")
@@ -173,9 +223,17 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
         new Setting(containerEl)
-            .setName("Before code blocks after headings")
+            .setName(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_GAPS,
+                    "Before code blocks after headings"
+                )
+            )
             .setDesc(
-                "Decides gaps before 'code blocks that are after headings'."
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_GAPS,
+                    "Decides gaps before 'code blocks that are after headings'."
+                )
             )
             .addText((text) =>
                 text
@@ -195,11 +253,21 @@ export class MainPluginSettingTab extends PluginSettingTab {
 
         // Format Settings
         containerEl.createEl("h2", {
-            text: "Format options",
+            text: getLocale(LOCALE_CATEGORY.SETTING_SECTIONS, "Format options"),
         });
         new Setting(containerEl)
-            .setName("Newline at the end of a document")
-            .setDesc("Inserts a newline at the end of a document.")
+            .setName(
+                getLocale(
+                    LOCALE_CATEGORY.FORMAT_OPTIONS,
+                    "Newline at the end of a document"
+                )
+            )
+            .setDesc(
+                getLocale(
+                    LOCALE_CATEGORY.FORMAT_OPTIONS,
+                    "Inserts a newline at the end of a document."
+                )
+            )
             .addToggle((text) =>
                 text
                     .setValue(this.plugin.settings.formatOptions.insertNewline)
@@ -212,11 +280,21 @@ export class MainPluginSettingTab extends PluginSettingTab {
 
         // Other Settings
         containerEl.createEl("h2", {
-            text: "Other options",
+            text: getLocale(LOCALE_CATEGORY.SETTING_SECTIONS, "Other options"),
         });
         new Setting(containerEl)
-            .setName("Notify when no change is needed")
-            .setDesc("Displays a different message when no change was made.")
+            .setName(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_OPTIONS,
+                    "Notify when no change is needed"
+                )
+            )
+            .setDesc(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_OPTIONS,
+                    "Displays a different message when no change was made."
+                )
+            )
             .addToggle((text) =>
                 text
                     .setValue(
@@ -229,8 +307,18 @@ export class MainPluginSettingTab extends PluginSettingTab {
                     })
             );
         new Setting(containerEl)
-            .setName("Show more detailed error messages")
-            .setDesc("Displays additional information when parsing fails.")
+            .setName(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_OPTIONS,
+                    "Show more detailed error messages"
+                )
+            )
+            .setDesc(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_OPTIONS,
+                    "Displays additional information when parsing fails."
+                )
+            )
             .addToggle((text) =>
                 text
                     .setValue(

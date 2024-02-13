@@ -1,6 +1,7 @@
 import { Editor, Notice } from "obsidian";
 
 import { format_document } from "../wasm/pkg/formatto_wasm";
+import { getLocale, LOCALE_CATEGORY } from "./lang/getLocale";
 import FormattoPlugin from "./main";
 
 export class FormattoUtil {
@@ -34,9 +35,19 @@ export class FormattoUtil {
             this.plugin.settings.otherOptions.notifyWhenUnchanged &&
             formattedDocument === originalDocument
         ) {
-            new Notice("Document is already formatted!");
+            new Notice(
+                getLocale(
+                    LOCALE_CATEGORY.NOTICE_MESSAGES,
+                    "Document is already formatted!"
+                )
+            );
         } else {
-            new Notice("Document Formatted!");
+            new Notice(
+                getLocale(
+                    LOCALE_CATEGORY.NOTICE_MESSAGES,
+                    "Document Formatted!"
+                )
+            );
         }
     }
 }
