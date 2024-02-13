@@ -7,6 +7,7 @@ const detectedLanguage = window.localStorage.getItem("language");
 
 export const LOCALE_CATEGORY = {
     COMMANDS: "commands",
+    EDITOR_MENU: "editorMenu",
     NOTICE_MESSAGES: "noticeMessages",
     SETTING_SECTIONS: "settingSections",
     HEADING_GAPS: "headingGaps",
