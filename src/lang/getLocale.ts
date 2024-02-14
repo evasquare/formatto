@@ -1,4 +1,3 @@
-import de from "./locale/de.json";
 import en from "./locale/en.json";
 import hu from "./locale/hu.json";
 import ko from "./locale/ko.json";
@@ -20,7 +19,6 @@ type ObjectValues<T> = T[keyof T];
 type LocaleCategory = ObjectValues<typeof LOCALE_CATEGORY>;
 
 const locales: { [key: string]: typeof en } = {
-    de: de,
     en: en,
     hu: hu,
     ko: ko,
