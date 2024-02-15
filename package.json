@@ -1,8 +1,8 @@
 {
     "name": "formatto",
     "type": "module",
-    "version": "1.2.0",
-    "description": "Obsidian Formatter.",
+    "version": "1.2.1",
+    "description": "Simple, fast, and easy-to-use Obsidian markdown formatter.",
     "main": "build/index.js",
     "scripts": {
         "dev:ts": "nodemon --config \"./nodemon-configs/nodemon-dev-ts.json\"",
