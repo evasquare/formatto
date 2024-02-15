@@ -3,7 +3,7 @@ import { getLocale, LOCALE_CATEGORY } from "src/lang/getLocale";
 
 import MainPlugin from "../main";
 
-export class FormattoCommand {
+export class FormattoCommands {
     private plugin: MainPlugin;
 
     constructor(plugin: MainPlugin) {

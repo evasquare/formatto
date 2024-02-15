@@ -3,7 +3,8 @@ import { getLocale, LOCALE_CATEGORY } from "src/lang/getLocale";
 
 import type { App } from "obsidian";
 import type FormattoPlugin from "../main";
-export class MainPluginSettingTab extends PluginSettingTab {
+
+export class FormattoSettingTab extends PluginSettingTab {
     private plugin: FormattoPlugin;
     private noticeMessages = {
         invalidNumberMessage: getLocale(

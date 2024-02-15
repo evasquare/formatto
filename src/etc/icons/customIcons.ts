@@ -2,7 +2,7 @@ import { addIcon } from "obsidian";
 
 import formattoLogo from "./img/formatto-logo.svg";
 
-export class CustomIcon {
+export class CustomIcons {
     private icons = [{ iconId: "formatto-logo", svg: formattoLogo }];
 
     registerIcons = () => {

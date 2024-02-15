@@ -4,7 +4,7 @@ import { format_document } from "../wasm/pkg/formatto_wasm";
 import { getLocale, LOCALE_CATEGORY } from "./lang/getLocale";
 import FormattoPlugin from "./main";
 
-export class FormattoUtil {
+export class FormattoUtils {
     private plugin: FormattoPlugin;
 
     constructor(plugin: FormattoPlugin) {

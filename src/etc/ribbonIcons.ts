@@ -2,7 +2,7 @@ import { MarkdownView, Notice } from "obsidian";
 import { getLocale, LOCALE_CATEGORY } from "src/lang/getLocale";
 import FormattoPlugin from "src/main";
 
-export class RibbonIcon {
+export class RibbonIcons {
     private plugin: FormattoPlugin;
 
     constructor(plugin: FormattoPlugin) {
