@@ -1,7 +1,7 @@
 ## Which branch do I clone/fork?
 You can start by cloning or forking a branch for the version you're adding features in.
 
-Please DO NOT make a pull request to the [main](https://github.com/decaplanet/formatto) branch.
+Please DO NOT make a pull request to the [main](https://github.com/polyecho/formatto) branch.
 
 
 ## Build Environment
