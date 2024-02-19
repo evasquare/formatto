@@ -4,7 +4,7 @@
     "version": "1.2.1",
     "minAppVersion": "0.15.0",
     "description": "Format markdown document.",
-    "author": "Deca",
+    "author": "Echo",
     "authorUrl": "https://github.com/polyecho",
     "isDesktopOnly": false
 }
