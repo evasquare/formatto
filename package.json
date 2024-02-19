@@ -41,9 +41,7 @@
         "rollup-plugin-svg": "^2.0.0",
         "typescript": "^5.2.2",
         "vitest": "^0.34.6",
-        "wasm-pack": "^0.12.1"
-    },
-    "dependencies": {
+        "wasm-pack": "^0.12.1",
         "@rollup/plugin-json": "^6.1.0"
     }
 }
