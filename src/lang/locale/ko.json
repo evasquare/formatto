@@ -48,5 +48,16 @@
         "Displays a different message when no change was made.": "변경할 사항이 없으면 다른 메세지를 표시합니다.",
         "Show more detailed error messages": "더 상세한 에러 메세지 표시하기",
         "Displays additional information when parsing fails.": "문서를 읽지 못했을 때 추가 정보를 표시합니다."
+    },
+    "wasm": {
+        "parsing": {
+            "Failed to parse the document. [Line: {VALUE}]": "문서를 읽지 못했습니다. [줄: {VALUE}]",
+            "Failed to parse the document.": "문서를 읽지 못했습니다."
+        },
+        "formatting": {
+            "Failed to read options. Please make sure there is no option with an empty value.": "옵션을 읽지 못했습니다. 값이 비어있는 옵션이 없는지 다시 확인해주세요.",
+            "Failed to read options. Some of them are possibly not positive number values.": "설정을 읽지 못했습니다. 양수가 아닌 값이 있을수도 있습니다.",
+            "Failed to read option properties.": "옵션 프로퍼티를 읽지 못했습니다."
+        }
     }
 }

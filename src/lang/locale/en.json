@@ -48,5 +48,16 @@
         "Displays a different message when no change was made.": "Displays a different message when no change was made.",
         "Show more detailed error messages": "Show more detailed error messages",
         "Displays additional information when parsing fails.": "Displays additional information when parsing fails."
+    },
+    "wasm": {
+        "parsing": {
+            "Failed to parse the document. [Line: {VALUE}]": "Failed to parse the document. [Line: {VALUE}]",
+            "Failed to parse the document.": "Failed to parse the document."
+        },
+        "formatting": {
+            "Failed to read options. Please make sure there is no option with an empty value.": "Failed to read options. Please make sure there is no option with an empty value.",
+            "Failed to read options. Some of them are possibly not positive number values.": "Failed to read options. Some of them are possibly not positive number values.",
+            "Failed to read option properties.": "Failed to read option properties."
+        }
     }
 }
