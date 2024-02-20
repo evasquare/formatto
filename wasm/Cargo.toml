@@ -2,7 +2,8 @@
 name = "formatto-wasm"
 description = "Wasm bindings for Formatto."
 version = "1.2.0"
-authors = ["polyecho"]
+authors = ["Echo"]
+repository = "https://github.com/polyecho/formatto"
 license = "MIT"
 edition = "2018"
 

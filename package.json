@@ -18,7 +18,7 @@
         "type": "git",
         "url": "git+https://github.com/polyecho/formatto.git"
     },
-    "author": "polyecho",
+    "author": "Echo",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/polyecho/formatto/issues"
