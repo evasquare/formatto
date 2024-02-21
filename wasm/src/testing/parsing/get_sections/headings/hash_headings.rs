@@ -1,5 +1,5 @@
 use crate::{
-    testing::{get_example_settings, setup},
+    testing::{get_example_locale, get_example_settings, setup},
     tools::{
         parsing::get_sections,
         tokens::{HeadingLevel, MarkdownSection},
@@ -25,7 +25,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings()).unwrap(),
+        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
         expected_output
     );
 }
@@ -45,7 +45,7 @@ fn case_2() {
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings()).unwrap(),
+        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
         expected_output
     );
 }
@@ -65,7 +65,7 @@ fn case_3() {
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings()).unwrap(),
+        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
         expected_output
     );
 }
@@ -102,7 +102,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings()).unwrap(),
+        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
         expected_output
     );
 }
@@ -138,7 +138,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings()).unwrap(),
+        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
         expected_output
     );
 }
@@ -167,7 +167,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings()).unwrap(),
+        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
         expected_output
     );
 }
@@ -204,7 +204,7 @@ fn hash_headings_without_title_names() {
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings()).unwrap(),
+        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
         expected_output
     );
 }
@@ -225,7 +225,7 @@ fn invalid_input_1() {
     )];
 
     assert_eq!(
-        get_sections(input, &get_example_settings()).unwrap(),
+        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
         expected_output
     );
 }

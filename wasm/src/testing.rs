@@ -1,10 +1,11 @@
-use crate::{
-    setting_schema::{FormatOptions, HeadingGaps, MainPluginSettings, OtherGaps, OtherOptions},
-    utils::set_panic_hook,
-};
+use crate::utils::set_panic_hook;
+use serde_json::Value;
+
+use crate::setting_schema::{FormatOptions, HeadingGaps, OtherGaps, OtherOptions, PluginSettings};
 
 mod formatting;
 mod parsing;
+mod utils;
 
 #[allow(dead_code)]
 fn setup() {
@@ -12,8 +13,8 @@ fn setup() {
 }
 
 #[allow(dead_code)]
-fn get_example_settings() -> MainPluginSettings {
-    MainPluginSettings {
+fn get_example_settings() -> PluginSettings {
+    PluginSettings {
         heading_gaps: HeadingGaps {
             before_top_level_headings: Some("3".to_string()),
             before_first_sub_heading: Some("1".to_string()),
@@ -34,4 +35,23 @@ fn get_example_settings() -> MainPluginSettings {
             show_more_detailed_error_messages: Some(false),
         },
     }
+}
+
+#[allow(dead_code)]
+fn get_example_locale() -> Value {
+    let val = r#"
+    {
+        "parsing": {
+            "Failed to parse the document. [Line: {LINE_NUMBER}]": "문서를 읽지 못했습니다. [줄: {LINE_NUMBER}]",
+            "Failed to parse the document.": "문서를 읽지 못했습니다."
+        },
+        "formatting": {
+            "Failed to read options. Please make sure there is no option with an empty value.": "옵션을 읽지 못했습니다. 값이 비어있는 옵션이 없는지 다시 확인해주세요.",
+            "Failed to read options. Some of them are possibly not positive number values.": "설정을 읽지 못했습니다. 양수가 아닌 값이 있을수도 있습니다.",
+            "Failed to read option properties.": "옵션 프로퍼티를 읽지 못했습니다."
+        }
+    }
+    "#;
+
+    serde_json::from_str(val).unwrap()
 }

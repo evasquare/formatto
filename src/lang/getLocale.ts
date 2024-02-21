@@ -36,3 +36,8 @@ export const getLocale = (category: LocaleCategory, key: string) => {
 
     return usingLocale[category][key];
 };
+
+export const getWasmLocale = () => {
+    const usingLocale = locales[detectedLanguage] ?? locales.en;
+    return usingLocale.wasm;
+};

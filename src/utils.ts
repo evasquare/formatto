@@ -1,7 +1,7 @@
 import { Editor, Notice } from "obsidian";
 
 import { format_document } from "../wasm/pkg/formatto_wasm";
-import { getLocale, LOCALE_CATEGORY } from "./lang/getLocale";
+import { getLocale, getWasmLocale, LOCALE_CATEGORY } from "./lang/getLocale";
 import FormattoPlugin from "./main";
 
 export class FormattoUtils {
@@ -19,7 +19,8 @@ export class FormattoUtils {
         try {
             formattedDocument = format_document(
                 originalDocument,
-                this.plugin.settings
+                this.plugin.settings,
+                JSON.stringify(getWasmLocale())
             );
         } catch (error) {
             new Notice(error);

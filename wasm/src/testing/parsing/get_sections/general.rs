@@ -1,5 +1,5 @@
 use crate::{
-    testing::{get_example_settings, setup},
+    testing::{get_example_locale, get_example_settings, setup},
     tools::parsing::get_sections,
 };
 
@@ -11,7 +11,7 @@ fn empty_input() {
     let expected_output = vec![];
 
     assert_eq!(
-        get_sections(input, &get_example_settings()).unwrap(),
+        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
         expected_output
     );
 }

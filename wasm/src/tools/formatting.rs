@@ -1,13 +1,15 @@
+use serde_json::Value;
 use std::error::Error;
 
 use crate::console_error;
-use crate::setting_schema::MainPluginSettings;
+use crate::setting_schema::PluginSettings;
 use crate::tools::tokens::{HeadingLevel, MarkdownSection};
 
 /// Return a String value that is replacing the entire document.
 pub fn get_formatted_string(
     sections: Vec<MarkdownSection>,
-    settings: &MainPluginSettings,
+    settings: &PluginSettings,
+    locales: &Value,
 ) -> Result<String, Box<dyn Error>> {
     let mut output = String::new();
 
@@ -33,10 +35,14 @@ pub fn get_formatted_string(
                             if output.is_empty() {
                                 0
                             } else if right_after_properties {
-                                parse_string_to_usize(&settings.other_gaps.after_properties)? + 1
+                                parse_string_to_usize(
+                                    &settings.other_gaps.after_properties,
+                                    locales,
+                                )? + 1
                             } else {
                                 parse_string_to_usize(
                                     &settings.heading_gaps.before_top_level_headings,
+                                    locales,
                                 )? + 1
                             },
                             0,
@@ -48,10 +54,14 @@ pub fn get_formatted_string(
                             if output.is_empty() {
                                 0
                             } else if right_after_properties {
-                                parse_string_to_usize(&settings.other_gaps.after_properties)? + 1
+                                parse_string_to_usize(
+                                    &settings.other_gaps.after_properties,
+                                    locales,
+                                )? + 1
                             } else {
                                 parse_string_to_usize(
                                     &settings.heading_gaps.before_first_sub_heading,
+                                    locales,
                                 )? + 1
                             },
                             0,
@@ -64,10 +74,15 @@ pub fn get_formatted_string(
                             if output.is_empty() {
                                 0
                             } else if right_after_properties {
-                                parse_string_to_usize(&settings.other_gaps.after_properties)? + 1
+                                parse_string_to_usize(
+                                    &settings.other_gaps.after_properties,
+                                    locales,
+                                )? + 1
                             } else {
-                                parse_string_to_usize(&settings.heading_gaps.before_sub_headings)?
-                                    + 1
+                                parse_string_to_usize(
+                                    &settings.heading_gaps.before_sub_headings,
+                                    locales,
+                                )? + 1
                             },
                             0,
                         ));
@@ -84,13 +99,14 @@ pub fn get_formatted_string(
                     if output.is_empty() {
                         0
                     } else if right_after_properties {
-                        parse_string_to_usize(&settings.other_gaps.after_properties)? + 1
+                        parse_string_to_usize(&settings.other_gaps.after_properties, locales)? + 1
                     } else if right_after_code_block {
                         parse_string_to_usize(
                             &settings.other_gaps.before_contents_after_code_blocks,
+                            locales,
                         )? + 1
                     } else {
-                        parse_string_to_usize(&settings.other_gaps.before_contents)? + 1
+                        parse_string_to_usize(&settings.other_gaps.before_contents, locales)? + 1
                     },
                     0,
                 ));
@@ -105,13 +121,14 @@ pub fn get_formatted_string(
                     if output.is_empty() {
                         0
                     } else if right_after_properties {
-                        parse_string_to_usize(&settings.other_gaps.after_properties)? + 1
+                        parse_string_to_usize(&settings.other_gaps.after_properties, locales)? + 1
                     } else if right_after_heading {
                         parse_string_to_usize(
                             &settings.other_gaps.before_code_blocks_after_headings,
+                            locales,
                         )? + 1
                     } else {
-                        parse_string_to_usize(&settings.other_gaps.before_code_blocks)? + 1
+                        parse_string_to_usize(&settings.other_gaps.before_code_blocks, locales)? + 1
                     },
                     0,
                 ));
@@ -140,13 +157,21 @@ pub fn insert_line_breaks(input: &str, before_count: usize, after_count: usize) 
 
 /// Parse a usize value from a &str type argument.
 /// Also return an `Error` to handle exceptions.
-pub fn parse_string_to_usize(input: &Option<String>) -> Result<usize, Box<dyn Error>> {
+pub fn parse_string_to_usize(
+    input: &Option<String>,
+    locales: &Value,
+) -> Result<usize, Box<dyn Error>> {
+    use crate::utils::{get_locale_string, LocaleCategory};
+
     if let Some(input) = input {
         if input.is_empty() {
-            return Err(String::from(
-                "Failed to read settings. Please make sure there is no option with an empty value.",
-            )
-            .into());
+            let msg = get_locale_string(
+                locales,
+                LocaleCategory::Formatting,
+                "Failed to read options. Please make sure there is no option with an empty value.",
+            );
+
+            return Err(msg.into());
         }
     }
 
@@ -155,12 +180,26 @@ pub fn parse_string_to_usize(input: &Option<String>) -> Result<usize, Box<dyn Er
             Ok(num) => Ok(num),
             Err(err) => {
                 console_error!("{}", err);
-                Err(String::from(
-                    "Failed to read settings. Some of them are possibly not positive number values.",
-                )
-                .into())
+
+                let msg = get_locale_string(
+                    locales,
+                    LocaleCategory::Formatting,
+                    "Failed to read options. Some of them are possibly not positive number values.",
+                );
+
+                #[allow(clippy::needless_return)]
+                return Err(msg.into());
             }
         },
-        None => Err(String::from("Failed to access setting properties.").into()),
+        None => {
+            let msg = get_locale_string(
+                locales,
+                LocaleCategory::Formatting,
+                "Failed to read option properties.",
+            );
+
+            #[allow(clippy::needless_return)]
+            return Err(msg.into());
+        }
     }
 }

@@ -44,7 +44,7 @@ pub struct OtherOptions {
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct MainPluginSettings {
+pub struct PluginSettings {
     pub heading_gaps: HeadingGaps,
     pub other_gaps: OtherGaps,
     pub format_options: FormatOptions,

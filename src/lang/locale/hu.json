@@ -51,7 +51,7 @@
     },
     "wasm": {
         "parsing": {
-            "Failed to parse the document. [Line: {VALUE}]": "",
+            "Failed to parse the document. [Line: {LINE_NUMBER}]": "",
             "Failed to parse the document.": ""
         },
         "formatting": {

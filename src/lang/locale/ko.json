@@ -51,7 +51,7 @@
     },
     "wasm": {
         "parsing": {
-            "Failed to parse the document. [Line: {VALUE}]": "문서를 읽지 못했습니다. [줄: {VALUE}]",
+            "Failed to parse the document. [Line: {LINE_NUMBER}]": "문서를 읽지 못했습니다. [줄: {LINE_NUMBER}]",
             "Failed to parse the document.": "문서를 읽지 못했습니다."
         },
         "formatting": {

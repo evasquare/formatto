@@ -1,5 +1,5 @@
 use crate::{
-    testing::{get_example_settings, setup},
+    testing::{get_example_locale, get_example_settings, setup},
     tools::{formatting::get_formatted_string, parsing::get_sections},
 };
 
@@ -17,8 +17,9 @@ fn main(
 ) {}
 ```"#;
 
-    let sections = get_sections(input, &get_example_settings()).unwrap();
-    let output = get_formatted_string(sections, &get_example_settings()).unwrap();
+    let sections = get_sections(input, &get_example_settings(), &get_example_locale()).unwrap();
+    let output =
+        get_formatted_string(sections, &get_example_settings(), &get_example_locale()).unwrap();
     let expected_output = r#"## Heading 2
 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 
@@ -48,8 +49,9 @@ fn main(
 Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 "#;
 
-    let sections = get_sections(input, &get_example_settings()).unwrap();
-    let output = get_formatted_string(sections, &get_example_settings()).unwrap();
+    let sections = get_sections(input, &get_example_settings(), &get_example_locale()).unwrap();
+    let output =
+        get_formatted_string(sections, &get_example_settings(), &get_example_locale()).unwrap();
     let expected_output = r#"## Heading 2
 ```rust
 fn main(

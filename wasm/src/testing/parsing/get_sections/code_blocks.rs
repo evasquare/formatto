@@ -1,5 +1,5 @@
 use crate::{
-    testing::{get_example_settings, setup},
+    testing::{get_example_locale, get_example_settings, setup},
     tools::{
         parsing::get_sections,
         tokens::{HeadingLevel, MarkdownSection},
@@ -38,7 +38,7 @@ println!(\"Hello World\");
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings()).unwrap(),
+        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
         expected_output
     );
 }
@@ -50,6 +50,6 @@ fn invalid_input_1() {
     let input = r#"```
 code
 SPACE```"#;
-    let sections = get_sections(input, &get_example_settings());
+    let sections = get_sections(input, &get_example_settings(), &get_example_locale());
     assert!(sections.is_err());
 }

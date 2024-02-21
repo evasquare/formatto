@@ -1,7 +1,8 @@
+use serde_json::Value;
 use std::{error::Error, vec};
 
 use crate::{
-    setting_schema::MainPluginSettings,
+    setting_schema::PluginSettings,
     tools::tokens::{HeadingLevel, MarkdownSection},
 };
 
@@ -15,7 +16,8 @@ struct ErrorInformation {
 
 pub fn get_sections(
     input: &str,
-    settings: &MainPluginSettings,
+    settings: &PluginSettings,
+    locales: &Value,
 ) -> Result<Vec<MarkdownSection>, Box<dyn Error>> {
     use super::parsing::contents::{append_line_break, finish_current_content_section};
     use super::parsing::headings::{
@@ -284,6 +286,7 @@ pub fn get_sections(
                 is_reading_property_block,
                 settings,
                 &error_information,
+                locales,
             )?;
             append_line_break(&mut temp_content_section, line);
         }
@@ -303,6 +306,7 @@ pub fn get_sections(
         is_reading_property_block,
         settings,
         &error_information,
+        locales,
     )?;
 
     Ok(sections)
@@ -312,18 +316,32 @@ pub fn get_sections(
 fn check_parsing_error(
     is_reading_code_block: bool,
     is_reading_property_block: bool,
-    settings: &MainPluginSettings,
+    settings: &PluginSettings,
     error_information: &ErrorInformation,
+    locales: &Value,
 ) -> Result<(), Box<dyn Error>> {
+    use crate::utils::{get_locale_string, LocaleCategory};
+
     if is_reading_code_block || is_reading_property_block {
         let error_message =
             if let Some(true) = settings.other_options.show_more_detailed_error_messages {
-                format!(
-                    "Failed to parse the document. [Reading line: {}]",
-                    error_information.reading_section_starting_line + 1
-                )
+                let mut msg = get_locale_string(
+                    locales,
+                    LocaleCategory::Parsing,
+                    "Failed to parse the document. [Line: {LINE_NUMBER}]",
+                );
+                msg = msg.replace(
+                    "{LINE_NUMBER}",
+                    &(error_information.reading_section_starting_line + 1).to_string(),
+                );
+
+                return Err(msg.into());
             } else {
-                String::from("Failed to parse the document.")
+                get_locale_string(
+                    locales,
+                    LocaleCategory::Parsing,
+                    "Failed to parse the document.",
+                )
             };
 
         return Err(error_message.into());

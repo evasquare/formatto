@@ -1,5 +1,5 @@
 use crate::{
-    testing::{get_example_settings, setup},
+    testing::{get_example_locale, get_example_settings, setup},
     tools::{
         parsing::get_sections,
         tokens::{HeadingLevel, MarkdownSection},
@@ -22,7 +22,7 @@ aliases:
     )];
 
     assert_eq!(
-        get_sections(input, &get_example_settings()).unwrap(),
+        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
         expected_output
     );
 }
@@ -64,7 +64,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings()).unwrap(),
+        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
         expected_output
     );
 }
@@ -92,5 +92,5 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 #### Heading 4
 ## Heading 2"#;
 
-    assert!(get_sections(input, &get_example_settings()).is_err())
+    assert!(get_sections(input, &get_example_settings(), &get_example_locale()).is_err())
 }
