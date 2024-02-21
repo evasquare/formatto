@@ -1,4 +1,4 @@
-/// Return the top heading level of a document.
+/// Returns the top heading level of a document.
 pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
     use self::alternate_headings::get_valid_alternate_heading_level;
     use self::hash_headings::validation::validate_hash_heading;
@@ -51,17 +51,17 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
 
 pub mod hash_headings {
     pub mod validation {
-        /// Validate hash heading syntax.
+        /// Validates hash heading syntax.
         pub fn validate_hash_heading(line: &str) -> bool {
             line.starts_with('#') && (line.contains("# ") || line.chars().all(|char| char == '#'))
         }
 
-        /// Validate hash heading syntax. (Top level heading)
+        /// Validates hash heading syntax. (Top level heading)
         pub fn validate_top_hash_heading(line: &str, top_heading_hash_literal: &str) -> bool {
             line.starts_with(top_heading_hash_literal)
                 && !line.starts_with(format!("{}#", top_heading_hash_literal).as_str())
         }
-        /// Validate hash heading syntax. (Sub level heading)
+        /// Validates hash heading syntax. (Sub level heading)
         pub fn validate_sub_hash_heading(line: &str, only_contains_header_symbols: bool) -> bool {
             line.contains("# ") || only_contains_header_symbols
         }
@@ -69,7 +69,7 @@ pub mod hash_headings {
 }
 
 pub mod alternate_headings {
-    /// Get the level of a valid alternate heading being read.
+    /// Gets the level of a valid alternate heading being read.
     pub fn get_valid_alternate_heading_level(
         input_lines: &[&str],
         reading_index: usize,
@@ -142,7 +142,7 @@ pub mod alternate_headings {
         }
 
         pub mod get_valid_alternate_top_heading_level {
-            /// Check which level of alternate heading is being read.
+            /// Checks which level of alternate heading is being read.
             /// EXAMPLE: heading-1 or heading-2
             pub fn get_alternate_heading_level(line: &str) -> Option<usize> {
                 if line.is_empty() {
@@ -162,7 +162,7 @@ pub mod alternate_headings {
             }
         }
 
-        /// Validate alternate top heading.
+        /// Validates alternate top heading.
         pub fn validate_alternate_top_heading(
             lines: &[&str],
             reading_index: usize,
@@ -178,7 +178,7 @@ pub mod alternate_headings {
                 false
             }
         }
-        /// Validate alternate sub heading.
+        /// Validates alternate sub heading.
         pub fn validate_alternate_sub_heading(
             lines: &[&str],
             reading_index: usize,

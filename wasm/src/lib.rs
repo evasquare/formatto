@@ -40,7 +40,7 @@ mod macro_rules {
 }
 
 #[wasm_bindgen]
-/// This function is called from the TypeScript side.
+/// This function will be called from the TypeScript side.
 pub fn format_document(input: &str, js_settings: JsValue, js_locales: JsValue) -> String {
     utils::set_panic_hook();
 

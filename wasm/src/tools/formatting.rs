@@ -5,7 +5,7 @@ use crate::console_error;
 use crate::setting_schema::PluginSettings;
 use crate::tools::tokens::{HeadingLevel, MarkdownSection};
 
-/// Return a String value that is replacing the entire document.
+/// Returns a string value of a formatted document.
 pub fn get_formatted_string(
     sections: Vec<MarkdownSection>,
     settings: &PluginSettings,
@@ -147,7 +147,7 @@ pub fn get_formatted_string(
     Ok(output)
 }
 
-/// Insert line breaks before and after an input.
+/// Inserts line breaks before and after an input.
 pub fn insert_line_breaks(input: &str, before_count: usize, after_count: usize) -> String {
     let line_breaks_before = "\n".repeat(before_count);
     let line_breaks_after = "\n".repeat(after_count);
@@ -155,8 +155,8 @@ pub fn insert_line_breaks(input: &str, before_count: usize, after_count: usize) 
     format!("{}{}{}", line_breaks_before, input, line_breaks_after)
 }
 
-/// Parse a usize value from a &str type argument.
-/// Also return an `Error` to handle exceptions.
+/// Parses a usize value from a &str type argument.
+/// Also returns an `Error` to handle exceptions.
 pub fn parse_string_to_usize(
     input: &Option<String>,
     locales: &Value,

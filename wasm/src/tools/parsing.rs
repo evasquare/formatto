@@ -312,7 +312,7 @@ pub fn get_sections(
     Ok(sections)
 }
 
-/// Return an error if the document is invalid.
+/// Returns an error if the document is invalid.
 fn check_parsing_error(
     is_reading_code_block: bool,
     is_reading_property_block: bool,

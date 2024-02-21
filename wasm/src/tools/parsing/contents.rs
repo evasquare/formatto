@@ -1,6 +1,6 @@
 use super::super::tokens::MarkdownSection;
 
-/// Finish reading the current "content" section and push it to the "sections" vector.
+/// Finishes reading the current "content" section and pushes it to the "sections" vector.
 pub fn finish_current_content_section(
     is_reading_content_section: &mut bool,
     sections: &mut Vec<MarkdownSection>,
@@ -20,7 +20,7 @@ pub fn finish_current_content_section(
     temp_content_section.clear();
 }
 
-/// Append a line with a line break.
+/// Appends a line with a line break.
 pub fn append_line_break(string: &mut String, line: &str) {
     // Break lines unless it's the first line.
     if !string.is_empty() {
