@@ -1,3 +1,4 @@
+use serde_json::Value;
 use std::error::Error;
 use wasm_bindgen::prelude::*;
 
@@ -52,7 +53,7 @@ pub fn format_document(input: &str, js_settings: JsValue, js_locales: JsValue) -
         }
     };
 
-    let locales = match read_js_value(js_locales) {
+    let locales: Value = match read_js_value(js_locales) {
         Ok(locales) => locales,
         Err(e) => {
             let error_message = e.to_string();
@@ -65,7 +66,7 @@ pub fn format_document(input: &str, js_settings: JsValue, js_locales: JsValue) -
     }
 
     // Return value to the TypeScript side or throw an error.
-    match parse_input(input, settings, &locales) {
+    match parse_input(input, &settings, &locales) {
         Ok(sections) => sections,
         Err(e) => {
             let error_message = e.to_string();
@@ -78,10 +79,9 @@ fn read_settings<T: serde::de::DeserializeOwned>(input: JsValue) -> Result<T, Bo
     Ok(serde_wasm_bindgen::from_value(input)?)
 }
 
-use serde_json::Value;
 fn read_js_value(js_value: JsValue) -> Result<Value, Box<dyn Error>> {
-    if let Some(a) = &js_value.as_string() {
-        Ok(serde_json::from_str(a)?)
+    if let Some(js_value) = &js_value.as_string() {
+        Ok(serde_json::from_str(js_value)?)
     } else {
         Err("Failed to read locale file.".into())
     }
@@ -89,11 +89,11 @@ fn read_js_value(js_value: JsValue) -> Result<Value, Box<dyn Error>> {
 
 fn parse_input(
     input: &str,
-    settings: PluginSettings,
+    settings: &PluginSettings,
     locales: &Value,
 ) -> Result<String, Box<dyn Error>> {
-    let sections = tools::parsing::get_sections(input, &settings, locales)?;
-    let output = tools::formatting::get_formatted_string(sections, &settings, locales)?;
+    let sections = tools::parsing::get_sections(input, settings, locales)?;
+    let output = tools::formatting::get_formatted_string(sections, settings, locales)?;
 
     Ok(output)
 }

@@ -23,16 +23,16 @@ pub enum LocaleCategory {
 pub fn get_locale_string(locales: &Value, category: LocaleCategory, key: &str) -> String {
     match category {
         LocaleCategory::Parsing => {
-            if let Some(msg) = locales["parsing"][key].as_str() {
-                if !msg.is_empty() {
-                    return String::from(msg);
+            if let Some(message) = locales["parsing"][key].as_str() {
+                if !message.is_empty() {
+                    return String::from(message);
                 }
             }
         }
         LocaleCategory::Formatting => {
-            if let Some(msg) = locales["formatting"][key].as_str() {
-                if !msg.is_empty() {
-                    return String::from(msg);
+            if let Some(message) = locales["formatting"][key].as_str() {
+                if !message.is_empty() {
+                    return String::from(message);
                 }
             }
         }
