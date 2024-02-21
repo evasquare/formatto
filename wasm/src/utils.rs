@@ -24,12 +24,16 @@ pub fn get_locale_string(locales: &Value, category: LocaleCategory, key: &str) -
     match category {
         LocaleCategory::Parsing => {
             if let Some(msg) = locales["parsing"][key].as_str() {
-                return String::from(msg);
+                if !msg.is_empty() {
+                    return String::from(msg);
+                }
             }
         }
         LocaleCategory::Formatting => {
             if let Some(msg) = locales["formatting"][key].as_str() {
-                return String::from(msg);
+                if !msg.is_empty() {
+                    return String::from(msg);
+                }
             }
         }
     }
