@@ -1,4 +1,4 @@
-/// Returns the top heading level of a document.
+/// Gets the top heading level of the entire document.
 pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
     use self::alternate_headings::get_valid_alternate_heading_level;
     use self::hash_headings::validation::validate_hash_heading;
@@ -69,7 +69,7 @@ pub mod hash_headings {
 }
 
 pub mod alternate_headings {
-    /// Gets the level of a valid alternate heading being read.
+    /// Checks a valid alternate heading syntax and returns its level.
     pub fn get_valid_alternate_heading_level(
         input_lines: &[&str],
         reading_index: usize,

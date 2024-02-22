@@ -1,4 +1,4 @@
-use crate::utils::set_panic_hook;
+use crate::utils::{set_panic_hook, Preferences};
 use serde_json::Value;
 
 use crate::setting_schema::{FormatOptions, HeadingGaps, OtherGaps, OtherOptions, PluginSettings};
@@ -12,7 +12,15 @@ fn setup() {
     set_panic_hook();
 }
 
-#[allow(dead_code)]
+/// Returns an example value for testing.
+fn get_example_preferences() -> Preferences {
+    Preferences {
+        settings: get_example_settings(),
+        locales: get_example_locale(),
+    }
+}
+
+/// Returns an example setting value.
 fn get_example_settings() -> PluginSettings {
     PluginSettings {
         heading_gaps: HeadingGaps {
@@ -37,7 +45,7 @@ fn get_example_settings() -> PluginSettings {
     }
 }
 
-#[allow(dead_code)]
+/// Returns an example locale value.
 fn get_example_locale() -> Value {
     let val = r#"
     {

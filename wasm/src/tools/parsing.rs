@@ -1,9 +1,8 @@
-use serde_json::Value;
 use std::{error::Error, vec};
 
 use crate::{
-    setting_schema::PluginSettings,
     tools::tokens::{HeadingLevel, MarkdownSection},
+    Preferences,
 };
 
 mod contents;
@@ -14,10 +13,10 @@ struct ErrorInformation {
     reading_section_starting_line: usize,
 }
 
+/// Serialize the input into sections.
 pub fn get_sections(
     input: &str,
-    settings: &PluginSettings,
-    locales: &Value,
+    preferences: &Preferences,
 ) -> Result<Vec<MarkdownSection>, Box<dyn Error>> {
     use super::parsing::contents::{append_line_break, finish_current_content_section};
     use super::parsing::headings::{
@@ -33,8 +32,8 @@ pub fn get_sections(
         return Ok(vec![]);
     }
 
-    let mut sections = Vec::<MarkdownSection>::new();
-    let input_lines = input.trim().split('\n').collect::<Vec<&str>>();
+    let mut sections: Vec<MarkdownSection> = Vec::new();
+    let input_lines: Vec<&str> = input.trim().split('\n').collect();
 
     // Get the top heading level and its hash literal.
     let mut top_heading_hash_literal = String::from("");
@@ -64,7 +63,7 @@ pub fn get_sections(
     };
 
     for (index, &line) in input_lines.iter().enumerate() {
-        // "is_reading_content_section" should be updated in the previous iteration.
+        // "is_reading_content_section" should be updated in the previous iterations.
         if line.is_empty() && !is_reading_content_section && !is_reading_code_block {
             continue;
         }
@@ -73,7 +72,7 @@ pub fn get_sections(
         let alternate_heading_level: Option<usize> =
             get_valid_alternate_heading_level(&input_lines, index);
 
-        // * Read Properties.
+        // Read Properties.
         if sections.is_empty()
             && ((alternate_heading_level.is_none() && line == "---") || is_reading_property_block)
         {
@@ -112,7 +111,7 @@ pub fn get_sections(
             }
         }
 
-        // * Read code blocks.
+        // Read code blocks.
         if line.starts_with("```") || is_reading_code_block {
             finish_current_content_section(
                 &mut is_reading_content_section,
@@ -149,13 +148,13 @@ pub fn get_sections(
             }
         }
 
-        // * Read hash headings.
-        let only_contains_header_symbols = line.chars().all(|item| item == '#');
-        if line.starts_with('#') && (line.contains("# ") || only_contains_header_symbols) {
+        // Read hash headings.
+        let hash_symbol_only = line.chars().all(|item| item == '#');
+        if line.starts_with('#') && (line.contains("# ") || hash_symbol_only) {
             if let Some(document_top_heading_level) = document_top_heading_level {
-                let is_top_heading = validate_top_hash_heading(line, &top_heading_hash_literal);
+                let is_top_level = validate_top_hash_heading(line, &top_heading_hash_literal);
 
-                if is_top_heading {
+                if is_top_level {
                     finish_current_content_section(
                         &mut is_reading_content_section,
                         &mut sections,
@@ -169,8 +168,7 @@ pub fn get_sections(
                     current_heading_level = document_top_heading_level;
                     continue;
                 } else {
-                    let is_sub_heading =
-                        validate_sub_hash_heading(line, only_contains_header_symbols);
+                    let is_sub_heading = validate_sub_hash_heading(line, hash_symbol_only);
                     let heading_level = line.chars().take_while(|&c| c == '#').count();
 
                     if is_sub_heading {
@@ -203,16 +201,16 @@ pub fn get_sections(
                 continue;
             }
 
-            let mut new_temp_content_section: Vec<String> = {
+            let mut overriding_temp_content_section: Vec<String> = {
                 let cloned_temp_content_section = temp_content_section.clone();
                 cloned_temp_content_section
                     .split('\n')
                     .map(|s| s.to_string())
                     .collect()
             };
-            new_temp_content_section.pop();
+            overriding_temp_content_section.pop();
             temp_content_section.clear();
-            temp_content_section = new_temp_content_section.join("\n");
+            temp_content_section = overriding_temp_content_section.join("\n");
 
             finish_current_content_section(
                 &mut is_reading_content_section,
@@ -221,53 +219,39 @@ pub fn get_sections(
             );
 
             if let Some(document_top_heading_level) = document_top_heading_level {
-                let is_top_heading =
+                let is_top_level =
                     validate_alternate_top_heading(&input_lines, index, document_top_heading_level);
-                let is_sub_heading =
+                let is_sub_level =
                     validate_alternate_sub_heading(&input_lines, index, document_top_heading_level);
 
-                // Get alternate heading information.
-                // Skip parsing the property section when it's detected.
-                let previous_first_line: Option<&str> = if index > 0 {
+                let previous_line: Option<&str> = if index > 0 {
                     input_lines.get(index - 1).copied()
                 } else {
                     None
                 };
 
-                if let Some(previous_first_line) = previous_first_line {
-                    if is_top_heading {
-                        let mut pushing_value = previous_first_line.to_string();
-                        pushing_value.push('\n');
-                        pushing_value.push_str(line);
+                if let Some(previous_line) = previous_line {
+                    if is_top_level {
+                        let mut section_string = previous_line.to_string();
+                        section_string.push('\n');
+                        section_string.push_str(line);
 
-                        if sections.last()
-                            == Some(&MarkdownSection::Content(previous_first_line.to_string()))
-                        {
-                            sections.pop();
-                        }
-
-                        sections.push(MarkdownSection::Heading(HeadingLevel::Top(pushing_value)));
-
+                        sections.push(MarkdownSection::Heading(HeadingLevel::Top(section_string)));
                         current_heading_level = document_top_heading_level;
-                        continue;
-                    } else if is_sub_heading {
-                        let mut pushing_value = previous_first_line.to_string();
-                        pushing_value.push('\n');
-                        pushing_value.push_str(line);
 
-                        if sections.last()
-                            == Some(&MarkdownSection::Content(previous_first_line.to_string()))
-                        {
-                            sections.pop();
-                        }
+                        continue;
+                    } else if is_sub_level {
+                        let mut section_string = previous_line.to_string();
+                        section_string.push('\n');
+                        section_string.push_str(line);
 
                         if alternate_heading_level > current_heading_level {
                             sections.push(MarkdownSection::Heading(HeadingLevel::FirstSub(
-                                pushing_value,
+                                section_string,
                             )));
                         } else {
                             sections
-                                .push(MarkdownSection::Heading(HeadingLevel::Sub(pushing_value)));
+                                .push(MarkdownSection::Heading(HeadingLevel::Sub(section_string)));
                         }
 
                         current_heading_level = alternate_heading_level;
@@ -277,16 +261,15 @@ pub fn get_sections(
             }
         }
 
-        // * Read contents.
+        // Read contents.
         if is_reading_content_section {
             error_information.reading_section_starting_line = index;
 
             check_parsing_error(
                 is_reading_code_block,
                 is_reading_property_block,
-                settings,
+                preferences,
                 &error_information,
-                locales,
             )?;
             append_line_break(&mut temp_content_section, line);
         }
@@ -304,9 +287,8 @@ pub fn get_sections(
     check_parsing_error(
         is_reading_code_block,
         is_reading_property_block,
-        settings,
+        preferences,
         &error_information,
-        locales,
     )?;
 
     Ok(sections)
@@ -316,33 +298,35 @@ pub fn get_sections(
 fn check_parsing_error(
     is_reading_code_block: bool,
     is_reading_property_block: bool,
-    settings: &PluginSettings,
+    preferences: &Preferences,
     error_information: &ErrorInformation,
-    locales: &Value,
 ) -> Result<(), Box<dyn Error>> {
     use crate::utils::{get_locale_string, LocaleCategory};
 
     if is_reading_code_block || is_reading_property_block {
-        let error_message =
-            if let Some(true) = settings.other_options.show_more_detailed_error_messages {
-                let mut msg = get_locale_string(
-                    locales,
-                    LocaleCategory::Parsing,
-                    "Failed to parse the document. [Line: {LINE_NUMBER}]",
-                );
-                msg = msg.replace(
-                    "{LINE_NUMBER}",
-                    &(error_information.reading_section_starting_line + 1).to_string(),
-                );
+        let error_message = if let Some(true) = preferences
+            .settings
+            .other_options
+            .show_more_detailed_error_messages
+        {
+            let mut msg = get_locale_string(
+                &preferences.locales,
+                LocaleCategory::Parsing,
+                "Failed to parse the document. [Line: {LINE_NUMBER}]",
+            );
+            msg = msg.replace(
+                "{LINE_NUMBER}",
+                &(error_information.reading_section_starting_line + 1).to_string(),
+            );
 
-                return Err(msg.into());
-            } else {
-                get_locale_string(
-                    locales,
-                    LocaleCategory::Parsing,
-                    "Failed to parse the document.",
-                )
-            };
+            return Err(msg.into());
+        } else {
+            get_locale_string(
+                &preferences.locales,
+                LocaleCategory::Parsing,
+                "Failed to parse the document.",
+            )
+        };
 
         return Err(error_message.into());
     }

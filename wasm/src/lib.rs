@@ -1,8 +1,7 @@
 use serde_json::Value;
 use std::error::Error;
+use utils::Preferences;
 use wasm_bindgen::prelude::*;
-
-use crate::setting_schema::PluginSettings;
 
 mod setting_schema;
 mod tools;
@@ -43,6 +42,9 @@ mod macro_rules {
 #[wasm_bindgen]
 /// This function will be called from the TypeScript side.
 pub fn format_document(input: &str, js_settings: JsValue, js_locales: JsValue) -> String {
+    use crate::setting_schema::PluginSettings;
+    use utils::{read_js_value, read_settings};
+
     utils::set_panic_hook();
 
     let settings: PluginSettings = match read_settings(js_settings) {
@@ -65,8 +67,10 @@ pub fn format_document(input: &str, js_settings: JsValue, js_locales: JsValue) -
         return input.to_string();
     }
 
+    let preferences = Preferences { settings, locales };
+
     // Return value to the TypeScript side or throw an error.
-    match parse_input(input, &settings, &locales) {
+    match parse_input(input, &preferences) {
         Ok(sections) => sections,
         Err(e) => {
             let error_message = e.to_string();
@@ -75,25 +79,10 @@ pub fn format_document(input: &str, js_settings: JsValue, js_locales: JsValue) -
     }
 }
 
-fn read_settings<T: serde::de::DeserializeOwned>(input: JsValue) -> Result<T, Box<dyn Error>> {
-    Ok(serde_wasm_bindgen::from_value(input)?)
-}
-
-fn read_js_value(js_value: JsValue) -> Result<Value, Box<dyn Error>> {
-    if let Some(js_value) = &js_value.as_string() {
-        Ok(serde_json::from_str(js_value)?)
-    } else {
-        Err("Failed to read locale file.".into())
-    }
-}
-
-fn parse_input(
-    input: &str,
-    settings: &PluginSettings,
-    locales: &Value,
-) -> Result<String, Box<dyn Error>> {
-    let sections = tools::parsing::get_sections(input, settings, locales)?;
-    let output = tools::formatting::get_formatted_string(sections, settings, locales)?;
+/// Parses an input and returns a formatted string.
+fn parse_input(input: &str, preferences: &Preferences) -> Result<String, Box<dyn Error>> {
+    let sections = tools::parsing::get_sections(input, preferences)?;
+    let output = tools::formatting::get_formatted_string(sections, preferences)?;
 
     Ok(output)
 }

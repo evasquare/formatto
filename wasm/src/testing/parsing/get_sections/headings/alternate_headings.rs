@@ -1,5 +1,5 @@
 use crate::{
-    testing::{get_example_locale, get_example_settings, setup},
+    testing::{get_example_preferences, setup},
     tools::{
         parsing::get_sections,
         tokens::{HeadingLevel, MarkdownSection},
@@ -23,7 +23,7 @@ fn case_1() {
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
+        get_sections(input, &get_example_preferences()).unwrap(),
         expected_output
     );
 }
@@ -54,7 +54,7 @@ Heading 2
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
+        get_sections(input, &get_example_preferences()).unwrap(),
         expected_output
     );
 }
@@ -99,13 +99,42 @@ Content
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
+        get_sections(input, &get_example_preferences()).unwrap(),
         expected_output
     );
 }
 
 #[test]
-fn edge_case_1() {
+fn case_4() {
+    setup();
+
+    let input = r#"Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+
+aaabbbccc
+
+Content
+===
+Content
+---
+
+## Heading 2"#;
+
+    let expected_output = vec![
+        MarkdownSection::Content("Lorem Ipsum is simply dummy text of the printing and typesetting industry.\nLorem Ipsum is simply dummy text of the printing and typesetting industry.\n\naaabbbccc".to_string()),
+        MarkdownSection::Heading(HeadingLevel::Top("Content\n===".to_string())),
+        MarkdownSection::Heading(HeadingLevel::FirstSub("Content\n---".to_string())),
+        MarkdownSection::Heading(HeadingLevel::Sub("## Heading 2".to_string())),
+    ];
+
+    assert_eq!(
+        get_sections(input, &get_example_preferences()).unwrap(),
+        expected_output
+    );
+}
+
+#[test]
+fn case_5() {
     setup();
 
     let input = r#"## Heading 2
@@ -125,13 +154,13 @@ Content
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
+        get_sections(input, &get_example_preferences()).unwrap(),
         expected_output
     );
 }
 
 #[test]
-fn edge_case_2() {
+fn case_6() {
     setup();
 
     let input = r#"## Heading 2
@@ -148,13 +177,13 @@ Content
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
+        get_sections(input, &get_example_preferences()).unwrap(),
         expected_output
     );
 }
 
 #[test]
-fn edge_case_3() {
+fn case_7() {
     setup();
 
     let input = r#"## Heading 2
@@ -199,7 +228,7 @@ Content
     ];
 
     assert_eq!(
-        get_sections(input, &get_example_settings(), &get_example_locale()).unwrap(),
+        get_sections(input, &get_example_preferences()).unwrap(),
         expected_output
     );
 }

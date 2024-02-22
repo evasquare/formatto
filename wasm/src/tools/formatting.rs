@@ -1,15 +1,14 @@
 use serde_json::Value;
 use std::error::Error;
 
-use crate::console_error;
 use crate::setting_schema::PluginSettings;
 use crate::tools::tokens::{HeadingLevel, MarkdownSection};
+use crate::{console_error, Preferences};
 
-/// Returns a string value of a formatted document.
+/// Formats a document based on the parsed sections.
 pub fn get_formatted_string(
     sections: Vec<MarkdownSection>,
-    settings: &PluginSettings,
-    locales: &Value,
+    preferences: &Preferences,
 ) -> Result<String, Box<dyn Error>> {
     let mut output = String::new();
 
@@ -17,6 +16,9 @@ pub fn get_formatted_string(
     let mut right_after_properties = false;
     let mut right_after_heading = false;
     let mut right_after_code_block = false;
+
+    let settings: &PluginSettings = &preferences.settings;
+    let locale: &Value = &preferences.locales;
 
     for section in sections {
         match section {
@@ -37,12 +39,12 @@ pub fn get_formatted_string(
                             } else if right_after_properties {
                                 parse_string_to_usize(
                                     &settings.other_gaps.after_properties,
-                                    locales,
+                                    locale,
                                 )? + 1
                             } else {
                                 parse_string_to_usize(
                                     &settings.heading_gaps.before_top_level_headings,
-                                    locales,
+                                    locale,
                                 )? + 1
                             },
                             0,
@@ -56,12 +58,12 @@ pub fn get_formatted_string(
                             } else if right_after_properties {
                                 parse_string_to_usize(
                                     &settings.other_gaps.after_properties,
-                                    locales,
+                                    locale,
                                 )? + 1
                             } else {
                                 parse_string_to_usize(
                                     &settings.heading_gaps.before_first_sub_heading,
-                                    locales,
+                                    locale,
                                 )? + 1
                             },
                             0,
@@ -76,12 +78,12 @@ pub fn get_formatted_string(
                             } else if right_after_properties {
                                 parse_string_to_usize(
                                     &settings.other_gaps.after_properties,
-                                    locales,
+                                    locale,
                                 )? + 1
                             } else {
                                 parse_string_to_usize(
                                     &settings.heading_gaps.before_sub_headings,
-                                    locales,
+                                    locale,
                                 )? + 1
                             },
                             0,
@@ -99,14 +101,14 @@ pub fn get_formatted_string(
                     if output.is_empty() {
                         0
                     } else if right_after_properties {
-                        parse_string_to_usize(&settings.other_gaps.after_properties, locales)? + 1
+                        parse_string_to_usize(&settings.other_gaps.after_properties, locale)? + 1
                     } else if right_after_code_block {
                         parse_string_to_usize(
                             &settings.other_gaps.before_contents_after_code_blocks,
-                            locales,
+                            locale,
                         )? + 1
                     } else {
-                        parse_string_to_usize(&settings.other_gaps.before_contents, locales)? + 1
+                        parse_string_to_usize(&settings.other_gaps.before_contents, locale)? + 1
                     },
                     0,
                 ));
@@ -121,14 +123,14 @@ pub fn get_formatted_string(
                     if output.is_empty() {
                         0
                     } else if right_after_properties {
-                        parse_string_to_usize(&settings.other_gaps.after_properties, locales)? + 1
+                        parse_string_to_usize(&settings.other_gaps.after_properties, locale)? + 1
                     } else if right_after_heading {
                         parse_string_to_usize(
                             &settings.other_gaps.before_code_blocks_after_headings,
-                            locales,
+                            locale,
                         )? + 1
                     } else {
-                        parse_string_to_usize(&settings.other_gaps.before_code_blocks, locales)? + 1
+                        parse_string_to_usize(&settings.other_gaps.before_code_blocks, locale)? + 1
                     },
                     0,
                 ));
@@ -140,7 +142,7 @@ pub fn get_formatted_string(
         }
     }
 
-    if settings.format_options.insert_newline == Some(true) {
+    if preferences.settings.format_options.insert_newline == Some(true) {
         output.push('\n');
     }
 
@@ -156,7 +158,6 @@ pub fn insert_line_breaks(input: &str, before_count: usize, after_count: usize) 
 }
 
 /// Parses a usize value from a &str type argument.
-/// Also returns an `Error` to handle exceptions.
 pub fn parse_string_to_usize(
     input: &Option<String>,
     locales: &Value,
