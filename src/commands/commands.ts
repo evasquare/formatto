@@ -1,12 +1,12 @@
 import { Command } from "obsidian";
 import { getLocale, LOCALE_CATEGORY } from "src/lang/getLocale";
 
-import MainPlugin from "../main";
+import FormattoPlugin from "../main";
 
 export class FormattoCommands {
-    private plugin: MainPlugin;
+    private plugin: FormattoPlugin;
 
-    constructor(plugin: MainPlugin) {
+    constructor(plugin: FormattoPlugin) {
         this.plugin = plugin;
     }
 
