@@ -1,8 +1,9 @@
 import { MarkdownView, Notice } from "obsidian";
-import { getLocale, LOCALE_CATEGORY } from "src/lang/getLocale";
-import FormattoPlugin from "src/main";
 
-export class RibbonIcons {
+import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang";
+import FormattoPlugin from "@src/main";
+
+export class FormattoRibbonIcons {
     private plugin: FormattoPlugin;
 
     constructor(plugin: FormattoPlugin) {

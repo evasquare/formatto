@@ -25,8 +25,8 @@ export default {
         }),
         alias({
             entires: [
-                { find: "@events", replacement: "./src/events" },
-                { find: "@settings", replacement: "./src/settings" },
+                { find: "@src", replacement: "./src/" },
+                { find: "@components", replacement: "./src/components/" },
             ],
         }),
         commonjs({

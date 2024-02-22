@@ -1,8 +1,9 @@
 import { Editor, Notice } from "obsidian";
 
-import { format_document } from "../wasm/pkg/formatto_wasm";
-import { getLocale, getWasmLocale, LOCALE_CATEGORY } from "./lang/getLocale";
-import FormattoPlugin from "./main";
+import { getLocale, getWasmLocale, LOCALE_CATEGORY } from "@src/lang/lang";
+
+import { format_document } from "../../wasm/pkg/formatto_wasm";
+import FormattoPlugin from "../main";
 
 export class FormattoUtils {
     private plugin: FormattoPlugin;

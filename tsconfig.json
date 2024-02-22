@@ -15,8 +15,8 @@
         "lib": ["ES2022", "DOM"],
         "baseUrl": "./",
         "paths": {
-            "@events/*": ["./src/events/*"],
-            "@settings/*": ["./src/settings/*"]
+            "@src/*": ["src/*"],
+            "@components/*": ["src/obsidian/*"]
         }
     }
 }

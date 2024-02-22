@@ -1,27 +1,27 @@
 import { Plugin } from "obsidian";
 
-import { FormattoEditorMenu } from "@events/editorMenu";
-import { FormattoSettingTab } from "@settings/settingTab";
-import { DEFAULT_SETTINGS } from "@settings/settingTypes";
+import { FormattoCommands } from "@src/obsidian/commands";
+import { FormattoEditorMenu } from "@src/obsidian/events/editorMenu";
+import { FormattoIcons } from "@src/obsidian/icons/icons";
+import { FormattoRibbonIcons } from "@src/obsidian/ribbonIcons";
+import { FormattoSettingTab } from "@src/obsidian/settings/settingTab";
+import { DEFAULT_SETTINGS } from "@src/obsidian/settings/settingTypes";
+import { FormattoUtils } from "@src/obsidian/utils";
 
 import __wbg_init from "../wasm/pkg/formatto_wasm";
 import formatto_wasm from "../wasm/pkg/formatto_wasm_bg.wasm";
-import { FormattoCommands } from "./commands/commands";
-import { CustomIcons } from "./etc/icons/customIcons";
-import { RibbonIcons } from "./etc/ribbonIcons";
-import { FormattoUtils } from "./utils";
 
-import type { FormattoPluginSettings } from "@settings/settingTypes";
+import type { FormattoPluginSettings } from "@src/obsidian/settings/settingTypes";
 
 /** Entry Point. */
 export default class FormattoPlugin extends Plugin {
     settings: FormattoPluginSettings;
 
     utils = new FormattoUtils(this);
-    private iconCreator = new CustomIcons();
-    private ribbonIcon = new RibbonIcons(this);
-    private eventsMenuCreator = new FormattoEditorMenu(this);
-    private commandCreator = new FormattoCommands(this);
+    private icons = new FormattoIcons();
+    private ribbonIcons = new FormattoRibbonIcons(this);
+    private editorMenus = new FormattoEditorMenu(this);
+    private commands = new FormattoCommands(this);
 
     /** Load and Save Settings */
     async loadSettings() {
@@ -47,10 +47,10 @@ export default class FormattoPlugin extends Plugin {
 
         this.addSettingTab(new FormattoSettingTab(this.app, this));
 
-        this.iconCreator.registerIcons();
-        this.ribbonIcon.registerRibbonIcons();
-        this.eventsMenuCreator.registerEditorMenus();
-        this.commandCreator.registerCommands();
+        this.icons.registerIcons();
+        this.ribbonIcons.registerRibbonIcons();
+        this.editorMenus.registerEditorMenus();
+        this.commands.registerCommands();
 
         console.log(
             "Plugin Loaded: Formatto\n(Error details are going to be displayed here.)"
