@@ -16,7 +16,7 @@
         "baseUrl": "./",
         "paths": {
             "@src/*": ["src/*"],
-            "@components/*": ["src/obsidian/*"]
+            "@obsidian/*": ["src/obsidian/*"]
         }
     }
 }

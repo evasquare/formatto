@@ -1,6 +1,5 @@
 import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang";
-
-import FormattoPlugin from "../../main";
+import FormattoPlugin from "@src/main";
 
 export class FormattoEditorMenu {
     private plugin: FormattoPlugin;

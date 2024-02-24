@@ -3,7 +3,7 @@ import { debounce, Notice, PluginSettingTab, Setting } from "obsidian";
 import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang";
 
 import type { App } from "obsidian";
-import type FormattoPlugin from "../../main";
+import type FormattoPlugin from "@src/main";
 
 export class FormattoSettingTab extends PluginSettingTab {
     private plugin: FormattoPlugin;

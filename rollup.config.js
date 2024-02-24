@@ -26,7 +26,7 @@ export default {
         alias({
             entires: [
                 { find: "@src", replacement: "./src/" },
-                { find: "@components", replacement: "./src/components/" },
+                { find: "@obsidian", replacement: "./src/obsidian/" },
             ],
         }),
         commonjs({

@@ -1,17 +1,17 @@
 import { Plugin } from "obsidian";
 
-import { FormattoCommands } from "@src/obsidian/commands";
-import { FormattoEditorMenu } from "@src/obsidian/events/editorMenu";
-import { FormattoIcons } from "@src/obsidian/icons/icons";
-import { FormattoRibbonIcons } from "@src/obsidian/ribbonIcons";
-import { FormattoSettingTab } from "@src/obsidian/settings/settingTab";
-import { DEFAULT_SETTINGS } from "@src/obsidian/settings/settingTypes";
-import { FormattoUtils } from "@src/obsidian/utils";
+import { FormattoCommands } from "@obsidian/commands";
+import { FormattoEditorMenu } from "@obsidian/events/editorMenu";
+import { FormattoIcons } from "@obsidian/icons/icons";
+import { FormattoRibbonIcons } from "@obsidian/ribbonIcons";
+import { FormattoSettingTab } from "@obsidian/settings/settingTab";
+import { DEFAULT_SETTINGS } from "@obsidian/settings/settingTypes";
+import { FormattoUtils } from "@obsidian/utils";
 
 import __wbg_init from "../wasm/pkg/formatto_wasm";
 import formatto_wasm from "../wasm/pkg/formatto_wasm_bg.wasm";
 
-import type { FormattoPluginSettings } from "@src/obsidian/settings/settingTypes";
+import type { FormattoPluginSettings } from "@obsidian/settings/settingTypes";
 
 /** Entry Point. */
 export default class FormattoPlugin extends Plugin {
