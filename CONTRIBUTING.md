@@ -1,6 +1,6 @@
-## Making a Pull Request
+## Creating a Pull Request
 Please create a pull request for one feature at a time.
-If your pull request is merged to the main branch, it will be added in the next release.
+If your pull request is merged to the main branch, the feature will be added in the next release.
 
 
 ## Development Environment
