@@ -1,10 +1,9 @@
-## Which branch do I clone/fork?
-You can start by cloning or forking a branch for the version you're adding features in.
+## Making a Pull Request
+Please create a pull request for one feature at a time.
+If your pull request is merged to the main branch, it will be added in the next release.
 
-Please DO NOT make a pull request to the [main](https://github.com/polyecho/formatto) branch.
 
-
-## Build Environment
+## Development Environment
 To build the code, you need Node.js, NPM, Rust, and Cargo in your development environment. Please refer to following documents.
 
 - [Node.js](https://nodejs.org/en)
