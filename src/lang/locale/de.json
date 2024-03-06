@@ -6,18 +6,18 @@
         "Format Document": "Dokument formatieren"
     },
     "noticeMessages": {
-        "Document Formatted!": "",
-        "Document is already formatted!": "",
-        "No open document is found.": "",
+        "Document Formatted!": "Dokument formatiert!",
+        "Document is already formatted!": "Dokument ist bereits formatiert!",
+        "No open document is found.": "Kein offenes Dokument gefunden.",
         "You can only format in editing mode.": "",
         "Please enter a valid number.\nIt should be at least 0.": "",
         "Please enter a valid number.\nIt should be a whole number.": ""
     },
     "settingSections": {
-        "Heading gaps": "",
-        "Other gaps": "",
-        "Format options": "",
-        "Other options": ""
+        "Heading gaps": "ÜberschriftenLücken",
+        "Other gaps": "Andere Lücken",
+        "Format options": "Formatoptionen",
+        "Other options": "Andere Optionen"
     },
     "headingGaps": {
         "Before top level headings": "",
