@@ -195,7 +195,7 @@ pub fn get_sections(
             }
         }
 
-        // * Read alternate headings.
+        // Read alternate headings.
         if let Some(alternate_heading_level) = alternate_heading_level {
             if is_reading_code_block || is_reading_property_block {
                 continue;
