@@ -1,7 +1,7 @@
 {
     "name": "formatto",
     "type": "module",
-    "version": "1.2.2",
+    "version": "1.2.3",
     "description": "Simple, fast, and easy-to-use Obsidian markdown formatter.",
     "main": "build/index.js",
     "scripts": {
