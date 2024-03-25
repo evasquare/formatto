@@ -173,6 +173,44 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
 }
 
 #[test]
+fn case_7() {
+    setup();
+
+    let input = r#"## Heading 2
+- "#;
+
+    let expected_output = vec![
+        MarkdownSection::Heading(HeadingLevel::Top(r#"## Heading 2"#.to_string())),
+        MarkdownSection::Content("-".to_string()),
+    ];
+
+    assert_eq!(
+        get_sections(input, &get_example_preferences()).unwrap(),
+        expected_output
+    );
+}
+
+#[test]
+fn case_8() {
+    setup();
+
+    let input = r#"### Heading 3
+## Heading 2
+- "#;
+
+    let expected_output = vec![
+        MarkdownSection::Heading(HeadingLevel::FirstSub("### Heading 3".to_string())),
+        MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
+        MarkdownSection::Content(r#"-"#.to_string()),
+    ];
+
+    assert_eq!(
+        get_sections(input, &get_example_preferences()).unwrap(),
+        expected_output
+    );
+}
+
+#[test]
 fn hash_headings_without_title_names() {
     setup();
 
