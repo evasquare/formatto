@@ -2,6 +2,8 @@ import { debounce, Notice, PluginSettingTab, Setting } from "obsidian";
 
 import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang";
 
+import { FALLBACK_SETTINGS } from "./settingTypes";
+
 import type { App } from "obsidian";
 import type FormattoPlugin from "@src/main";
 
@@ -25,6 +27,10 @@ export class FormattoSettingTab extends PluginSettingTab {
 
     private checkDecimal(value: string): boolean {
         return value !== "0" && value !== "1" && parseFloat(value) % 1 !== 0;
+    }
+
+    private putDefaultIndicator(value: string): string {
+        return `${value} (Default)`;
     }
 
     display(): void {
@@ -69,7 +75,11 @@ export class FormattoSettingTab extends PluginSettingTab {
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("3")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.headingGaps.beforeTopLevelHeadings
+                        )
+                    )
                     .setValue(
                         this.plugin.settings.headingGaps.beforeTopLevelHeadings
                     )
@@ -96,7 +106,11 @@ export class FormattoSettingTab extends PluginSettingTab {
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("1")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.headingGaps.beforeFirstSubHeading
+                        )
+                    )
                     .setValue(
                         this.plugin.settings.headingGaps.beforeFirstSubHeading
                     )
@@ -120,7 +134,11 @@ export class FormattoSettingTab extends PluginSettingTab {
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("2")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.headingGaps.beforeSubHeadings
+                        )
+                    )
                     .setValue(
                         this.plugin.settings.headingGaps.beforeSubHeadings
                     )
@@ -147,7 +165,11 @@ export class FormattoSettingTab extends PluginSettingTab {
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("2")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.otherGaps.afterProperties
+                        )
+                    )
                     .setValue(this.plugin.settings.otherGaps.afterProperties)
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -166,7 +188,11 @@ export class FormattoSettingTab extends PluginSettingTab {
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("0")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.otherGaps.beforeContents
+                        )
+                    )
                     .setValue(this.plugin.settings.otherGaps.beforeContents)
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -190,7 +216,12 @@ export class FormattoSettingTab extends PluginSettingTab {
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("1")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.otherGaps
+                                .beforeContentsAfterCodeBlocks
+                        )
+                    )
                     .setValue(
                         this.plugin.settings.otherGaps
                             .beforeContentsAfterCodeBlocks
@@ -215,7 +246,11 @@ export class FormattoSettingTab extends PluginSettingTab {
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("1")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.otherGaps.beforeCodeBlocks
+                        )
+                    )
                     .setValue(this.plugin.settings.otherGaps.beforeCodeBlocks)
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -239,7 +274,12 @@ export class FormattoSettingTab extends PluginSettingTab {
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("0")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.otherGaps
+                                .beforeCodeBlocksAfterHeadings
+                        )
+                    )
                     .setValue(
                         this.plugin.settings.otherGaps
                             .beforeCodeBlocksAfterHeadings
