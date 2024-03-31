@@ -74,7 +74,8 @@ pub fn get_sections(
 
         // Read Properties.
         if sections.is_empty()
-            && ((alternate_heading_level.is_none() && line == "---") || is_reading_property_block)
+            && ((index == 0 && alternate_heading_level.is_none() && line == "---")
+                || is_reading_property_block)
         {
             finish_current_content_section(
                 &mut is_reading_content_section,
