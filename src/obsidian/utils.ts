@@ -32,11 +32,10 @@ export class FormattoUtils {
                 copiedSettings,
                 JSON.stringify(getWasmLocale())
             );
+            this.displayMessage();
         } catch (error) {
             new Notice(error);
         }
-
-        this.displayMessage();
 
         if (!this.formattedDocument) return;
         if (this.formattedDocument !== this.originalDocument) {
