@@ -70,6 +70,7 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 }
 
 /// Invalid property syntax.
+/// It gets read as a content section.
 #[test]
 fn invalid_input_1() {
     setup();
@@ -92,5 +93,49 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 #### Heading 4
 ## Heading 2"#;
 
-    assert!(get_sections(input, &get_example_preferences()).is_err())
+    let expected_output = vec![
+        MarkdownSection::Content(
+            "---INVALID\naliases:\n---\n- Test\n---INVALID\n---INVALID\n---INVALID".to_string(),
+        ),
+        MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
+        MarkdownSection::Content(
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                .to_string(),
+        ),
+        MarkdownSection::Heading(HeadingLevel::FirstSub("### Heading 3".to_string())),
+        MarkdownSection::Content(
+            "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+                .to_string(),
+        ),
+        MarkdownSection::Heading(HeadingLevel::FirstSub("#### Heading 4".to_string())),
+        MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
+    ];
+
+    assert_eq!(
+        get_sections(input, &get_example_preferences()).unwrap(),
+        expected_output
+    );
+}
+
+/// Invalid property syntax.
+/// It gets read as a content section.
+#[test]
+fn invalid_input_2() {
+    setup();
+
+    let input = r#"Text
+
+---
+
+## Heading 2"#;
+
+    let expected_output = vec![
+        MarkdownSection::Content("Text\n\n---".to_string()),
+        MarkdownSection::Heading(HeadingLevel::Top("## Heading 2".to_string())),
+    ];
+
+    assert_eq!(
+        get_sections(input, &get_example_preferences()).unwrap(),
+        expected_output
+    );
 }
