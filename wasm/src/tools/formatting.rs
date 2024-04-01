@@ -166,6 +166,7 @@ pub fn parse_string_to_usize(
 
     if let Some(input) = input {
         if input.is_empty() {
+            // This part of the code is possibly unreachable.
             let msg = get_locale_string(
                 locales,
                 LocaleCategory::Formatting,
