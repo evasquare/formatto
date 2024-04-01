@@ -1,7 +1,7 @@
 {
     "id": "formatto-format",
     "name": "Formatto",
-    "version": "1.2.3",
+    "version": "1.2.4",
     "minAppVersion": "0.15.0",
     "description": "Format markdown document.",
     "author": "Echo",
