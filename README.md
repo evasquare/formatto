@@ -9,7 +9,7 @@ Formatto is a simple Rust-powered Markdown formatter plugin for [Obsidian](https
 </div>
 
 ## Contributing
-If you're interested in participating in this project, please refer to the [contribution guide](https://github.com/polyecho/formatto/blob/main/CONTRIBUTING.md).
+If you're interested in participating in this project, please refer to the [contribution guide](https://github.com/cosmostellar/formatto/blob/main/CONTRIBUTING.md).
 
 
 ## How to Use
