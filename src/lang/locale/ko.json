@@ -14,7 +14,7 @@
         "Please enter a valid number.\nIt should be a whole number.": "유효한 숫자를 입력해주세요.\n자연수만 입력할 수 있습니다."
     },
     "optionWarnings": {
-        "Gap values must be a whole number and it should be at least 0.": "여백 옵션의 값은 반드시 자연수이고 0 이상이어야 합니다."
+        "Gap values must be a whole number and they need to be at least 0.": "여백 옵션의 값은 반드시 자연수이고 0 이상이어야 합니다."
     },
     "placeholders": {
         "(Default)": "(기본값)"

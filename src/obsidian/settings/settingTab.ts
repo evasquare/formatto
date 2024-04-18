@@ -63,7 +63,7 @@ export class FormattoSettingTab extends PluginSettingTab {
             span.innerHTML = `⚠️ <span class="setting-item-description" style="color: var(--text-accent)">
                 ${getLocale(
                     LOCALE_CATEGORY.OPTION_WARNINGS,
-                    "Gap values must be a whole number and it should be at least 0."
+                    "Gap values must be a whole number and they need to be at least 0."
                 )}
             </span>
             <br/>`;
