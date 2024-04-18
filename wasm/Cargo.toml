@@ -1,7 +1,7 @@
 [package]
 name = "formatto-wasm"
 description = "Wasm bindings for Formatto."
-version = "1.2.4"
+version = "1.2.5"
 authors = ["Stellar"]
 repository = "https://github.com/cosmostellar/formatto"
 license = "MIT"
