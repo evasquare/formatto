@@ -59,14 +59,14 @@ export class FormattoSettingTab extends PluginSettingTab {
             true
         );
 
-        containerEl.createSpan({}, (span) => {
-            span.innerHTML = `⚠️ <span class="setting-item-description" style="color: var(--text-accent)">
+        containerEl.createDiv({}, (div) => {
+            div.innerHTML = `<div style="color: var(--text-accent)">
                 ${getLocale(
                     LOCALE_CATEGORY.OPTION_WARNINGS,
                     "Gap values must be a whole number and they need to be at least 0."
                 )}
-            </span>
-            <br/>`;
+            </div>`;
+            div.className = "setting-item setting-item-description";
         });
 
         // Heading Gaps
