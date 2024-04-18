@@ -30,7 +30,10 @@ export class FormattoSettingTab extends PluginSettingTab {
     }
 
     private putDefaultIndicator(value: string): string {
-        return `${value} (Default)`;
+        return `${value} ${getLocale(
+            LOCALE_CATEGORY.PLACEHOLDERS,
+            "(Default)"
+        )}`;
     }
 
     display(): void {
@@ -56,9 +59,19 @@ export class FormattoSettingTab extends PluginSettingTab {
             true
         );
 
+        containerEl.createSpan({}, (span) => {
+            span.innerHTML = `⚠️ <span class="setting-item-description" style="color: var(--text-accent)">
+                ${getLocale(
+                    LOCALE_CATEGORY.OPTION_WARNINGS,
+                    "Gap values must be a whole number and it should be at least 0."
+                )}
+            </span>
+            <br/>`;
+        });
+
         // Heading Gaps
         containerEl.createEl("h2", {
-            text: getLocale(LOCALE_CATEGORY.SETTING_SECTIONS, "Heading gaps"),
+            text: getLocale(LOCALE_CATEGORY.OPTION_SECTIONS, "Heading gaps"),
         });
         new Setting(containerEl)
             .setName(
@@ -153,7 +166,7 @@ export class FormattoSettingTab extends PluginSettingTab {
 
         // Other Gaps
         containerEl.createEl("h2", {
-            text: getLocale(LOCALE_CATEGORY.SETTING_SECTIONS, "Other gaps"),
+            text: getLocale(LOCALE_CATEGORY.OPTION_SECTIONS, "Other gaps"),
         });
         new Setting(containerEl)
             .setName(getLocale(LOCALE_CATEGORY.OTHER_GAPS, "After properties"))
@@ -295,7 +308,7 @@ export class FormattoSettingTab extends PluginSettingTab {
 
         // Format Settings
         containerEl.createEl("h2", {
-            text: getLocale(LOCALE_CATEGORY.SETTING_SECTIONS, "Format options"),
+            text: getLocale(LOCALE_CATEGORY.OPTION_SECTIONS, "Format options"),
         });
         new Setting(containerEl)
             .setName(
@@ -322,7 +335,7 @@ export class FormattoSettingTab extends PluginSettingTab {
 
         // Other Settings
         containerEl.createEl("h2", {
-            text: getLocale(LOCALE_CATEGORY.SETTING_SECTIONS, "Other options"),
+            text: getLocale(LOCALE_CATEGORY.OPTION_SECTIONS, "Other options"),
         });
         new Setting(containerEl)
             .setName(
@@ -334,7 +347,7 @@ export class FormattoSettingTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_OPTIONS,
-                    "Displays a different message when no change was made."
+                    "Displays a different message when no change is needed."
                 )
             )
             .addToggle((text) =>

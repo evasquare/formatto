@@ -13,7 +13,13 @@
         "Please enter a valid number.\nIt should be at least 0.": "Kérlek egy megfelelő számot írjál be.\nLegalább 0 legyen.",
         "Please enter a valid number.\nIt should be a whole number.": "Kérlek egy megfelelő számot írjál be.\nEgész szám legyen."
     },
-    "settingSections": {
+    "optionWarnings": {
+        "Gap values must be a whole number and it should be at least 0.": ""
+    },
+    "placeholders": {
+        "(Default)": ""
+    },
+    "optionSections": {
         "Heading gaps": "Fejléc hézagok",
         "Other gaps": "Egyéb hézagok",
         "Format options": "Formázási opciók",
@@ -45,7 +51,7 @@
     },
     "otherOptions": {
         "Notify when no change is needed": "Értesítsen, hogyha nem szükséges változás",
-        "Displays a different message when no change was made.": "Eltérő üzenetet mutat, hogyha nem történt változás",
+        "Displays a different message when no change is needed.": "Eltérő üzenetet mutat, hogyha nem történt változás",
         "Show more detailed error messages": "Mutasson részletesebb hiba üzeneteket",
         "Displays additional information when parsing fails.": "Plusz információt mutat, amikor az átírás közben hiba történik."
     },

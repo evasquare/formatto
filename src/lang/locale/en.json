@@ -13,7 +13,13 @@
         "Please enter a valid number.\nIt should be at least 0.": "Please enter a valid number.\nIt should be at least 0.",
         "Please enter a valid number.\nIt should be a whole number.": "Please enter a valid number.\nIt should be a whole number."
     },
-    "settingSections": {
+    "optionWarnings": {
+        "Gap values must be a whole number and it should be at least 0.": "Gap values must be a whole number and it should be at least 0."
+    },
+    "placeholders": {
+        "(Default)": "(Default)"
+    },
+    "optionSections": {
         "Heading gaps": "Heading gaps",
         "Other gaps": "Other gaps",
         "Format options": "Format options",
@@ -45,7 +51,7 @@
     },
     "otherOptions": {
         "Notify when no change is needed": "Notify when no change is needed",
-        "Displays a different message when no change was made.": "Displays a different message when no change was made.",
+        "Displays a different message when no change is needed.": "Displays a different message when no change is needed.",
         "Show more detailed error messages": "Show more detailed error messages",
         "Displays additional information when parsing fails.": "Displays additional information when parsing fails."
     },
