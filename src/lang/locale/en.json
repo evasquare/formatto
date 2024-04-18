@@ -14,7 +14,7 @@
         "Please enter a valid number.\nIt should be a whole number.": "Please enter a valid number.\nIt should be a whole number."
     },
     "optionWarnings": {
-        "Gap values must be a whole number and they need to be at least 0.": "Gap values must be a whole number and they need to be at least 0."
+        "Gap value must be a whole number and it needs to be at least 0.": "Gap value must be a whole number and it needs to be at least 0."
     },
     "placeholders": {
         "(Default)": "(Default)"
