@@ -13,7 +13,13 @@
         "Please enter a valid number.\nIt should be at least 0.": "유효한 숫자를 입력해주세요.\n0 이상만 입력할수 있습니다.",
         "Please enter a valid number.\nIt should be a whole number.": "유효한 숫자를 입력해주세요.\n자연수만 입력할 수 있습니다."
     },
-    "settingSections": {
+    "optionWarnings": {
+        "Gap values must be a whole number and they need to be at least 0.": "여백 옵션의 값은 반드시 자연수이고 0 이상이어야 합니다."
+    },
+    "placeholders": {
+        "(Default)": "(기본값)"
+    },
+    "optionSections": {
         "Heading gaps": "제목 여백",
         "Other gaps": "기타 여백",
         "Format options": "포맷 옵션",
@@ -45,7 +51,7 @@
     },
     "otherOptions": {
         "Notify when no change is needed": "변경할 사항이 없을 때 알려주기",
-        "Displays a different message when no change was made.": "변경할 사항이 없으면 다른 메세지를 표시합니다.",
+        "Displays a different message when no change is needed.": "변경할 사항이 없으면 다른 메세지를 표시합니다.",
         "Show more detailed error messages": "더 상세한 에러 메세지 표시하기",
         "Displays additional information when parsing fails.": "문서를 읽지 못했을 때 추가 정보를 표시합니다."
     },
