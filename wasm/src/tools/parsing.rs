@@ -50,7 +50,8 @@ pub fn get_sections(
 
     // Code block section.
     let mut temp_code_block = String::new();
-    let mut is_reading_code_block = false;
+    let mut is_reading_code_block: bool = false;
+    let mut current_code_block_backtick_count: Option<usize> = None;
 
     // Content section. (The rest part of the document.)
     // Everything goes into `MarkdownSection::Content` type,
@@ -113,24 +114,38 @@ pub fn get_sections(
         }
 
         // Read code blocks.
-        if line.starts_with("```") || is_reading_code_block {
+        let valid_code_block_syntax_line: bool = line.starts_with("```");
+        if valid_code_block_syntax_line || is_reading_code_block {
             finish_current_content_section(
                 &mut is_reading_content_section,
                 &mut sections,
                 &mut temp_content_section,
             );
 
-            if line.starts_with("```") {
+            if valid_code_block_syntax_line {
+                let current_line_backtick_count = line.chars().filter(|&c| c == '`').count();
+
+                let mut closing_pair = false;
+                if let Some(reading_code_block_backtick_count) = current_code_block_backtick_count {
+                    if is_reading_code_block
+                        && current_line_backtick_count == reading_code_block_backtick_count
+                    {
+                        closing_pair = true;
+                    }
+                }
+
                 if !is_reading_code_block {
                     // Enter a code block.
                     error_information.reading_section_starting_line = index;
                     temp_code_block.push_str(line);
                     is_reading_code_block = true;
+                    current_code_block_backtick_count = Some(current_line_backtick_count);
                     continue;
-                } else {
+                } else if closing_pair {
                     // Exit a code block.
                     temp_code_block.push_str(format!("\n{}", line).as_str());
                     sections.push(MarkdownSection::Code(temp_code_block.clone()));
+                    current_code_block_backtick_count = None;
 
                     // Clear the temporary code block.
                     temp_code_block.clear();

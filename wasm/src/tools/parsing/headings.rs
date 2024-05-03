@@ -4,12 +4,31 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
     use self::hash_headings::validation::validate_hash_heading;
 
     let mut top_heading_level = usize::MAX;
+
     let mut is_reading_code_block = false;
+    let mut reading_code_block_backtick_count: Option<usize> = None;
 
     for (index, &line) in input_lines.iter().enumerate() {
+        let current_line_backtick_count = line.chars().filter(|&c| c == '`').count();
+
         // Skip code blocks.
         if line.starts_with("```") {
-            is_reading_code_block = !is_reading_code_block;
+            let mut closing_pair = false;
+            if Some(current_line_backtick_count) == reading_code_block_backtick_count
+                && line.chars().all(|c| c == '`')
+            {
+                closing_pair = true;
+            }
+
+            if !is_reading_code_block {
+                // Enter a code block.
+                is_reading_code_block = true;
+                reading_code_block_backtick_count = Some(current_line_backtick_count);
+            } else if closing_pair {
+                // Exit a code block.
+                is_reading_code_block = false;
+                reading_code_block_backtick_count = None;
+            }
         }
         if is_reading_code_block {
             continue;

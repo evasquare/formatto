@@ -40,6 +40,28 @@ Heading 2
 }
 
 #[test]
+fn case_3() {
+    setup();
+
+    let input: Vec<&str> = r#"````rust
+```compile_fail
+# struct MyNonSendType(std::rc::Rc<()>);
+fn is_send<T: Send>() {}
+is_send::<MyNonSendType>();
+```
+````
+
+## Heading 2
+"#
+    .split('\n')
+    .collect();
+
+    let expected_output = 2;
+
+    assert_eq!(get_top_heading_level(&input).unwrap(), expected_output);
+}
+
+#[test]
 fn invalid_input_1() {
     setup();
 
