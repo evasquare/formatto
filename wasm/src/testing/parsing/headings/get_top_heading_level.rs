@@ -62,6 +62,26 @@ is_send::<MyNonSendType>();
 }
 
 #[test]
+fn case_4() {
+    setup();
+
+    let input: Vec<&str> = r#"````md
+```language-name
+// code
+```
+````
+
+## Heading 2
+"#
+    .split('\n')
+    .collect();
+
+    let expected_output = 2;
+
+    assert_eq!(get_top_heading_level(&input).unwrap(), expected_output);
+}
+
+#[test]
 fn invalid_input_1() {
     setup();
 
