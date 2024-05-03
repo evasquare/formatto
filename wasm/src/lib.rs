@@ -69,7 +69,7 @@ pub fn format_document(input: &str, js_settings: JsValue, js_locales: JsValue) -
 
     let preferences = Preferences { settings, locales };
 
-    // Return value to the TypeScript side or throw an error.
+    // Return output to the TypeScript side or throw an error.
     match parse_input(input, &preferences) {
         Ok(sections) => sections,
         Err(e) => {

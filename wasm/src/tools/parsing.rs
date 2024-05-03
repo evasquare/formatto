@@ -13,7 +13,7 @@ struct ErrorInformation {
     reading_section_starting_line: usize,
 }
 
-/// Serialize the input into sections.
+/// Serializes input into sections.
 pub fn get_sections(
     input: &str,
     preferences: &Preferences,
@@ -35,27 +35,28 @@ pub fn get_sections(
     let mut sections: Vec<MarkdownSection> = Vec::new();
     let input_lines: Vec<&str> = input.trim().split('\n').collect();
 
-    // Get the top heading level and its hash literal.
-    let mut top_heading_hash_literal = String::from("");
     let document_top_heading_level: Option<usize> = get_top_heading_level(&input_lines);
+
+    // Hash literals
+    let mut top_heading_hash_literal = String::from("");
     if let Some(document_top_heading_level) = document_top_heading_level {
         top_heading_hash_literal = "#".repeat(document_top_heading_level);
     }
 
     let mut current_heading_level = 0;
 
-    // Property section.
+    // Property sections.
     let mut temp_properties = String::new();
     let mut is_reading_property_block = false;
 
-    // Code block section.
+    // Code block sections.
     let mut temp_code_block = String::new();
     let mut is_reading_code_block: bool = false;
     let mut current_code_block_backtick_count: Option<usize> = None;
 
-    // Content section. (The rest part of the document.)
+    // Content section.
     // Everything goes into `MarkdownSection::Content` type,
-    // unless it detects a markdown syntax that needs to be handled.
+    // unless it detects some specific markdown syntax that needs to be parsed.
     let mut temp_content_section = String::new();
     let mut is_reading_content_section: bool = false;
 
@@ -64,7 +65,7 @@ pub fn get_sections(
     };
 
     for (index, &line) in input_lines.iter().enumerate() {
-        // "is_reading_content_section" should be updated in the previous iterations.
+        // "is_reading_content_section" should be updated in previous iterations.
         if line.is_empty() && !is_reading_content_section && !is_reading_code_block {
             continue;
         }
@@ -147,7 +148,7 @@ pub fn get_sections(
                     sections.push(MarkdownSection::Code(temp_code_block.clone()));
                     current_code_block_backtick_count = None;
 
-                    // Clear the temporary code block.
+                    // Clear temporary code block.
                     temp_code_block.clear();
                     is_reading_code_block = false;
                     continue;

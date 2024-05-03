@@ -5,7 +5,7 @@ use crate::setting_schema::PluginSettings;
 use crate::tools::tokens::{HeadingLevel, MarkdownSection};
 use crate::{console_error, Preferences};
 
-/// Formats a document based on the parsed sections.
+/// Formats a parsed document.
 pub fn get_formatted_string(
     sections: Vec<MarkdownSection>,
     preferences: &Preferences,
