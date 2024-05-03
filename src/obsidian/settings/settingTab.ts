@@ -83,7 +83,7 @@ export class FormattoSettingTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.HEADING_GAPS,
-                    "Decides gaps before top level of headings."
+                    "Decides gaps before top level headings."
                 )
             )
             .addText((text) =>
@@ -114,7 +114,7 @@ export class FormattoSettingTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.HEADING_GAPS,
-                    "Decides the child heading gap right before a parent heading."
+                    "Decides child heading gaps right before parent headings."
                 )
             )
             .addText((text) =>
@@ -196,7 +196,7 @@ export class FormattoSettingTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    "Decides gaps before contents. (ex: Text section before headings)"
+                    "Decides gaps before content sections. (ex: Text before headings)"
                 )
             )
             .addText((text) =>
@@ -224,7 +224,7 @@ export class FormattoSettingTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    "Decides gaps before 'contents that are after code blocks'."
+                    "Decides gaps before 'contents that are after code blocks.'"
                 )
             )
             .addText((text) =>
@@ -282,7 +282,7 @@ export class FormattoSettingTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    "Decides gaps before 'code blocks that are after headings'."
+                    "Decides gaps before 'code blocks that are after headings.'"
                 )
             )
             .addText((text) =>

@@ -27,9 +27,9 @@
     },
     "headingGaps": {
         "Before top level headings": "",
-        "Decides gaps before top level of headings.": "",
+        "Decides gaps before top level headings.": "",
         "Before first sub heading": "",
-        "Decides the child heading gap right before a parent heading.": "",
+        "Decides child heading gaps right before parent headings.": "",
         "Before sub headings": "",
         "Decides gaps before headings that are not in the top level.": ""
     },
@@ -37,13 +37,13 @@
         "After properties": "",
         "Decides the gap after the property section.": "",
         "Before contents": "",
-        "Decides gaps before contents. (ex: Text section before headings)": "",
+        "Decides gaps before content sections. (ex: Text before headings)": "",
         "Before contents after code blocks": "",
-        "Decides gaps before 'contents that are after code blocks'.": "",
+        "Decides gaps before 'contents that are after code blocks.'": "",
         "Before code blocks": "",
         "Decides gaps before code blocks.": "",
         "Before code blocks after headings": "",
-        "Decides gaps before 'code blocks that are after headings'.": ""
+        "Decides gaps before 'code blocks that are after headings.'": ""
     },
     "formatOptions": {
         "Newline at the end of a document": "",
