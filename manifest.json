@@ -1,10 +1,10 @@
 {
     "id": "formatto-format",
     "name": "Formatto",
-    "version": "1.2.2",
+    "version": "1.2.6",
     "minAppVersion": "0.15.0",
-    "description": "Format markdown document.",
-    "author": "Echo",
-    "authorUrl": "https://github.com/polyecho",
+    "description": "Simple, fast, and easy-to-use Markdown formatter.",
+    "author": "Stellar",
+    "authorUrl": "https://github.com/cosmostellar",
     "isDesktopOnly": false
 }

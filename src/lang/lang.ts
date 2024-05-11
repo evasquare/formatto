@@ -1,3 +1,4 @@
+import de from "./locale/de.json";
 import en from "./locale/en.json";
 import hu from "./locale/hu.json";
 import ko from "./locale/ko.json";
@@ -8,7 +9,9 @@ export const LOCALE_CATEGORY = {
     COMMANDS: "commands",
     EDITOR_MENU: "editorMenu",
     NOTICE_MESSAGES: "noticeMessages",
-    SETTING_SECTIONS: "settingSections",
+    OPTION_WARNINGS: "optionWarnings",
+    PLACEHOLDERS: "placeholders",
+    OPTION_SECTIONS: "optionSections",
     HEADING_GAPS: "headingGaps",
     OTHER_GAPS: "otherGaps",
     FORMAT_OPTIONS: "formatOptions",
@@ -20,6 +23,7 @@ type LocaleCategory = ObjectValues<typeof LOCALE_CATEGORY>;
 
 const locales: { [key: string]: typeof en } = {
     en: en,
+    de: de,
     hu: hu,
     ko: ko,
 };

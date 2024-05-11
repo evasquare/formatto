@@ -2,6 +2,8 @@ import { debounce, Notice, PluginSettingTab, Setting } from "obsidian";
 
 import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang";
 
+import { FALLBACK_SETTINGS } from "./settingTypes";
+
 import type { App } from "obsidian";
 import type FormattoPlugin from "@src/main";
 
@@ -27,6 +29,13 @@ export class FormattoSettingTab extends PluginSettingTab {
         return value !== "0" && value !== "1" && parseFloat(value) % 1 !== 0;
     }
 
+    private putDefaultIndicator(value: string): string {
+        return `${value} ${getLocale(
+            LOCALE_CATEGORY.PLACEHOLDERS,
+            "(Default)"
+        )}`;
+    }
+
     display(): void {
         const { containerEl } = this;
         containerEl.empty();
@@ -50,9 +59,19 @@ export class FormattoSettingTab extends PluginSettingTab {
             true
         );
 
+        containerEl.createDiv({}, (div) => {
+            div.innerHTML = `<div style="color: var(--text-accent)">
+                ${getLocale(
+                    LOCALE_CATEGORY.OPTION_WARNINGS,
+                    "Gap value must be a whole number and it needs to be at least 0."
+                )}
+            </div>`;
+            div.className = "setting-item setting-item-description";
+        });
+
         // Heading Gaps
         containerEl.createEl("h2", {
-            text: getLocale(LOCALE_CATEGORY.SETTING_SECTIONS, "Heading gaps"),
+            text: getLocale(LOCALE_CATEGORY.OPTION_SECTIONS, "Heading gaps"),
         });
         new Setting(containerEl)
             .setName(
@@ -64,12 +83,16 @@ export class FormattoSettingTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.HEADING_GAPS,
-                    "Decides gaps before top level of headings."
+                    "Decides gaps before top level headings."
                 )
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("3")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.headingGaps.beforeTopLevelHeadings
+                        )
+                    )
                     .setValue(
                         this.plugin.settings.headingGaps.beforeTopLevelHeadings
                     )
@@ -91,12 +114,16 @@ export class FormattoSettingTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.HEADING_GAPS,
-                    "Decides the child heading gap right before a parent heading."
+                    "Decides child heading gaps right before parent headings."
                 )
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("1")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.headingGaps.beforeFirstSubHeading
+                        )
+                    )
                     .setValue(
                         this.plugin.settings.headingGaps.beforeFirstSubHeading
                     )
@@ -120,7 +147,11 @@ export class FormattoSettingTab extends PluginSettingTab {
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("2")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.headingGaps.beforeSubHeadings
+                        )
+                    )
                     .setValue(
                         this.plugin.settings.headingGaps.beforeSubHeadings
                     )
@@ -135,7 +166,7 @@ export class FormattoSettingTab extends PluginSettingTab {
 
         // Other Gaps
         containerEl.createEl("h2", {
-            text: getLocale(LOCALE_CATEGORY.SETTING_SECTIONS, "Other gaps"),
+            text: getLocale(LOCALE_CATEGORY.OPTION_SECTIONS, "Other gaps"),
         });
         new Setting(containerEl)
             .setName(getLocale(LOCALE_CATEGORY.OTHER_GAPS, "After properties"))
@@ -147,7 +178,11 @@ export class FormattoSettingTab extends PluginSettingTab {
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("2")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.otherGaps.afterProperties
+                        )
+                    )
                     .setValue(this.plugin.settings.otherGaps.afterProperties)
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -161,12 +196,16 @@ export class FormattoSettingTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    "Decides gaps before contents. (ex: Text section before headings)"
+                    "Decides gaps before content sections. (ex: Text before headings)"
                 )
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("0")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.otherGaps.beforeContents
+                        )
+                    )
                     .setValue(this.plugin.settings.otherGaps.beforeContents)
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -185,12 +224,17 @@ export class FormattoSettingTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    "Decides gaps before 'contents that are after code blocks'."
+                    "Decides gaps before 'contents that are after code blocks.'"
                 )
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("1")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.otherGaps
+                                .beforeContentsAfterCodeBlocks
+                        )
+                    )
                     .setValue(
                         this.plugin.settings.otherGaps
                             .beforeContentsAfterCodeBlocks
@@ -215,7 +259,11 @@ export class FormattoSettingTab extends PluginSettingTab {
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("1")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.otherGaps.beforeCodeBlocks
+                        )
+                    )
                     .setValue(this.plugin.settings.otherGaps.beforeCodeBlocks)
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -234,12 +282,17 @@ export class FormattoSettingTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    "Decides gaps before 'code blocks that are after headings'."
+                    "Decides gaps before 'code blocks that are after headings.'"
                 )
             )
             .addText((text) =>
                 text
-                    .setPlaceholder("0")
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_SETTINGS.otherGaps
+                                .beforeCodeBlocksAfterHeadings
+                        )
+                    )
                     .setValue(
                         this.plugin.settings.otherGaps
                             .beforeCodeBlocksAfterHeadings
@@ -255,7 +308,7 @@ export class FormattoSettingTab extends PluginSettingTab {
 
         // Format Settings
         containerEl.createEl("h2", {
-            text: getLocale(LOCALE_CATEGORY.SETTING_SECTIONS, "Format options"),
+            text: getLocale(LOCALE_CATEGORY.OPTION_SECTIONS, "Format options"),
         });
         new Setting(containerEl)
             .setName(
@@ -282,7 +335,7 @@ export class FormattoSettingTab extends PluginSettingTab {
 
         // Other Settings
         containerEl.createEl("h2", {
-            text: getLocale(LOCALE_CATEGORY.SETTING_SECTIONS, "Other options"),
+            text: getLocale(LOCALE_CATEGORY.OPTION_SECTIONS, "Other options"),
         });
         new Setting(containerEl)
             .setName(
@@ -294,7 +347,7 @@ export class FormattoSettingTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_OPTIONS,
-                    "Displays a different message when no change was made."
+                    "Displays a different message when no change is needed."
                 )
             )
             .addToggle((text) =>

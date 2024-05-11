@@ -4,12 +4,31 @@ pub fn get_top_heading_level(input_lines: &[&str]) -> Option<usize> {
     use self::hash_headings::validation::validate_hash_heading;
 
     let mut top_heading_level = usize::MAX;
+
     let mut is_reading_code_block = false;
+    let mut reading_code_block_backtick_count: Option<usize> = None;
 
     for (index, &line) in input_lines.iter().enumerate() {
+        let current_line_backtick_count = line.chars().filter(|&c| c == '`').count();
+
         // Skip code blocks.
         if line.starts_with("```") {
-            is_reading_code_block = !is_reading_code_block;
+            let mut closing_pair = false;
+            if Some(current_line_backtick_count) == reading_code_block_backtick_count
+                && line.chars().all(|c| c == '`')
+            {
+                closing_pair = true;
+            }
+
+            if !is_reading_code_block {
+                // Enter a code block.
+                is_reading_code_block = true;
+                reading_code_block_backtick_count = Some(current_line_backtick_count);
+            } else if closing_pair {
+                // Exit a code block.
+                is_reading_code_block = false;
+                reading_code_block_backtick_count = None;
+            }
         }
         if is_reading_code_block {
             continue;
@@ -103,8 +122,8 @@ pub mod alternate_headings {
         ) -> bool {
             use self::get_valid_alternate_top_heading_level::get_alternate_heading_level;
 
-            let mut is_reading_syntax = true; // true
-            let mut is_reading_title = false; // false
+            let mut is_reading_syntax = true;
+            let mut is_reading_title = false;
 
             for (index, &line) in input_lines[0..=reading_index].iter().enumerate().rev() {
                 if line.is_empty() && is_reading_syntax && !is_reading_title {
@@ -124,6 +143,9 @@ pub mod alternate_headings {
 
                     return false;
                 } else if is_reading_title {
+                    if super::super::hash_headings::validation::validate_hash_heading(line) {
+                        return false;
+                    }
                     if index == 0 {
                         return true;
                     }

@@ -13,7 +13,13 @@
         "Please enter a valid number.\nIt should be at least 0.": "Kérlek egy megfelelő számot írjál be.\nLegalább 0 legyen.",
         "Please enter a valid number.\nIt should be a whole number.": "Kérlek egy megfelelő számot írjál be.\nEgész szám legyen."
     },
-    "settingSections": {
+    "optionWarnings": {
+        "Gap value must be a whole number and it needs to be at least 0.": ""
+    },
+    "placeholders": {
+        "(Default)": ""
+    },
+    "optionSections": {
         "Heading gaps": "Fejléc hézagok",
         "Other gaps": "Egyéb hézagok",
         "Format options": "Formázási opciók",
@@ -21,9 +27,9 @@
     },
     "headingGaps": {
         "Before top level headings": "Fő címsorok előtt",
-        "Decides gaps before top level of headings.": "Meghatározza a hézag nagyságát a fő címsorok előtt.",
+        "Decides gaps before top level headings.": "Meghatározza a hézag nagyságát a fő címsorok előtt.",
         "Before first sub heading": "Az első alcím előtt",
-        "Decides the child heading gap right before a parent heading.": "Meghatározza a gyerekcím hézagát közvetlenül a szülőcím előtt.",
+        "Decides child heading gaps right before parent headings.": "Meghatározza a gyerekcím hézagát közvetlenül a szülőcím előtt.",
         "Before sub headings": "Alcímek előtt",
         "Decides gaps before headings that are not in the top level.": "Meghatározza a nem fő címsorok előtti részeket"
     },
@@ -31,13 +37,13 @@
         "After properties": "Tulajdonságok után",
         "Decides the gap after the property section.": "Meghatározza a hézagot a tulajdonságok szekció után.",
         "Before contents": "Tartalmak előtt",
-        "Decides gaps before contents. (ex: Text section before headings)": "Meghatározza a hézagot a tartalmak előtt. (pl.: Szövegrész a címsorok előtt)",
+        "Decides gaps before content sections. (ex: Text before headings)": "Meghatározza a hézagot a tartalmak előtt. (pl.: Szövegrész a címsorok előtt)",
         "Before contents after code blocks": "Tartalmak előtti kód részek",
-        "Decides gaps before 'contents that are after code blocks'.": "Meghatározza azon tartalmi hézagokat, melyek kód részek előtt vannak.",
+        "Decides gaps before 'contents that are after code blocks.'": "Meghatározza azon tartalmi hézagokat, melyek kód részek előtt vannak.",
         "Before code blocks": "Kód részek előtt",
         "Decides gaps before code blocks.": "Meghatározza a hézagot kód részek előtt.",
         "Before code blocks after headings": "Kód részek előtt, a címsorok előtt",
-        "Decides gaps before 'code blocks that are after headings'.": "Meghatározza azon kód részi hézagokat, melyek címsorok után vannak."
+        "Decides gaps before 'code blocks that are after headings.'": "Meghatározza azon kód részi hézagokat, melyek címsorok után vannak."
     },
     "formatOptions": {
         "Newline at the end of a document": "Új sor a dokumentum végére.",
@@ -45,7 +51,7 @@
     },
     "otherOptions": {
         "Notify when no change is needed": "Értesítsen, hogyha nem szükséges változás",
-        "Displays a different message when no change was made.": "Eltérő üzenetet mutat, hogyha nem történt változás",
+        "Displays a different message when no change is needed.": "Eltérő üzenetet mutat, hogyha nem történt változás",
         "Show more detailed error messages": "Mutasson részletesebb hiba üzeneteket",
         "Displays additional information when parsing fails.": "Plusz információt mutat, amikor az átírás közben hiba történik."
     },

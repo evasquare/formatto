@@ -5,7 +5,7 @@ use crate::setting_schema::PluginSettings;
 use crate::tools::tokens::{HeadingLevel, MarkdownSection};
 use crate::{console_error, Preferences};
 
-/// Formats a document based on the parsed sections.
+/// Formats a parsed document.
 pub fn get_formatted_string(
     sections: Vec<MarkdownSection>,
     preferences: &Preferences,
@@ -166,6 +166,7 @@ pub fn parse_string_to_usize(
 
     if let Some(input) = input {
         if input.is_empty() {
+            // This part of the code is possibly unreachable.
             let msg = get_locale_string(
                 locales,
                 LocaleCategory::Formatting,

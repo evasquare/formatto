@@ -13,7 +13,13 @@
         "Please enter a valid number.\nIt should be at least 0.": "",
         "Please enter a valid number.\nIt should be a whole number.": ""
     },
-    "settingSections": {
+    "optionWarnings": {
+        "Gap value must be a whole number and it needs to be at least 0.": ""
+    },
+    "placeholders": {
+        "(Default)": ""
+    },
+    "optionSections": {
         "Heading gaps": "ÜberschriftenLücken",
         "Other gaps": "Andere Lücken",
         "Format options": "Formatoptionen",
@@ -21,9 +27,9 @@
     },
     "headingGaps": {
         "Before top level headings": "",
-        "Decides gaps before top level of headings.": "",
+        "Decides gaps before top level headings.": "",
         "Before first sub heading": "",
-        "Decides the child heading gap right before a parent heading.": "",
+        "Decides child heading gaps right before parent headings.": "",
         "Before sub headings": "",
         "Decides gaps before headings that are not in the top level.": ""
     },
@@ -31,13 +37,13 @@
         "After properties": "",
         "Decides the gap after the property section.": "",
         "Before contents": "",
-        "Decides gaps before contents. (ex: Text section before headings)": "",
+        "Decides gaps before content sections. (ex: Text before headings)": "",
         "Before contents after code blocks": "",
-        "Decides gaps before 'contents that are after code blocks'.": "",
+        "Decides gaps before 'contents that are after code blocks.'": "",
         "Before code blocks": "",
         "Decides gaps before code blocks.": "",
         "Before code blocks after headings": "",
-        "Decides gaps before 'code blocks that are after headings'.": ""
+        "Decides gaps before 'code blocks that are after headings.'": ""
     },
     "formatOptions": {
         "Newline at the end of a document": "",
@@ -45,7 +51,7 @@
     },
     "otherOptions": {
         "Notify when no change is needed": "",
-        "Displays a different message when no change was made.": "",
+        "Displays a different message when no change is needed.": "",
         "Show more detailed error messages": "",
         "Displays additional information when parsing fails.": ""
     },
