@@ -164,19 +164,6 @@ pub fn parse_string_to_usize(
 ) -> Result<usize, Box<dyn Error>> {
     use crate::utils::{get_locale_string, LocaleCategory};
 
-    if let Some(input) = input {
-        if input.is_empty() {
-            // This part of the code is possibly unreachable.
-            let msg = get_locale_string(
-                locales,
-                LocaleCategory::Formatting,
-                "Failed to read options. Please make sure there is no option with an empty value.",
-            );
-
-            return Err(msg.into());
-        }
-    }
-
     match input {
         Some(input) => match input.parse::<usize>() {
             Ok(num) => Ok(num),
@@ -189,19 +176,9 @@ pub fn parse_string_to_usize(
                     "Failed to read options. Some of them are possibly not positive number values.",
                 );
 
-                #[allow(clippy::needless_return)]
-                return Err(msg.into());
+                Err(msg.into())
             }
         },
-        None => {
-            let msg = get_locale_string(
-                locales,
-                LocaleCategory::Formatting,
-                "Failed to read option properties.",
-            );
-
-            #[allow(clippy::needless_return)]
-            return Err(msg.into());
-        }
+        None => unreachable!(),
     }
 }
