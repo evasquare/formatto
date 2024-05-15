@@ -1,10 +1,12 @@
 ## Creating a Pull Request
 Please create a pull request for one feature at a time.
-If your pull request is merged to the main branch, the feature will be added in the next release.
+If your pull request is merged into the main branch,
+the feature will be added in the next release.
 
 
 ## Development Environment
-To build the code, you need Node.js, NPM, Rust, and Cargo in your development environment. Please refer to following documents.
+To build the code, you need Node.js, NPM, Rust, and Cargo in your development 
+environment. Please refer to following documents.
 
 - [Node.js](https://nodejs.org/en)
 - [Install Rust](https://www.rust-lang.org/tools/install)
