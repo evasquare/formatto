@@ -9,6 +9,7 @@ mod utils;
 #[cfg(test)]
 mod testing;
 
+#[allow(dead_code)]
 #[cfg(target_arch = "wasm32")]
 #[wasm_bindgen]
 extern "C" {
@@ -17,13 +18,14 @@ extern "C" {
     #[wasm_bindgen(js_namespace = console)]
     pub fn error(s: &str);
 }
-
+#[allow(dead_code)]
 #[cfg(not(target_arch = "wasm32"))]
-pub fn log(s: &str) {
+fn log(s: &str) {
     println!("{}", s);
 }
+#[allow(dead_code)]
 #[cfg(not(target_arch = "wasm32"))]
-pub fn error(s: &str) {
+fn error(s: &str) {
     eprintln!("{}", s);
 }
 
