@@ -61,9 +61,7 @@
             "Failed to parse the document.": ""
         },
         "formatting": {
-            "Failed to read options. Please make sure there is no option with an empty value.": "",
-            "Failed to read options. Some of them are possibly not positive number values.": "",
-            "Failed to read option properties.": ""
+            "Failed to read options. Some of them are possibly not positive number values.": ""
         }
     }
 }
