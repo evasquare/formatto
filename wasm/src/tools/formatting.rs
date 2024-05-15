@@ -1,7 +1,6 @@
 use serde_json::Value;
 use std::error::Error;
 
-use crate::setting_schema::PluginSettings;
 use crate::tools::tokens::{HeadingLevel, MarkdownSection};
 use crate::{console_error, Preferences};
 
@@ -13,21 +12,21 @@ pub fn get_formatted_string(
     let mut output = String::new();
 
     // Check the type of the last parsed section.
-    let mut right_after_properties = false;
-    let mut right_after_heading = false;
-    let mut right_after_code_block = false;
+    let mut is_right_after_properties = false;
+    let mut is_right_after_heading = false;
+    let mut is_right_after_code_block = false;
 
-    let settings: &PluginSettings = &preferences.settings;
-    let locale: &Value = &preferences.locales;
+    let settings = &preferences.settings;
+    let locale = &preferences.locales;
 
     for section in sections {
         match section {
             MarkdownSection::Property(content) => {
                 output.push_str(&content);
 
-                right_after_properties = true;
-                right_after_heading = false;
-                right_after_code_block = false;
+                is_right_after_properties = true;
+                is_right_after_heading = false;
+                is_right_after_code_block = false;
             }
             MarkdownSection::Heading(heading_level) => {
                 match heading_level {
@@ -36,7 +35,7 @@ pub fn get_formatted_string(
                             &content,
                             if output.is_empty() {
                                 0
-                            } else if right_after_properties {
+                            } else if is_right_after_properties {
                                 parse_string_to_usize(
                                     &settings.other_gaps.after_properties,
                                     locale,
@@ -55,7 +54,7 @@ pub fn get_formatted_string(
                             &content,
                             if output.is_empty() {
                                 0
-                            } else if right_after_properties {
+                            } else if is_right_after_properties {
                                 parse_string_to_usize(
                                     &settings.other_gaps.after_properties,
                                     locale,
@@ -75,7 +74,7 @@ pub fn get_formatted_string(
                             &content,
                             if output.is_empty() {
                                 0
-                            } else if right_after_properties {
+                            } else if is_right_after_properties {
                                 parse_string_to_usize(
                                     &settings.other_gaps.after_properties,
                                     locale,
@@ -91,18 +90,18 @@ pub fn get_formatted_string(
                     }
                 }
 
-                right_after_properties = false;
-                right_after_heading = true;
-                right_after_code_block = false;
+                is_right_after_properties = false;
+                is_right_after_heading = true;
+                is_right_after_code_block = false;
             }
             MarkdownSection::Content(content) => {
                 output.push_str(&insert_line_breaks(
                     &content,
                     if output.is_empty() {
                         0
-                    } else if right_after_properties {
+                    } else if is_right_after_properties {
                         parse_string_to_usize(&settings.other_gaps.after_properties, locale)? + 1
-                    } else if right_after_code_block {
+                    } else if is_right_after_code_block {
                         parse_string_to_usize(
                             &settings.other_gaps.before_contents_after_code_blocks,
                             locale,
@@ -113,18 +112,18 @@ pub fn get_formatted_string(
                     0,
                 ));
 
-                right_after_properties = false;
-                right_after_heading = false;
-                right_after_code_block = false;
+                is_right_after_properties = false;
+                is_right_after_heading = false;
+                is_right_after_code_block = false;
             }
             MarkdownSection::Code(content) => {
                 output.push_str(&insert_line_breaks(
                     &content,
                     if output.is_empty() {
                         0
-                    } else if right_after_properties {
+                    } else if is_right_after_properties {
                         parse_string_to_usize(&settings.other_gaps.after_properties, locale)? + 1
-                    } else if right_after_heading {
+                    } else if is_right_after_heading {
                         parse_string_to_usize(
                             &settings.other_gaps.before_code_blocks_after_headings,
                             locale,
@@ -135,9 +134,9 @@ pub fn get_formatted_string(
                     0,
                 ));
 
-                right_after_properties = false;
-                right_after_heading = false;
-                right_after_code_block = true
+                is_right_after_properties = false;
+                is_right_after_heading = false;
+                is_right_after_code_block = true
             }
         }
     }

@@ -8,7 +8,7 @@ fn empty_input() {
     setup();
 
     let input = "";
-    let expected_output = vec![];
+    let expected_output = Vec::new();
 
     assert_eq!(
         get_sections(input, &get_example_preferences()).unwrap(),

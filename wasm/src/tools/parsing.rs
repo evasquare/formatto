@@ -1,4 +1,4 @@
-use std::{error::Error, vec};
+use std::error::Error;
 
 use crate::{
     tools::tokens::{HeadingLevel, MarkdownSection},
@@ -29,16 +29,16 @@ pub fn get_sections(
     };
 
     if input.is_empty() {
-        return Ok(vec![]);
+        return Ok(Vec::new());
     }
 
     let mut sections: Vec<MarkdownSection> = Vec::new();
     let input_lines: Vec<&str> = input.trim().split('\n').collect();
 
-    let document_top_heading_level: Option<usize> = get_top_heading_level(&input_lines);
+    let document_top_heading_level = get_top_heading_level(&input_lines);
 
     // Hash literals
-    let mut top_heading_hash_literal = String::from("");
+    let mut top_heading_hash_literal = String::new();
     if let Some(document_top_heading_level) = document_top_heading_level {
         top_heading_hash_literal = "#".repeat(document_top_heading_level);
     }
@@ -51,14 +51,14 @@ pub fn get_sections(
 
     // Code block sections.
     let mut temp_code_block = String::new();
-    let mut is_reading_code_block: bool = false;
+    let mut is_reading_code_block = false;
     let mut current_code_block_backtick_count: Option<usize> = None;
 
     // Content section.
     // Everything goes into `MarkdownSection::Content` type,
     // unless it detects some specific markdown syntax that needs to be parsed.
     let mut temp_content_section = String::new();
-    let mut is_reading_content_section: bool = false;
+    let mut is_reading_content_section = false;
 
     let mut error_information = ErrorInformation {
         reading_section_starting_line: 0,
@@ -115,7 +115,7 @@ pub fn get_sections(
         }
 
         // Read code blocks.
-        let valid_code_block_syntax_line: bool = line.starts_with("```");
+        let valid_code_block_syntax_line = line.starts_with("```");
         if valid_code_block_syntax_line || is_reading_code_block {
             finish_current_content_section(
                 &mut is_reading_content_section,

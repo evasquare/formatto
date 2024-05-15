@@ -1,4 +1,3 @@
-use serde_json::Value;
 use std::error::Error;
 use utils::Preferences;
 use wasm_bindgen::prelude::*;
@@ -42,12 +41,11 @@ mod macro_rules {
 #[wasm_bindgen]
 /// This function will be called from the TypeScript side.
 pub fn format_document(input: &str, js_settings: JsValue, js_locales: JsValue) -> String {
-    use crate::setting_schema::PluginSettings;
     use utils::{read_js_value, read_settings};
 
     utils::set_panic_hook();
 
-    let settings: PluginSettings = match read_settings(js_settings) {
+    let settings = match read_settings(js_settings) {
         Ok(settings) => settings,
         Err(e) => {
             let error_message = e.to_string();
@@ -55,7 +53,7 @@ pub fn format_document(input: &str, js_settings: JsValue, js_locales: JsValue) -
         }
     };
 
-    let locales: Value = match read_js_value(js_locales) {
+    let locales = match read_js_value(js_locales) {
         Ok(locales) => locales,
         Err(e) => {
             let error_message = e.to_string();
