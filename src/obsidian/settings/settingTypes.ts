@@ -3,9 +3,9 @@
 */
 
 export interface HeadingGaps {
-    /** Decides gaps before top level of headings. */
+    /** Decides gaps before top level headings. */
     beforeTopLevelHeadings: string;
-    /** Decides the child heading gap right before a parent heading. */
+    /** Decides child heading gaps right before parent headings. */
     beforeFirstSubHeading: string;
     /** Decides gaps before headings that are not in the top level. */
     beforeSubHeadings: string;
@@ -14,13 +14,13 @@ export interface HeadingGaps {
 export interface OtherGaps {
     /** Decides the gap after the property section. */
     afterProperties: string;
-    /** Decides gaps before contents (ex: Text section before headings). */
+    /** Decides gaps before content sections. (ex: Text before headings) */
     beforeContents: string;
-    /** Decides gaps before 'contents that are after code blocks'. */
+    /** Decides gaps before 'contents that are after code blocks.' */
     beforeContentsAfterCodeBlocks: string;
     /** Decides gaps before code blocks. */
     beforeCodeBlocks: string;
-    /** Decides gaps before 'code blocks that are after headings'. */
+    /** Decides gaps before 'code blocks that are after headings.' */
     beforeCodeBlocksAfterHeadings: string;
 }
 
@@ -30,7 +30,7 @@ export interface FormatOptions {
 }
 
 export interface OtherOptions {
-    /** Displays a different message when no change was made. */
+    /** Displays a different message when no change is needed. */
     notifyWhenUnchanged: boolean;
     /** Displays additional information when parsing fails. */
     showMoreDetailedErrorMessages: boolean;

@@ -3,9 +3,9 @@ use serde::Deserialize;
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct HeadingGaps {
-    /// Decides gaps before top level of headings.
+    /// Decides gaps before top level headings.
     pub before_top_level_headings: Option<String>,
-    /// Decides the child heading gap right before a parent heading.
+    /// Decides child heading gaps right before parent headings.
     pub before_first_sub_heading: Option<String>,
     /// Decides gaps before headings that are not in the top level.
     pub before_sub_headings: Option<String>,
@@ -16,13 +16,13 @@ pub struct HeadingGaps {
 pub struct OtherGaps {
     /// Decides the gap after the property section.
     pub after_properties: Option<String>,
-    /// Decides gaps before contents (ex: Text section before headings).
+    /// Decides gaps before content sections. (ex: Text before headings)
     pub before_contents: Option<String>,
-    /// Decides gaps before 'contents that are after code blocks'.
+    /// Decides gaps before 'contents that are after code blocks.'
     pub before_contents_after_code_blocks: Option<String>,
     /// Decides gaps before code blocks.
     pub before_code_blocks: Option<String>,
-    /// Decides gaps before 'code blocks that are after headings'.
+    /// Decides gaps before 'code blocks that are after headings.'
     pub before_code_blocks_after_headings: Option<String>,
 }
 
@@ -36,7 +36,7 @@ pub struct FormatOptions {
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct OtherOptions {
-    /// Displays a different message when no change was made.
+    /// Displays a different message when no change is needed.
     pub notify_when_unchanged: Option<bool>,
     /// Displays additional information when parsing fails.
     pub show_more_detailed_error_messages: Option<bool>,
