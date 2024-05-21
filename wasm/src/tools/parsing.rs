@@ -18,7 +18,7 @@ pub fn get_sections(
     input: &str,
     preferences: &Preferences,
 ) -> Result<Vec<MarkdownSection>, Box<dyn Error>> {
-    use super::parsing::contents::{append_line_break, finish_current_content_section};
+    use super::parsing::contents::{append_a_line_break, finish_current_content_section};
     use super::parsing::headings::{
         alternate_headings::get_valid_alternate_heading_level,
         alternate_headings::validation::{
@@ -56,7 +56,7 @@ pub fn get_sections(
 
     // Content section.
     // Everything goes into `MarkdownSection::Content` type,
-    // unless it detects some specific markdown syntax that needs to be parsed.
+    // unless it detects some specific Markdown syntax that needs to be parsed.
     let mut temp_content_section = String::new();
     let mut is_reading_content_section = false;
 
@@ -64,6 +64,7 @@ pub fn get_sections(
         reading_section_starting_line: 0,
     };
 
+    // Iterate over lines of a document.
     for (index, &line) in input_lines.iter().enumerate() {
         // "is_reading_content_section" should be updated in previous iterations.
         if line.is_empty() && !is_reading_content_section && !is_reading_code_block {
@@ -288,7 +289,7 @@ pub fn get_sections(
                 preferences,
                 &error_information,
             )?;
-            append_line_break(&mut temp_content_section, line);
+            append_a_line_break(&mut temp_content_section, line);
         }
 
         // Run this when it's the last line.

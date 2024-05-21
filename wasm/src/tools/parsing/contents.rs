@@ -21,7 +21,7 @@ pub fn finish_current_content_section(
 }
 
 /// Appends a line with a line break.
-pub fn append_line_break(string: &mut String, line: &str) {
+pub fn append_a_line_break(string: &mut String, line: &str) {
     if !string.is_empty() {
         string.push('\n');
     }
