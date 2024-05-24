@@ -2,12 +2,12 @@ import { debounce, Notice, PluginSettingTab, Setting } from "obsidian";
 
 import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang";
 
-import { FALLBACK_SETTINGS } from "./settingTypes";
+import { FALLBACK_OPTIONS } from "./optionTypes";
 
 import type { App } from "obsidian";
 import type FormattoPlugin from "@src/main";
 
-export class FormattoSettingTab extends PluginSettingTab {
+export class FormattoOptionTab extends PluginSettingTab {
     private plugin: FormattoPlugin;
     private noticeMessages = {
         invalidNumberMessage: getLocale(
@@ -90,7 +90,7 @@ export class FormattoSettingTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_SETTINGS.headingGaps.beforeTopLevelHeadings
+                            FALLBACK_OPTIONS.headingGaps.beforeTopLevelHeadings
                         )
                     )
                     .setValue(
@@ -101,7 +101,7 @@ export class FormattoSettingTab extends PluginSettingTab {
 
                         this.plugin.settings.headingGaps.beforeTopLevelHeadings =
                             value;
-                        await this.plugin.saveSettings();
+                        await this.plugin.saveOptions();
                     })
             );
         new Setting(containerEl)
@@ -121,7 +121,7 @@ export class FormattoSettingTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_SETTINGS.headingGaps.beforeFirstSubHeading
+                            FALLBACK_OPTIONS.headingGaps.beforeFirstSubHeading
                         )
                     )
                     .setValue(
@@ -132,7 +132,7 @@ export class FormattoSettingTab extends PluginSettingTab {
 
                         this.plugin.settings.headingGaps.beforeFirstSubHeading =
                             value;
-                        await this.plugin.saveSettings();
+                        await this.plugin.saveOptions();
                     })
             );
         new Setting(containerEl)
@@ -149,7 +149,7 @@ export class FormattoSettingTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_SETTINGS.headingGaps.beforeSubHeadings
+                            FALLBACK_OPTIONS.headingGaps.beforeSubHeadings
                         )
                     )
                     .setValue(
@@ -160,7 +160,7 @@ export class FormattoSettingTab extends PluginSettingTab {
 
                         this.plugin.settings.headingGaps.beforeSubHeadings =
                             value;
-                        await this.plugin.saveSettings();
+                        await this.plugin.saveOptions();
                     })
             );
 
@@ -180,7 +180,7 @@ export class FormattoSettingTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_SETTINGS.otherGaps.afterProperties
+                            FALLBACK_OPTIONS.otherGaps.afterProperties
                         )
                     )
                     .setValue(this.plugin.settings.otherGaps.afterProperties)
@@ -188,7 +188,7 @@ export class FormattoSettingTab extends PluginSettingTab {
                         debounceMsg(value);
 
                         this.plugin.settings.otherGaps.afterProperties = value;
-                        await this.plugin.saveSettings();
+                        await this.plugin.saveOptions();
                     })
             );
         new Setting(containerEl)
@@ -203,7 +203,7 @@ export class FormattoSettingTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_SETTINGS.otherGaps.beforeContents
+                            FALLBACK_OPTIONS.otherGaps.beforeContents
                         )
                     )
                     .setValue(this.plugin.settings.otherGaps.beforeContents)
@@ -211,7 +211,7 @@ export class FormattoSettingTab extends PluginSettingTab {
                         debounceMsg(value);
 
                         this.plugin.settings.otherGaps.beforeContents = value;
-                        await this.plugin.saveSettings();
+                        await this.plugin.saveOptions();
                     })
             );
         new Setting(containerEl)
@@ -231,7 +231,7 @@ export class FormattoSettingTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_SETTINGS.otherGaps
+                            FALLBACK_OPTIONS.otherGaps
                                 .beforeContentsAfterCodeBlocks
                         )
                     )
@@ -244,7 +244,7 @@ export class FormattoSettingTab extends PluginSettingTab {
 
                         this.plugin.settings.otherGaps.beforeContentsAfterCodeBlocks =
                             value;
-                        await this.plugin.saveSettings();
+                        await this.plugin.saveOptions();
                     })
             );
         new Setting(containerEl)
@@ -261,7 +261,7 @@ export class FormattoSettingTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_SETTINGS.otherGaps.beforeCodeBlocks
+                            FALLBACK_OPTIONS.otherGaps.beforeCodeBlocks
                         )
                     )
                     .setValue(this.plugin.settings.otherGaps.beforeCodeBlocks)
@@ -269,7 +269,7 @@ export class FormattoSettingTab extends PluginSettingTab {
                         debounceMsg(value);
 
                         this.plugin.settings.otherGaps.beforeCodeBlocks = value;
-                        await this.plugin.saveSettings();
+                        await this.plugin.saveOptions();
                     })
             );
         new Setting(containerEl)
@@ -289,7 +289,7 @@ export class FormattoSettingTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_SETTINGS.otherGaps
+                            FALLBACK_OPTIONS.otherGaps
                                 .beforeCodeBlocksAfterHeadings
                         )
                     )
@@ -302,11 +302,11 @@ export class FormattoSettingTab extends PluginSettingTab {
 
                         this.plugin.settings.otherGaps.beforeCodeBlocksAfterHeadings =
                             value;
-                        await this.plugin.saveSettings();
+                        await this.plugin.saveOptions();
                     })
             );
 
-        // Format Settings
+        // Format Options
         containerEl.createEl("h2", {
             text: getLocale(LOCALE_CATEGORY.OPTION_SECTIONS, "Format options"),
         });
@@ -329,11 +329,11 @@ export class FormattoSettingTab extends PluginSettingTab {
                     .onChange(async (value) => {
                         this.plugin.settings.formatOptions.insertNewline =
                             value;
-                        await this.plugin.saveSettings();
+                        await this.plugin.saveOptions();
                     })
             );
 
-        // Other Settings
+        // Other Options
         containerEl.createEl("h2", {
             text: getLocale(LOCALE_CATEGORY.OPTION_SECTIONS, "Other options"),
         });
@@ -358,7 +358,7 @@ export class FormattoSettingTab extends PluginSettingTab {
                     .onChange(async (value) => {
                         this.plugin.settings.otherOptions.notifyWhenUnchanged =
                             value;
-                        await this.plugin.saveSettings();
+                        await this.plugin.saveOptions();
                     })
             );
         new Setting(containerEl)
@@ -383,7 +383,7 @@ export class FormattoSettingTab extends PluginSettingTab {
                     .onChange(async (value) => {
                         this.plugin.settings.otherOptions.showMoreDetailedErrorMessages =
                             value;
-                        await this.plugin.saveSettings();
+                        await this.plugin.saveOptions();
                     })
             );
     }

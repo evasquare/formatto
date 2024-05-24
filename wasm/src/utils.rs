@@ -2,7 +2,7 @@ use serde_json::Value;
 use std::error::Error;
 use wasm_bindgen::JsValue;
 
-use crate::setting_schema::PluginSettings;
+use crate::option_schema::PluginOptions;
 
 // To use the feature, use the following argument.
 // "--features development"
@@ -22,12 +22,12 @@ pub fn set_panic_hook() {
 /// Struct for data from the TypeScript side.
 #[derive(Debug)]
 pub struct Preferences {
-    pub settings: PluginSettings,
+    pub options: PluginOptions,
     pub locales: Value,
 }
 
-/// Reads the Obsidian plugin's setting data.
-pub fn read_settings<T: serde::de::DeserializeOwned>(input: JsValue) -> Result<T, Box<dyn Error>> {
+/// Reads the plugin option data.
+pub fn read_options<T: serde::de::DeserializeOwned>(input: JsValue) -> Result<T, Box<dyn Error>> {
     Ok(serde_wasm_bindgen::from_value(input)?)
 }
 
@@ -40,7 +40,7 @@ pub fn read_js_value(js_value: JsValue) -> Result<Value, Box<dyn Error>> {
     }
 }
 
-/// The category of a message.
+/// Message categories.
 pub enum LocaleCategory {
     Parsing,
     Formatting,

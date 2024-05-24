@@ -2,7 +2,7 @@ use std::error::Error;
 use utils::Preferences;
 use wasm_bindgen::prelude::*;
 
-mod setting_schema;
+mod option_schema;
 mod tools;
 mod utils;
 
@@ -42,13 +42,13 @@ mod macro_rules {
 
 #[wasm_bindgen]
 /// This function will be called from the TypeScript side.
-pub fn format_document(input: &str, js_settings: JsValue, js_locales: JsValue) -> String {
-    use utils::{read_js_value, read_settings};
+pub fn format_document(input: &str, js_options: JsValue, js_locales: JsValue) -> String {
+    use utils::{read_js_value, read_options};
 
     utils::set_panic_hook();
 
-    let settings = match read_settings(js_settings) {
-        Ok(settings) => settings,
+    let options = match read_options(js_options) {
+        Ok(options) => options,
         Err(e) => {
             let error_message = e.to_string();
             wasm_bindgen::throw_str(&error_message);
@@ -67,7 +67,7 @@ pub fn format_document(input: &str, js_settings: JsValue, js_locales: JsValue) -
         return input.to_string();
     }
 
-    let preferences = Preferences { settings, locales };
+    let preferences = Preferences { options, locales };
 
     // Return output to the TypeScript side or throw an error.
     match parse_input(input, &preferences) {

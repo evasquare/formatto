@@ -1,7 +1,7 @@
 use crate::utils::{set_panic_hook, Preferences};
 use serde_json::Value;
 
-use crate::setting_schema::{FormatOptions, HeadingGaps, OtherGaps, OtherOptions, PluginSettings};
+use crate::option_schema::{FormatOptions, HeadingGaps, OtherGaps, OtherOptions, PluginOptions};
 
 mod formatting;
 mod parsing;
@@ -15,14 +15,14 @@ fn setup() {
 /// Returns an example value for testing.
 fn get_example_preferences() -> Preferences {
     Preferences {
-        settings: get_example_settings(),
+        options: get_example_options(),
         locales: get_example_locale(),
     }
 }
 
-/// Returns an example setting value.
-fn get_example_settings() -> PluginSettings {
-    PluginSettings {
+/// Returns an example option value.
+fn get_example_options() -> PluginOptions {
+    PluginOptions {
         heading_gaps: HeadingGaps {
             before_top_level_headings: Some("3".to_string()),
             before_first_sub_heading: Some("1".to_string()),

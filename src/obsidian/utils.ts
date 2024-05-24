@@ -4,10 +4,7 @@ import { getLocale, getWasmLocale, LOCALE_CATEGORY } from "@src/lang/lang";
 import FormattoPlugin from "@src/main";
 
 import { format_document } from "../../wasm/pkg/formatto_wasm";
-import {
-    FALLBACK_SETTINGS,
-    FormattoPluginSettings,
-} from "./settings/settingTypes";
+import { FALLBACK_OPTIONS, FormattoPluginOptions } from "./options/optionTypes";
 
 export class FormattoUtils {
     private plugin: FormattoPlugin;
@@ -20,8 +17,8 @@ export class FormattoUtils {
     }
 
     formatDocument(editor: Editor) {
-        const copiedSettings = JSON.parse(JSON.stringify(this.plugin.settings));
-        this.handleEmptyOptions(copiedSettings);
+        const copiedOptions = JSON.parse(JSON.stringify(this.plugin.settings));
+        this.handleEmptyOptions(copiedOptions);
 
         this.cursorPosition = editor.getCursor();
         this.originalDocument = editor.getValue();
@@ -29,7 +26,7 @@ export class FormattoUtils {
         try {
             this.formattedDocument = format_document(
                 this.originalDocument,
-                copiedSettings,
+                copiedOptions,
                 JSON.stringify(getWasmLocale())
             );
             this.displayMessage();
@@ -67,14 +64,12 @@ export class FormattoUtils {
         }
     }
 
-    private handleEmptyOptions(copiedSettings: FormattoPluginSettings) {
-        for (const optionSection of Object.keys(copiedSettings)) {
-            for (const optionKey of Object.keys(
-                copiedSettings[optionSection]
-            )) {
-                if (copiedSettings[optionSection][optionKey] === "") {
-                    copiedSettings[optionSection][optionKey] =
-                        FALLBACK_SETTINGS[optionSection][optionKey];
+    private handleEmptyOptions(copiedOptions: FormattoPluginOptions) {
+        for (const optionSection of Object.keys(copiedOptions)) {
+            for (const optionKey of Object.keys(copiedOptions[optionSection])) {
+                if (copiedOptions[optionSection][optionKey] === "") {
+                    copiedOptions[optionSection][optionKey] =
+                        FALLBACK_OPTIONS[optionSection][optionKey];
                 }
             }
         }

@@ -16,7 +16,7 @@ pub fn get_formatted_string(
     let mut is_right_after_heading = false;
     let mut is_right_after_code_block = false;
 
-    let settings = &preferences.settings;
+    let options = &preferences.options;
     let locale = &preferences.locales;
 
     for section in sections {
@@ -36,13 +36,11 @@ pub fn get_formatted_string(
                             if output.is_empty() {
                                 0
                             } else if is_right_after_properties {
-                                parse_string_to_usize(
-                                    &settings.other_gaps.after_properties,
-                                    locale,
-                                )? + 1
+                                parse_string_to_usize(&options.other_gaps.after_properties, locale)?
+                                    + 1
                             } else {
                                 parse_string_to_usize(
-                                    &settings.heading_gaps.before_top_level_headings,
+                                    &options.heading_gaps.before_top_level_headings,
                                     locale,
                                 )? + 1
                             },
@@ -55,13 +53,11 @@ pub fn get_formatted_string(
                             if output.is_empty() {
                                 0
                             } else if is_right_after_properties {
-                                parse_string_to_usize(
-                                    &settings.other_gaps.after_properties,
-                                    locale,
-                                )? + 1
+                                parse_string_to_usize(&options.other_gaps.after_properties, locale)?
+                                    + 1
                             } else {
                                 parse_string_to_usize(
-                                    &settings.heading_gaps.before_first_sub_heading,
+                                    &options.heading_gaps.before_first_sub_heading,
                                     locale,
                                 )? + 1
                             },
@@ -75,13 +71,11 @@ pub fn get_formatted_string(
                             if output.is_empty() {
                                 0
                             } else if is_right_after_properties {
-                                parse_string_to_usize(
-                                    &settings.other_gaps.after_properties,
-                                    locale,
-                                )? + 1
+                                parse_string_to_usize(&options.other_gaps.after_properties, locale)?
+                                    + 1
                             } else {
                                 parse_string_to_usize(
-                                    &settings.heading_gaps.before_sub_headings,
+                                    &options.heading_gaps.before_sub_headings,
                                     locale,
                                 )? + 1
                             },
@@ -100,14 +94,14 @@ pub fn get_formatted_string(
                     if output.is_empty() {
                         0
                     } else if is_right_after_properties {
-                        parse_string_to_usize(&settings.other_gaps.after_properties, locale)? + 1
+                        parse_string_to_usize(&options.other_gaps.after_properties, locale)? + 1
                     } else if is_right_after_code_block {
                         parse_string_to_usize(
-                            &settings.other_gaps.before_contents_after_code_blocks,
+                            &options.other_gaps.before_contents_after_code_blocks,
                             locale,
                         )? + 1
                     } else {
-                        parse_string_to_usize(&settings.other_gaps.before_contents, locale)? + 1
+                        parse_string_to_usize(&options.other_gaps.before_contents, locale)? + 1
                     },
                     0,
                 ));
@@ -122,14 +116,14 @@ pub fn get_formatted_string(
                     if output.is_empty() {
                         0
                     } else if is_right_after_properties {
-                        parse_string_to_usize(&settings.other_gaps.after_properties, locale)? + 1
+                        parse_string_to_usize(&options.other_gaps.after_properties, locale)? + 1
                     } else if is_right_after_heading {
                         parse_string_to_usize(
-                            &settings.other_gaps.before_code_blocks_after_headings,
+                            &options.other_gaps.before_code_blocks_after_headings,
                             locale,
                         )? + 1
                     } else {
-                        parse_string_to_usize(&settings.other_gaps.before_code_blocks, locale)? + 1
+                        parse_string_to_usize(&options.other_gaps.before_code_blocks, locale)? + 1
                     },
                     0,
                 ));
@@ -141,7 +135,7 @@ pub fn get_formatted_string(
         }
     }
 
-    if preferences.settings.format_options.insert_newline == Some(true) {
+    if preferences.options.format_options.insert_newline == Some(true) {
         output.push('\n');
     }
 

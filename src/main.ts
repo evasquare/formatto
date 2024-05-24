@@ -4,18 +4,18 @@ import { FormattoCommands } from "@obsidian/commands";
 import { FormattoEditorMenu } from "@obsidian/events/editorMenu";
 import { FormattoIcons } from "@obsidian/icons/icons";
 import { FormattoRibbonIcons } from "@obsidian/ribbonIcons";
-import { FormattoSettingTab } from "@obsidian/settings/settingTab";
-import { DEFAULT_SETTINGS } from "@obsidian/settings/settingTypes";
 import { FormattoUtils } from "@obsidian/utils";
+import { FormattoOptionTab } from "@src/obsidian/options/optionTab";
+import { DEFAULT_OPTIONS } from "@src/obsidian/options/optionTypes";
 
 import __wbg_init from "../wasm/pkg/formatto_wasm";
 import formatto_wasm from "../wasm/pkg/formatto_wasm_bg.wasm";
 
-import type { FormattoPluginSettings } from "@obsidian/settings/settingTypes";
+import type { FormattoPluginOptions } from "@src/obsidian/options/optionTypes";
 
 /** Entry Point. */
 export default class FormattoPlugin extends Plugin {
-    settings: FormattoPluginSettings;
+    settings: FormattoPluginOptions;
 
     utils = new FormattoUtils(this);
     private icons = new FormattoIcons();
@@ -23,21 +23,21 @@ export default class FormattoPlugin extends Plugin {
     private editorMenus = new FormattoEditorMenu(this);
     private commands = new FormattoCommands(this);
 
-    /** Load and Save Settings */
-    async loadSettings() {
+    /** Load and Save Options */
+    async loadOptions() {
         this.settings = Object.assign(
             {},
-            DEFAULT_SETTINGS,
+            DEFAULT_OPTIONS,
             await this.loadData()
         );
     }
-    async saveSettings() {
+    async saveOptions() {
         await this.saveData(this.settings);
     }
 
     /** Runs whenever the user starts using the plugin in Obsidian. */
     async onload() {
-        await this.loadSettings();
+        await this.loadOptions();
 
         // Initialize WebAssembly
         await (async () => {
@@ -45,7 +45,7 @@ export default class FormattoPlugin extends Plugin {
             await __wbg_init(await formatto_wasm());
         })();
 
-        this.addSettingTab(new FormattoSettingTab(this.app, this));
+        this.addSettingTab(new FormattoOptionTab(this.app, this));
 
         this.icons.registerIcons();
         this.ribbonIcons.registerRibbonIcons();
@@ -53,7 +53,7 @@ export default class FormattoPlugin extends Plugin {
         this.commands.registerCommands();
 
         console.log(
-            "Plugin Loaded: Formatto\n(Error details are going to be displayed here.)"
+            "Plugin Loaded: Formatto\n(Some error details are going to be displayed here.)"
         );
     }
 

@@ -323,7 +323,7 @@ fn check_parsing_error(
 
     if is_reading_code_block || is_reading_property_block {
         let error_message = if let Some(true) = preferences
-            .settings
+            .options
             .other_options
             .show_more_detailed_error_messages
         {
