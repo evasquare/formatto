@@ -11,7 +11,7 @@ pub fn get_formatted_string(
 ) -> Result<String, Box<dyn Error>> {
     let mut output = String::new();
 
-    // Check the type of the last parsed section.
+    // Check which type of section was last parsed.
     let mut is_right_after_properties = false;
     let mut is_right_after_heading = false;
     let mut is_right_after_code_block = false;
