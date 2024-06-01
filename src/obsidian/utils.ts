@@ -65,11 +65,11 @@ export class FormattoUtils {
     }
 
     private handleEmptyOptions(copiedOptions: FormattoPluginOptions) {
-        for (const optionSection of Object.keys(copiedOptions)) {
-            for (const optionKey of Object.keys(copiedOptions[optionSection])) {
-                if (copiedOptions[optionSection][optionKey] === "") {
-                    copiedOptions[optionSection][optionKey] =
-                        FALLBACK_OPTIONS[optionSection][optionKey];
+        for (const sectionKey of Object.keys(copiedOptions)) {
+            for (const optionKey of Object.keys(copiedOptions[sectionKey])) {
+                if (copiedOptions[sectionKey][optionKey] === "") {
+                    copiedOptions[sectionKey][optionKey] =
+                        FALLBACK_OPTIONS[sectionKey][optionKey];
                 }
             }
         }
