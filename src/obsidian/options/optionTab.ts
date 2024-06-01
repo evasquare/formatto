@@ -12,11 +12,11 @@ export class FormattoOptionTab extends PluginSettingTab {
     private noticeMessages = {
         invalidNumberMessage: getLocale(
             LOCALE_CATEGORY.NOTICE_MESSAGES,
-            "Please enter a valid number.\nIt should be at least 0."
+            "Please enter a valid number.\nIt must be at least 0."
         ),
         notWholeNumberMessage: getLocale(
             LOCALE_CATEGORY.NOTICE_MESSAGES,
-            "Please enter a valid number.\nIt should be a whole number."
+            "Please enter a valid number.\nIt must be a whole number."
         ),
     };
 

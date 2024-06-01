@@ -10,8 +10,8 @@
         "Document is already formatted!": "Document is already formatted!",
         "No open document is found.": "No open document is found.",
         "You can only format in editing mode.": "You can only format in editing mode.",
-        "Please enter a valid number.\nIt should be at least 0.": "Please enter a valid number.\nIt should be at least 0.",
-        "Please enter a valid number.\nIt should be a whole number.": "Please enter a valid number.\nIt should be a whole number."
+        "Please enter a valid number.\nIt must be at least 0.": "Please enter a valid number.\nIt must be at least 0.",
+        "Please enter a valid number.\nIt must be a whole number.": "Please enter a valid number.\nIt must be a whole number."
     },
     "optionWarnings": {
         "Gap value must be a whole number and it needs to be at least 0.": "Gap value must be a whole number and it needs to be at least 0."

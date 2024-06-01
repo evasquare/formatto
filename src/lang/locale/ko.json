@@ -8,10 +8,10 @@
     "noticeMessages": {
         "Document Formatted!": "포맷 완료!",
         "Document is already formatted!": "문서가 이미 포맷돼 있습니다.",
-        "No open document is found.": "열려있는 문서를 찾지 못했습니다.",
+        "No open document is found.": "열려 있는 문서를 찾지 못했습니다.",
         "You can only format in editing mode.": "편집 모드에서만 포맷할수 있습니다.",
-        "Please enter a valid number.\nIt should be at least 0.": "유효한 숫자를 입력해주세요.\n0 이상만 입력할수 있습니다.",
-        "Please enter a valid number.\nIt should be a whole number.": "유효한 숫자를 입력해주세요.\n자연수만 입력할 수 있습니다."
+        "Please enter a valid number.\nIt must be at least 0.": "유효한 숫자를 입력해주세요.\n0 이상만 입력할수 있습니다.",
+        "Please enter a valid number.\nIt must be a whole number.": "유효한 숫자를 입력해주세요.\n자연수만 입력할 수 있습니다."
     },
     "optionWarnings": {
         "Gap value must be a whole number and it needs to be at least 0.": "여백 옵션의 값은 반드시 자연수이고 0 이상이어야 합니다."
@@ -29,7 +29,7 @@
         "Before top level headings": "최상위 제목 앞",
         "Decides gaps before top level headings.": "최상위 제목 앞의 여백을 결정합니다.",
         "Before first sub heading": "첫 번째 하위 제목 앞",
-        "Decides child heading gaps right before parent headings.": "부모 제목 바로 앞의 자식 제목 여백을 결정합니다.",
+        "Decides child heading gaps right before parent headings.": "부모 제목 바로 앞 자식 제목의 여백을 결정합니다.",
         "Before sub headings": "하위 제목 앞",
         "Decides gaps before headings that are not in the top level.": "최상위 제목이 아닌 제목 앞의 여백을 결정합니다."
     },
@@ -38,11 +38,11 @@
         "Decides the gap after the property section.": "프로퍼티 뒤 여백을 결정합니다.",
         "Before contents": "콘텐츠 섹션 앞",
         "Decides gaps before content sections. (ex: Text before headings)": "콘텐츠 섹션 앞의 여백을 결정합니다. (예: 제목 앞 텍스트)",
-        "Before contents after code blocks": "코드 블럭 뒤 콘텐츠 섹션 앞",
-        "Decides gaps before 'contents that are after code blocks.'": "'코드 블럭 뒤 콘텐츠 섹션' 앞의 여백을 결정합니다.",
+        "Before contents after code blocks": "코드 블럭 뒤 콘텐츠 섹션의 앞",
+        "Decides gaps before 'contents that are after code blocks.'": "'코드 블럭 뒤에 있는 콘텐츠 섹션' 앞의 여백을 결정합니다.",
         "Before code blocks": "코드 블럭 앞",
         "Decides gaps before code blocks.": "코드 블럭 앞의 여백을 결정합니다.",
-        "Before code blocks after headings": "제목 뒤 코드 블럭 앞",
+        "Before code blocks after headings": "제목 뒤 코드 블럭의 앞",
         "Decides gaps before 'code blocks that are after headings.'": "'제목 뒤에 있는 코드 블럭' 앞의 줄 바꿈을 결정합니다."
     },
     "formatOptions": {

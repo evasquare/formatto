@@ -8,16 +8,16 @@
     "noticeMessages": {
         "Document Formatted!": "A dokumentum meg lett formázva!",
         "Document is already formatted!": "A dokumentum már meg van formázva!",
-        "No open document is found.": "Nem található megnyitott dokumentum",
+        "No open document is found.": "Nem található megnyitott dokumentum.",
         "You can only format in editing mode.": "A formázás csakis a szerkesztői módban lehetséges. ",
-        "Please enter a valid number.\nIt should be at least 0.": "Kérlek egy megfelelő számot írjál be.\nLegalább 0 legyen.",
-        "Please enter a valid number.\nIt should be a whole number.": "Kérlek egy megfelelő számot írjál be.\nEgész szám legyen."
+        "Please enter a valid number.\nIt must be at least 0.": "Kérlek egy megfelelő számot írjál be.\nLegalább 0 legyen.",
+        "Please enter a valid number.\nIt must be a whole number.": "Kérlek egy megfelelő számot írjál be.\nEgész szám legyen."
     },
     "optionWarnings": {
         "Gap value must be a whole number and it needs to be at least 0.": ""
     },
     "placeholders": {
-        "(Default)": ""
+        "(Default)": "(Alapértelmezett)"
     },
     "optionSections": {
         "Heading gaps": "Fejléc hézagok",
