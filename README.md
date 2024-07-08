@@ -10,15 +10,21 @@ designed to be simple, fast, and easy to use.
     <img alt="options-example" width="49.4%" src="./images/example2.png">
 </div>
 
-## Contributing
-If you're interested in participating in this project, please refer to the
-[contribution guide](https://github.com/cosmostellar/formatto/blob/main/CONTRIBUTING.md).
-
 
 ## How to Use
 You can use the plugin in following ways:
 
 - Right click in the editor and select "Format Document"
-- Run a command "Formatto: Format Document"
-- Assign a keyboard shortcut to the command "Formatto: Format Document"
+- Run a command "Formatto: Format Document" (or assign a keyboard shortcut to the command)
 - Click "Format Document" ribbon action
+
+
+## This plugin works best in "source mode."
+Obsidian uses "live preview" as the default editing mode. But this plugin was designed to work best in "source mode." You can change the editing mode here:
+
+- Options -> Editor -> Default editing mode
+
+
+## Contributing
+If you're interested in participating in this project, please refer to the
+[contribution guide](https://github.com/cosmostellar/formatto/blob/main/CONTRIBUTING.md).
