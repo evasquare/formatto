@@ -27,4 +27,4 @@ Obsidian uses "live preview" as the default editing mode. But this plugin was de
 
 ## Contributing
 If you're interested in participating in this project, please refer to the
-[contribution guide](https://github.com/cosmostellar/formatto/blob/main/CONTRIBUTING.md).
+[contribution guide](https://github.com/pixelbracket/formatto/blob/main/CONTRIBUTING.md).
