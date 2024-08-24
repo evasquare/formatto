@@ -54,7 +54,7 @@ pub fn get_sections(
     let mut is_reading_code_block = false;
     let mut current_code_block_backtick_count: Option<usize> = None;
 
-    // Content section.
+    // Content sections.
     // Everything goes into `MarkdownSection::Content` type,
     // unless it detects some specific Markdown syntax that needs to be parsed.
     let mut temp_content_section = String::new();
@@ -86,9 +86,9 @@ pub fn get_sections(
                 &mut temp_content_section,
             );
 
-            let is_first_property_line = temp_properties.is_empty();
+            let is_first_property_section_line = temp_properties.is_empty();
             if line == "---" {
-                if is_first_property_line {
+                if is_first_property_section_line {
                     // Enter a property section.
                     error_information.reading_section_starting_line = index;
                     temp_properties.push_str(line);
@@ -107,7 +107,7 @@ pub fn get_sections(
 
             // Keep reading properties.
             if is_reading_property_block {
-                if !is_first_property_line {
+                if !is_first_property_section_line {
                     temp_properties.push('\n');
                 }
                 temp_properties.push_str(line);
@@ -116,15 +116,15 @@ pub fn get_sections(
         }
 
         // Read code blocks.
-        let valid_code_block_syntax_line = line.starts_with("```");
-        if valid_code_block_syntax_line || is_reading_code_block {
+        let is_valid_code_block_syntax_line = line.starts_with("```");
+        if is_valid_code_block_syntax_line || is_reading_code_block {
             finish_current_content_section(
                 &mut is_reading_content_section,
                 &mut sections,
                 &mut temp_content_section,
             );
 
-            if valid_code_block_syntax_line {
+            if is_valid_code_block_syntax_line {
                 let current_line_backtick_count = line.chars().filter(|&c| c == '`').count();
 
                 let mut closing_pair = false;
@@ -167,8 +167,8 @@ pub fn get_sections(
         }
 
         // Read hash headings.
-        let hash_symbol_only = line.chars().all(|item| item == '#');
-        if line.starts_with('#') && (line.contains("# ") || hash_symbol_only) {
+        let is_hash_symbol_only = line.chars().all(|item| item == '#');
+        if line.starts_with('#') && (line.contains("# ") || is_hash_symbol_only) {
             if let Some(document_top_heading_level) = document_top_heading_level {
                 let is_top_level = validate_top_hash_heading(line, &top_heading_hash_literal);
 
@@ -186,7 +186,7 @@ pub fn get_sections(
                     current_heading_level = document_top_heading_level;
                     continue;
                 } else {
-                    let is_sub_heading = validate_sub_hash_heading(line, hash_symbol_only);
+                    let is_sub_heading = validate_sub_hash_heading(line, is_hash_symbol_only);
                     let heading_level = line.chars().take_while(|&c| c == '#').count();
 
                     if is_sub_heading {
@@ -220,14 +220,13 @@ pub fn get_sections(
             }
 
             let mut overriding_temp_content_section: Vec<String> = {
-                let cloned_temp_content_section = temp_content_section.clone();
-                cloned_temp_content_section
+                let temp_content_section_clone = temp_content_section.clone();
+                temp_content_section_clone
                     .split('\n')
                     .map(|s| s.to_string())
                     .collect()
             };
             overriding_temp_content_section.pop();
-            temp_content_section.clear();
             temp_content_section = overriding_temp_content_section.join("\n");
 
             finish_current_content_section(
@@ -249,20 +248,16 @@ pub fn get_sections(
                 };
 
                 if let Some(previous_line) = previous_line {
-                    if is_top_level {
-                        let mut section_string = previous_line.to_string();
-                        section_string.push('\n');
-                        section_string.push_str(line);
+                    let mut section_string = previous_line.to_string();
+                    section_string.push('\n');
+                    section_string.push_str(line);
 
+                    if is_top_level {
                         sections.push(MarkdownSection::Heading(HeadingLevel::Top(section_string)));
                         current_heading_level = document_top_heading_level;
 
                         continue;
                     } else if is_sub_level {
-                        let mut section_string = previous_line.to_string();
-                        section_string.push('\n');
-                        section_string.push_str(line);
-
                         if alternate_heading_level > current_heading_level {
                             sections.push(MarkdownSection::Heading(HeadingLevel::FirstSub(
                                 section_string,
