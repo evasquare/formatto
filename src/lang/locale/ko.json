@@ -9,8 +9,8 @@
         "Document Formatted!": "포맷 완료!",
         "Document is already formatted!": "문서가 이미 포맷돼 있습니다.",
         "No open document is found.": "열려 있는 문서를 찾지 못했습니다.",
-        "You can only format in editing mode.": "편집 모드에서만 포맷할수 있습니다.",
-        "Please enter a valid number.\nIt must be at least 0.": "유효한 숫자를 입력해주세요.\n0 이상만 입력할수 있습니다.",
+        "You can only format in editing mode.": "편집 모드에서만 포맷할 수 있습니다.",
+        "Please enter a valid number.\nIt must be at least 0.": "유효한 숫자를 입력해주세요.\n0 이상만 입력할 수 있습니다.",
         "Please enter a valid number.\nIt must be a whole number.": "유효한 숫자를 입력해주세요.\n자연수만 입력할 수 있습니다."
     },
     "optionWarnings": {
@@ -46,13 +46,13 @@
         "Decides gaps before 'code blocks that are after headings.'": "'제목 뒤에 있는 코드 블럭들'의 앞 여백을 결정합니다."
     },
     "formatOptions": {
-        "Newline at the end of a document": "문서 끝에 새 줄 추가하기",
+        "Newline at the end of a document": "문서 끝 새 줄",
         "Inserts a newline at the end of a document.": "문서 끝에 새 줄을 추가합니다."
     },
     "otherOptions": {
-        "Notify when no change is needed": "변경할 사항이 없을 때 알려주기",
+        "Notify when no change is needed": "변경사항이 없을 때 알려주기",
         "Displays a different message when no change is needed.": "변경할 사항이 없으면 다른 메세지를 표시합니다.",
-        "Show more detailed error messages": "더 상세한 에러 메세지 표시하기",
+        "More detailed error message": "더 상세한 에러 메세지",
         "Displays additional information when parsing fails.": "문서를 읽지 못했을 때 추가 정보를 표시합니다."
     },
     "wasm": {

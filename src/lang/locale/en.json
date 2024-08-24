@@ -52,7 +52,7 @@
     "otherOptions": {
         "Notify when no change is needed": "Notify when no change is needed",
         "Displays a different message when no change is needed.": "Displays a different message when no change is needed.",
-        "Show more detailed error messages": "Show more detailed error messages",
+        "More detailed error message": "More detailed error message",
         "Displays additional information when parsing fails.": "Displays additional information when parsing fails."
     },
     "wasm": {

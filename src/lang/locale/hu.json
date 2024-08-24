@@ -52,7 +52,7 @@
     "otherOptions": {
         "Notify when no change is needed": "Értesítsen, hogyha nem szükséges változás",
         "Displays a different message when no change is needed.": "Eltérő üzenetet mutat, hogyha nem történt változás",
-        "Show more detailed error messages": "Mutasson részletesebb hiba üzeneteket",
+        "More detailed error message": "Mutasson részletesebb hiba üzeneteket",
         "Displays additional information when parsing fails.": "Plusz információt mutat, amikor az átírás közben hiba történik."
     },
     "wasm": {

@@ -365,7 +365,7 @@ export class FormattoOptionTab extends PluginSettingTab {
             .setName(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_OPTIONS,
-                    "Show more detailed error messages"
+                    "More detailed error message"
                 )
             )
             .setDesc(
