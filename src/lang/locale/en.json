@@ -26,24 +26,24 @@
         "Other options": "Other options"
     },
     "headingGaps": {
-        "Before top level headings": "Before top level headings",
-        "Decides gaps before top level headings.": "Decides gaps before top level headings.",
-        "Before first sub heading": "Before first sub heading",
-        "Decides child heading gaps right before parent headings.": "Decides child heading gaps right before parent headings.",
-        "Before sub headings": "Before sub headings",
-        "Decides gaps before headings that are not in the top level.": "Decides gaps before headings that are not in the top level."
+        "Before top-level headings": "Before top-level headings",
+        "Decides the gap before a top-level heading.": "Decides the gap before a top-level heading.",
+        "Before the first sub-level heading": "Before the first sub-level heading",
+        "Decides the child heading gap right after a parent heading.": "Decides the child heading gap right after a parent heading.",
+        "Before sub-level headings": "Before sub-level headings",
+        "Decides gaps before headings that are not top-level.": "Decides gaps before headings that are not top-level."
     },
     "otherGaps": {
         "After properties": "After properties",
-        "Decides the gap after the property section.": "Decides the gap after the property section.",
+        "Decides the gap after a property section.": "Decides the gap after a property section.",
         "Before contents": "Before contents",
         "Decides gaps before content sections. (ex: Text before headings)": "Decides gaps before content sections. (ex: Text before headings)",
         "Before contents after code blocks": "Before contents after code blocks",
-        "Decides gaps before 'contents that are after code blocks.'": "Decides gaps before 'contents that are after code blocks.'",
+        "Decides gaps before \"contents that are after code blocks.\"": "Decides gaps before \"contents that are after code blocks.\"",
         "Before code blocks": "Before code blocks",
         "Decides gaps before code blocks.": "Decides gaps before code blocks.",
         "Before code blocks after headings": "Before code blocks after headings",
-        "Decides gaps before 'code blocks that are after headings.'": "Decides gaps before 'code blocks that are after headings.'"
+        "Decides gaps before \"code blocks that are after headings.\"": "Decides gaps before \"code blocks that are after headings.\""
     },
     "formatOptions": {
         "Newline at the end of a document": "Newline at the end of a document",

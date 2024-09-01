@@ -26,24 +26,24 @@
         "Other options": "기타 옵션"
     },
     "headingGaps": {
-        "Before top level headings": "최상위 제목 앞",
-        "Decides gaps before top level headings.": "최상위 제목들의 앞 여백을 결정합니다.",
-        "Before first sub heading": "첫 번째 하위 제목 앞",
-        "Decides child heading gaps right before parent headings.": "부모 제목 바로 뒤 자식 제목의 여백을 결정합니다.",
-        "Before sub headings": "하위 제목 앞",
-        "Decides gaps before headings that are not in the top level.": "최상위 제목이 아닌 제목들의 앞 여백을 결정합니다."
+        "Before top-level headings": "최상위 제목 앞",
+        "Decides the gap before a top-level heading.": "최상위 제목들의 앞 여백을 결정합니다.",
+        "Before the first sub-level heading": "첫 번째 하위 제목 앞",
+        "Decides the child heading gap right after a parent heading.": "부모 제목 바로 뒤 자식 제목의 여백을 결정합니다.",
+        "Before sub-level headings": "하위 제목 앞",
+        "Decides gaps before headings that are not top-level.": "최상위 제목이 아닌 제목들의 앞 여백을 결정합니다."
     },
     "otherGaps": {
         "After properties": "속성 영역 뒤",
-        "Decides the gap after the property section.": "속성 영역 뒤 여백을 결정합니다.",
+        "Decides the gap after a property section.": "속성 영역 뒤 여백을 결정합니다.",
         "Before contents": "내용 영역 앞",
-        "Decides gaps before content sections. (ex: Text before headings)": "내용 영역들의 앞 여백을 결정합니다. (예: 제목 앞 텍스트)",
+        "Decides gaps before content sections. (ex: Text before headings)": "내용 영역의 앞 여백을 결정합니다. (예: 제목 앞 텍스트)",
         "Before contents after code blocks": "코드 블럭 뒤 내용 영역 앞",
-        "Decides gaps before 'contents that are after code blocks.'": "'코드 블럭 뒤에 있는 내용 영역들'의 앞 여백을 결정합니다.",
+        "Decides gaps before \"contents that are after code blocks.\"": "\"코드 블럭 뒤 내용 영역\"의 앞 여백을 결정합니다.",
         "Before code blocks": "코드 블럭 앞",
-        "Decides gaps before code blocks.": "코드 블럭들의 앞 여백을 결정합니다.",
+        "Decides gaps before code blocks.": "코드 블럭의 앞 여백을 결정합니다.",
         "Before code blocks after headings": "제목 뒤 코드 블럭 앞",
-        "Decides gaps before 'code blocks that are after headings.'": "'제목 뒤에 있는 코드 블럭들'의 앞 여백을 결정합니다."
+        "Decides gaps before \"code blocks that are after headings.\"": "\"제목 뒤 코드 블럭\"의 앞 여백을 결정합니다."
     },
     "formatOptions": {
         "Newline at the end of a document": "문서 끝 새 줄",

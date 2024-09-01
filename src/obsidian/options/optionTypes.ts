@@ -3,24 +3,24 @@
 */
 
 export interface HeadingGaps {
-    /** Decides gaps before top level headings. */
+    /** "Decides the gap before a top-level heading." */
     beforeTopLevelHeadings: string;
-    /** Decides child heading gaps right before parent headings. */
+    /** Decides the child heading gap right before a parent heading. */
     beforeFirstSubHeading: string;
-    /** Decides gaps before headings that are not in the top level. */
+    /** Decides gaps before headings that are not top-level. */
     beforeSubHeadings: string;
 }
 
 export interface OtherGaps {
-    /** Decides the gap after the property section. */
+    /** Decides the gap after a property section. */
     afterProperties: string;
     /** Decides gaps before content sections. (ex: Text before headings) */
     beforeContents: string;
-    /** Decides gaps before 'contents that are after code blocks.' */
+    /** Decides gaps before \"contents that are after code blocks.\" */
     beforeContentsAfterCodeBlocks: string;
     /** Decides gaps before code blocks. */
     beforeCodeBlocks: string;
-    /** Decides gaps before 'code blocks that are after headings.' */
+    /** Decides gaps before \"code blocks that are after headings.\" */
     beforeCodeBlocksAfterHeadings: string;
 }
 

@@ -26,24 +26,24 @@
         "Other options": "Egyéb opciók"
     },
     "headingGaps": {
-        "Before top level headings": "Fő címsorok előtt",
-        "Decides gaps before top level headings.": "Meghatározza a hézag nagyságát a fő címsorok előtt.",
-        "Before first sub heading": "Az első alcím előtt",
-        "Decides child heading gaps right before parent headings.": "Meghatározza a gyerekcím hézagát közvetlenül a szülőcím előtt.",
-        "Before sub headings": "Alcímek előtt",
-        "Decides gaps before headings that are not in the top level.": "Meghatározza a nem fő címsorok előtti részeket"
+        "Before top-level headings": "",
+        "Decides the gap before a top-level heading.": "",
+        "Before the first sub-level heading": "",
+        "Decides the child heading gap right after a parent heading.": "",
+        "Before sub-level headings": "",
+        "Decides gaps before headings that are not top-level.": ""
     },
     "otherGaps": {
         "After properties": "Tulajdonságok után",
-        "Decides the gap after the property section.": "Meghatározza a hézagot a tulajdonságok szekció után.",
+        "Decides the gap after a property section.": "Meghatározza a hézagot a tulajdonságok szekció után.",
         "Before contents": "Tartalmak előtt",
-        "Decides gaps before content sections. (ex: Text before headings)": "Meghatározza a hézagot a tartalmak előtt. (pl.: Szövegrész a címsorok előtt)",
+        "Decides gaps before content sections. (ex: Text before headings)": "",
         "Before contents after code blocks": "Tartalmak előtti kód részek",
-        "Decides gaps before 'contents that are after code blocks.'": "Meghatározza azon tartalmi hézagokat, melyek kód részek előtt vannak.",
+        "Decides gaps before \"contents that are after code blocks.\"": "Meghatározza azon tartalmi hézagokat, melyek kód részek előtt vannak.",
         "Before code blocks": "Kód részek előtt",
         "Decides gaps before code blocks.": "Meghatározza a hézagot kód részek előtt.",
         "Before code blocks after headings": "Kód részek előtt, a címsorok előtt",
-        "Decides gaps before 'code blocks that are after headings.'": "Meghatározza azon kód részi hézagokat, melyek címsorok után vannak."
+        "Decides gaps before \"code blocks that are after headings.\"": "Meghatározza azon kód részi hézagokat, melyek címsorok után vannak."
     },
     "formatOptions": {
         "Newline at the end of a document": "Új sor a dokumentum végére.",
