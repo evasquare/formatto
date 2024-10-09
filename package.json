@@ -16,14 +16,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/pixelbracket/formatto.git"
+        "url": "git+https://github.com/evasquare/formatto.git"
     },
-    "author": "Pixella",
+    "author": "Eva",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/pixelbracket/formatto/issues"
+        "url": "https://github.com/evasquare/formatto/issues"
     },
-    "homepage": "https://github.com/pixelbracket/formatto#readme",
+    "homepage": "https://github.com/evasquare/formatto#readme",
     "devDependencies": {
         "@rollup/plugin-alias": "^5.0.1",
         "@rollup/plugin-commonjs": "^25.0.7",

@@ -2,8 +2,8 @@
 name = "formatto-wasm"
 description = "Wasm bindings for Formatto."
 version = "1.2.9"
-authors = ["Pixella"]
-repository = "https://github.com/pixelbracket/formatto"
+authors = ["Eva"]
+repository = "https://github.com/evasquare/formatto"
 license = "MIT"
 edition = "2018"
 
