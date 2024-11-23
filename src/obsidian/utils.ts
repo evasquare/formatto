@@ -43,6 +43,26 @@ export class FormattoUtils {
         this.clearVariables();
     }
 
+    formatText(data: string): string {
+        const copiedOptions = JSON.parse(JSON.stringify(this.plugin.settings));
+        this.handleEmptyOptions(copiedOptions);
+
+        this.originalDocument = data;
+
+        try {
+            this.formattedDocument = format_document(
+                this.originalDocument,
+                copiedOptions,
+                JSON.stringify(getWasmLocale())
+            );
+            return this.formattedDocument;
+        } catch (error) {
+            new Notice(error);
+        } finally {
+            this.clearVariables();
+        }
+    }
+
     private displayMessage() {
         if (
             this.plugin.settings.otherOptions.notifyWhenUnchanged &&

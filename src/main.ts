@@ -1,4 +1,4 @@
-import { Plugin } from "obsidian";
+import { Plugin, TFile } from "obsidian";
 
 import { FormattoCommands } from "@obsidian/commands";
 import { FormattoEditorMenu } from "@obsidian/events/editorMenu";
@@ -51,6 +51,16 @@ export default class FormattoPlugin extends Plugin {
         this.ribbonIcons.registerRibbonIcons();
         this.editorMenus.registerEditorMenus();
         this.commands.registerCommands();
+
+        this.registerEvent(
+            this.app.vault.on('modify', (file) => {
+                if (this.settings.otherOptions.formatOnSave && file instanceof TFile && file.extension === 'md') {
+                    this.app.vault.process(file, (data) => {
+                        return this.utils.formatText(data)
+                    });
+                }
+            }),
+        );
 
         console.log(
             "Plugin Loaded: Formatto\n(Some error details are going to be displayed here.)"

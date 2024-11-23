@@ -389,5 +389,30 @@ export class FormattoOptionTab extends PluginSettingTab {
                         await this.plugin.saveOptions();
                     })
             );
+        new Setting(containerEl)
+            .setName(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_OPTIONS,
+                    "Format documents on modification"
+                )
+            )
+            .setDesc(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_OPTIONS,
+                    "Automatically format documents after each modification. Triggers on save and autosave."
+                )
+            )
+            .addToggle((text) =>
+                text
+                    .setValue(
+                        this.plugin.settings.otherOptions
+                            .formatOnSave
+                    )
+                    .onChange(async (value) => {
+                        this.plugin.settings.otherOptions.formatOnSave =
+                            value;
+                        await this.plugin.saveOptions();
+                    })
+            );
     }
 }

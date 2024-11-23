@@ -53,7 +53,9 @@
         "Notify when no change is needed": "Értesítsen, hogyha nem szükséges változás",
         "Displays a different message when no change is needed.": "Eltérő üzenetet mutat, hogyha nem történt változás",
         "More detailed error message": "Mutasson részletesebb hiba üzeneteket",
-        "Displays additional information when parsing fails.": "Plusz információt mutat, amikor az átírás közben hiba történik."
+        "Displays additional information when parsing fails.": "Plusz információt mutat, amikor az átírás közben hiba történik.",
+        "Format documents on modification": "",
+        "Automatically format documents after each modification. Triggers on save and autosave.": ""
     },
     "wasm": {
         "parsing": {

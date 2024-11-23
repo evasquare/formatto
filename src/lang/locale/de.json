@@ -53,7 +53,9 @@
         "Notify when no change is needed": "",
         "Displays a different message when no change is needed.": "",
         "More detailed error message": "",
-        "Displays additional information when parsing fails.": ""
+        "Displays additional information when parsing fails.": "",
+        "Format documents on modification": "",
+        "Automatically format documents after each modification. Triggers on save and autosave.": ""
     },
     "wasm": {
         "parsing": {
