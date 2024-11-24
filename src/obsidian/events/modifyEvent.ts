@@ -10,7 +10,7 @@ export class FormattoModifyEvent {
     }
 
     private timer = null;
-    private timerMs = 1500;
+    private timerDelay = 5000;
 
     registerEvents() {
         this.getEventsArr().forEach((item) => {
@@ -31,7 +31,7 @@ export class FormattoModifyEvent {
                             return this.plugin.utils.formatText(data);
                         });
                     }
-                }, this.timerMs);
+                }, this.timerDelay);
             }),
             this.plugin.app.workspace.on("editor-change", (editor, info) => {
                 clearTimeout(this.timer);
