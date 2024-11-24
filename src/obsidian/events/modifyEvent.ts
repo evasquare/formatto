@@ -33,7 +33,7 @@ export class FormattoModifyEvent {
                     }
                 }, this.timerDelay);
             }),
-            this.plugin.app.workspace.on("editor-change", (editor, info) => {
+            this.plugin.app.workspace.on("editor-change", () => {
                 clearTimeout(this.timer);
             }),
         ];
