@@ -34,6 +34,8 @@ export interface OtherOptions {
     notifyWhenUnchanged: boolean;
     /** Displays additional information when parsing fails. */
     showMoreDetailedErrorMessages: boolean;
+    /** Format document after each modification. */
+    formatOnSave: boolean;
 }
 
 export interface FormattoPluginOptions {
@@ -68,6 +70,7 @@ export const FALLBACK_FORMAT_OPTIONS: Partial<FormatOptions> = {
 export const FALLBACK_OTHER_OPTIONS: Partial<OtherOptions> = {
     notifyWhenUnchanged: true,
     showMoreDetailedErrorMessages: false,
+    formatOnSave: false,
 };
 
 export const FALLBACK_OPTIONS: FormattoPluginOptions = {
