@@ -3,7 +3,10 @@ import { Editor, EditorPosition, Notice } from "obsidian";
 import { getLocale, getWasmLocale, LOCALE_CATEGORY } from "@src/lang/lang";
 import FormattoPlugin from "@src/main";
 
-import { format_document } from "../../wasm/pkg/formatto_wasm";
+import {
+    EditorPosition as WasmEditorPosition,
+    format_document,
+} from "../../wasm/pkg/formatto_wasm";
 import { FALLBACK_OPTIONS, FormattoPluginOptions } from "./options/optionTypes";
 
 export class FormattoUtils {
@@ -23,12 +26,18 @@ export class FormattoUtils {
         this.cursorPosition = editor.getCursor();
         this.originalDocument = editor.getValue();
 
+        const originalCursor = editor.getCursor();
+
         try {
-            this.formattedDocument = format_document(
+            const info = format_document(
                 this.originalDocument,
+                new WasmEditorPosition(originalCursor.line, originalCursor.ch),
                 copiedOptions,
                 JSON.stringify(getWasmLocale())
             );
+
+            this.formattedDocument = info.document;
+            editor.setCursor(info.editorPosition);
             this.displayMessage();
         } catch (error) {
             new Notice(error);
@@ -54,7 +63,7 @@ export class FormattoUtils {
                 this.originalDocument,
                 copiedOptions,
                 JSON.stringify(getWasmLocale())
-            );
+            ).document;
             return this.formattedDocument;
         } catch (error) {
             new Notice(error);

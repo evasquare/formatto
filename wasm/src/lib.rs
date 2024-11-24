@@ -41,8 +41,54 @@ mod macro_rules {
 }
 
 #[wasm_bindgen]
+pub struct FormattedDocument {
+    document: String,
+    editor_position: EditorPosition,
+}
+#[wasm_bindgen]
+impl FormattedDocument {
+    #[wasm_bindgen(getter)]
+    pub fn document(&self) -> String {
+        self.document.clone()
+    }
+    #[wasm_bindgen(getter, js_name = editorPosition)]
+    pub fn editor_position(&self) -> EditorPosition {
+        self.editor_position.clone()
+    }
+}
+
+#[wasm_bindgen]
+#[derive(Debug, Clone)]
+pub struct EditorPosition {
+    line: usize,
+    ch: usize,
+}
+#[wasm_bindgen]
+impl EditorPosition {
+    #[wasm_bindgen(constructor)]
+    pub fn new(line: usize, ch: usize) -> Self {
+        EditorPosition { line, ch }
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn line(&self) -> usize {
+        self.line
+    }
+
+    #[wasm_bindgen(getter)]
+    pub fn ch(&self) -> usize {
+        self.ch
+    }
+}
+
+#[wasm_bindgen]
 /// This function will be called from the TypeScript side.
-pub fn format_document(input: &str, js_options: JsValue, js_locales: JsValue) -> String {
+pub fn format_document(
+    input: &str,
+    original_cursor_position: EditorPosition,
+    js_options: JsValue,
+    js_locales: JsValue,
+) -> FormattedDocument {
     use utils::{read_js_value, read_options};
 
     utils::set_panic_hook();
@@ -64,25 +110,40 @@ pub fn format_document(input: &str, js_options: JsValue, js_locales: JsValue) ->
     };
 
     if input.is_empty() {
-        return input.to_string();
+        return FormattedDocument {
+            document: "".to_string(),
+            editor_position: EditorPosition { line: 0, ch: 0 },
+        };
     }
 
     let preferences = Preferences { options, locales };
 
     // Return output to the TypeScript side or throw an error.
-    match parse_input(input, &preferences) {
+    let formetted_document = match parse_input(input, &original_cursor_position, &preferences) {
         Ok(sections) => sections,
         Err(e) => {
             let error_message = e.to_string();
             wasm_bindgen::throw_str(&error_message);
         }
+    };
+
+    FormattedDocument {
+        document: formetted_document.0,
+        editor_position: EditorPosition {
+            line: formetted_document.1,
+            ch: original_cursor_position.ch,
+        },
     }
 }
 
 /// Parses an input and returns a formatted string.
-fn parse_input(input: &str, preferences: &Preferences) -> Result<String, Box<dyn Error>> {
-    let sections = tools::parsing::get_sections(input, preferences)?;
-    let output = tools::formatting::get_formatted_string(sections, preferences)?;
+fn parse_input(
+    input: &str,
+    original_cursor_position: &EditorPosition,
+    preferences: &Preferences,
+) -> Result<(String, usize), Box<dyn Error>> {
+    let sections = tools::parsing::get_sections(input, original_cursor_position, preferences)?;
+    let output = tools::formatting::get_formatted_string(sections.0, sections.1, preferences)?;
 
-    Ok(output)
+    Ok((output.0, output.1))
 }

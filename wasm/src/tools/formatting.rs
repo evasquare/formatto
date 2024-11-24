@@ -7,8 +7,9 @@ use crate::{console_error, Preferences};
 /// Formats a parsed document.
 pub fn get_formatted_string(
     sections: Vec<MarkdownSection>,
+    new_cursor_section_index: usize,
     preferences: &Preferences,
-) -> Result<String, Box<dyn Error>> {
+) -> Result<(String, usize), Box<dyn Error>> {
     let mut output = String::new();
 
     // Check which type of section was last parsed.
@@ -19,7 +20,9 @@ pub fn get_formatted_string(
     let options = &preferences.options;
     let locale = &preferences.locales;
 
-    for section in sections {
+    let mut new_line_index = 0;
+
+    for (index, section) in sections.iter().enumerate() {
         match section {
             MarkdownSection::Property(content) => {
                 output.push_str(&content);
@@ -133,13 +136,20 @@ pub fn get_formatted_string(
                 is_right_after_code_block = true
             }
         }
+
+        if index == new_cursor_section_index {
+            let a: Vec<&str> = output.split("\n").collect();
+            new_line_index = a.len() - 1;
+            console_error!("{:#?}", a);
+            console_error!("{}", new_line_index)
+        }
     }
 
     if preferences.options.format_options.insert_newline == Some(true) {
         output.push('\n');
     }
 
-    Ok(output)
+    Ok((output, new_line_index))
 }
 
 /// Inserts line breaks before and after an input.

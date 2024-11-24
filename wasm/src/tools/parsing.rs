@@ -1,8 +1,9 @@
 use std::error::Error;
 
 use crate::{
+    console_log,
     tools::tokens::{HeadingLevel, MarkdownSection},
-    Preferences,
+    EditorPosition, Preferences,
 };
 
 mod contents;
@@ -16,8 +17,9 @@ struct ErrorInformation {
 /// Serializes input into sections.
 pub fn get_sections(
     input: &str,
+    original_cursor_position: &EditorPosition,
     preferences: &Preferences,
-) -> Result<Vec<MarkdownSection>, Box<dyn Error>> {
+) -> Result<(Vec<MarkdownSection>, usize), Box<dyn Error>> {
     use super::parsing::contents::{append_a_line_break, finish_current_content_section};
     use super::parsing::headings::{
         alternate_headings::get_valid_alternate_heading_level,
@@ -29,11 +31,11 @@ pub fn get_sections(
     };
 
     if input.is_empty() {
-        return Ok(Vec::new());
+        return Ok((Vec::new(), 0));
     }
 
     let mut sections: Vec<MarkdownSection> = Vec::new();
-    let input_lines: Vec<&str> = input.trim().split('\n').collect();
+    let input_lines: Vec<&str> = input.split('\n').collect();
 
     let document_top_heading_level = get_top_heading_level(&input_lines);
 
@@ -64,8 +66,17 @@ pub fn get_sections(
         reading_section_starting_line: 0,
     };
 
+    let mut new_cursor_section_index = 0;
+
     // Iterate over lines of a document.
     for (index, &line) in input_lines.iter().enumerate() {
+        let mut is_cursor_line = index == original_cursor_position.line;
+        if (is_cursor_line) {
+            new_cursor_section_index = sections.len() - 1;
+            console_log!("{:#?}", sections);
+            console_log!("{}", new_cursor_section_index);
+        }
+
         // "is_reading_content_section" should be updated in previous iterations.
         if line.is_empty() && !is_reading_content_section && !is_reading_code_block {
             continue;
@@ -304,7 +315,7 @@ pub fn get_sections(
         &error_information,
     )?;
 
-    Ok(sections)
+    Ok((sections, new_cursor_section_index))
 }
 
 /// Returns an error if the document is invalid.
