@@ -36,6 +36,7 @@ pub struct FormatOptions {
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
 pub struct OtherOptions {
+    #[allow(dead_code)]
     /// Displays a different message when no change is needed.
     pub notify_when_unchanged: Option<bool>,
     /// Displays additional information when parsing fails.

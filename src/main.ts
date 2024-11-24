@@ -1,10 +1,11 @@
-import { Plugin, TFile } from "obsidian";
+import { Plugin } from "obsidian";
 
 import { FormattoCommands } from "@obsidian/commands";
-import { FormattoEditorMenu } from "@obsidian/events/editorMenu";
 import { FormattoIcons } from "@obsidian/icons/icons";
 import { FormattoRibbonIcons } from "@obsidian/ribbonIcons";
 import { FormattoUtils } from "@obsidian/utils";
+import { FormattoEditorMenuEvent } from "@src/obsidian/events/editorMenuEvent";
+import { FormattoModifyEvent } from "@src/obsidian/events/modifyEvent";
 import { FormattoOptionTab } from "@src/obsidian/options/optionTab";
 import { DEFAULT_OPTIONS } from "@src/obsidian/options/optionTypes";
 
@@ -20,7 +21,8 @@ export default class FormattoPlugin extends Plugin {
     utils = new FormattoUtils(this);
     private icons = new FormattoIcons();
     private ribbonIcons = new FormattoRibbonIcons(this);
-    private editorMenus = new FormattoEditorMenu(this);
+    private editorMenus = new FormattoEditorMenuEvent(this);
+    private modify = new FormattoModifyEvent(this);
     private commands = new FormattoCommands(this);
 
     /** Load and Save Options */
@@ -49,18 +51,9 @@ export default class FormattoPlugin extends Plugin {
 
         this.icons.registerIcons();
         this.ribbonIcons.registerRibbonIcons();
-        this.editorMenus.registerEditorMenus();
+        this.editorMenus.registerEvents();
+        this.modify.registerEvents();
         this.commands.registerCommands();
-
-        this.registerEvent(
-            this.app.vault.on('modify', (file) => {
-                if (this.settings.otherOptions.formatOnSave && file instanceof TFile && file.extension === 'md') {
-                    this.app.vault.process(file, (data) => {
-                        return this.utils.formatText(data)
-                    });
-                }
-            }),
-        );
 
         console.log(
             "Plugin Loaded: Formatto\n(Some error details are going to be displayed here.)"

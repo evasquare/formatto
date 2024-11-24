@@ -1,14 +1,14 @@
 import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang";
 import FormattoPlugin from "@src/main";
 
-export class FormattoEditorMenu {
+export class FormattoEditorMenuEvent {
     private plugin: FormattoPlugin;
 
     constructor(plugin: FormattoPlugin) {
         this.plugin = plugin;
     }
 
-    registerEditorMenus() {
+    registerEvents() {
         this.getEventsArr().forEach((item) => {
             this.plugin.registerEvent(item);
         });
