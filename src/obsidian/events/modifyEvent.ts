@@ -10,7 +10,7 @@ export class FormattoModifyEvent {
     }
 
     private timer = null;
-    private timerDelay = 2000;
+    private timerDelay = 1000;
 
     registerEvents() {
         this.getEventsArr().forEach((item) => {
