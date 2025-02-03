@@ -5,6 +5,9 @@
     "editorMenu": {
         "Format Document": "문서 포맷하기"
     },
+    "ribbonIcons": {
+        "Format Document": "문서 포맷하기"
+    },
     "noticeMessages": {
         "Document Formatted!": "포맷 완료!",
         "Document is already formatted!": "문서가 이미 포맷돼 있습니다.",

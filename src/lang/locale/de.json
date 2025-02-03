@@ -5,6 +5,9 @@
     "editorMenu": {
         "Format Document": "Dokument formatieren"
     },
+    "ribbonIcons": {
+        "Format Document": "Dokument formatieren"
+    },
     "noticeMessages": {
         "Document Formatted!": "",
         "Document is already formatted!": "",

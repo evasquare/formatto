@@ -5,6 +5,9 @@
     "editorMenu": {
         "Format Document": "Dokumentum formázása"
     },
+    "ribbonIcons": {
+        "Format Document": "Dokumentum formázása"
+    },
     "noticeMessages": {
         "Document Formatted!": "A dokumentum meg lett formázva!",
         "Document is already formatted!": "A dokumentum már meg van formázva!",
