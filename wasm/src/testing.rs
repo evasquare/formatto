@@ -30,7 +30,8 @@ fn get_example_options() -> PluginOptions {
         },
         other_gaps: OtherGaps {
             after_properties: Some("2".to_string()),
-            before_contents: Some("0".to_string()),
+            before_contents: Some("1".to_string()),
+            before_contents_after_headings: Some("0".to_string()),
             before_contents_after_code_blocks: Some("1".to_string()),
             before_code_blocks: Some("1".to_string()),
             before_code_blocks_after_headings: Some("0".to_string()),

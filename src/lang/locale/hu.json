@@ -40,6 +40,8 @@
         "After properties": "Tulajdonságok után",
         "Decides the gap after a property section.": "Meghatározza a hézagot a tulajdonságok szekció után.",
         "Before contents": "Tartalmak előtt",
+        "Before contents after headings": "",
+        "Decides gaps before \"contents that are after headings.\"": "",
         "Decides gaps before content sections. (ex: Text before headings)": "",
         "Before contents after code blocks": "Tartalmak előtti kód részek",
         "Decides gaps before \"contents that are after code blocks.\"": "Meghatározza azon tartalmi hézagokat, melyek kód részek előtt vannak.",

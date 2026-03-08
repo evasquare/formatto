@@ -16,6 +16,8 @@ export interface OtherGaps {
     afterProperties: string;
     /** Decides gaps before content sections. (ex: Text before headings) */
     beforeContents: string;
+    /** Decides gaps before \"contents that are after headings.\" */
+    beforeContentsAfterHeadings: string;
     /** Decides gaps before \"contents that are after code blocks.\" */
     beforeContentsAfterCodeBlocks: string;
     /** Decides gaps before code blocks. */
@@ -61,7 +63,8 @@ export const FALLBACK_HEADING_GAPS: Partial<HeadingGaps> = {
 
 export const FALLBACK_OTHER_GAPS: Partial<OtherGaps> = {
     afterProperties: "2",
-    beforeContents: "0",
+    beforeContents: "1",
+    beforeContentsAfterHeadings: "0",
     beforeContentsAfterCodeBlocks: "1",
     beforeCodeBlocks: "1",
     beforeCodeBlocksAfterHeadings: "0",
@@ -99,6 +102,7 @@ export const EMPTY_HEADING_GAPS: Partial<HeadingGaps> = {
 export const EMPTY_OTHER_GAPS: Partial<OtherGaps> = {
     afterProperties: "",
     beforeContents: "",
+    beforeContentsAfterHeadings: "",
     beforeContentsAfterCodeBlocks: "",
     beforeCodeBlocks: "",
     beforeCodeBlocksAfterHeadings: "",

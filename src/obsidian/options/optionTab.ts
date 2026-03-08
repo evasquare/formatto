@@ -221,6 +221,34 @@ export class FormattoOptionTab extends PluginSettingTab {
             .setName(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
+                    "Before contents after headings",
+                ),
+            )
+            .setDesc(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_GAPS,
+                    'Decides gaps before "contents that are after headings."', // eslint-disable-line
+                ),
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_OPTIONS.otherGaps.beforeContents,
+                        ),
+                    )
+                    .setValue(this.plugin.settings.otherGaps.beforeContents)
+                    .onChange(async (value) => {
+                        debounceMsg(value);
+
+                        this.plugin.settings.otherGaps.beforeContents = value;
+                        await this.plugin.saveOptions();
+                    }),
+            );
+        new Setting(containerEl)
+            .setName(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_GAPS,
                     "Before contents after code blocks",
                 ),
             )
@@ -285,7 +313,7 @@ export class FormattoOptionTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    'Decides gaps before "code blocks that are after headings."',
+                    'Decides gaps before "code blocks that are after headings."', // eslint-disable-line
                 ),
             )
             .addText((text) =>
@@ -346,7 +374,7 @@ export class FormattoOptionTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    'Decides gaps before "callouts that are after content sections."', // eslint-disable-line
+                    'Decides gaps before "callouts\"', // eslint-disable-line
                 ),
             )
             .addText((text) =>

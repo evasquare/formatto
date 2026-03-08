@@ -41,6 +41,8 @@
         "Decides the gap after a property section.": "속성 영역 뒤 여백을 결정합니다.",
         "Before contents": "내용 영역 앞",
         "Decides gaps before content sections. (ex: Text before headings)": "내용 영역의 앞 여백을 결정합니다. (예: 제목 앞 텍스트)",
+        "Before contents after headings": "",
+        "Decides gaps before \"contents that are after headings.\"": "",
         "Before contents after code blocks": "코드 블럭 뒤 내용 영역 앞",
         "Decides gaps before \"contents that are after code blocks.\"": "\"코드 블럭 뒤 내용 영역\"의 앞 여백을 결정합니다.",
         "Before code blocks": "코드 블럭 앞",

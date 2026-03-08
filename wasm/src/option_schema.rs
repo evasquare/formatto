@@ -18,6 +18,8 @@ pub struct OtherGaps {
     pub after_properties: Option<String>,
     /// Decides gaps before content sections. (ex: Text before headings)
     pub before_contents: Option<String>,
+    /// Decides gaps before \"contents that are after headings.\"
+    pub before_contents_after_headings: Option<String>,
     /// Decides gaps before \"contents that are after code blocks.\"
     pub before_contents_after_code_blocks: Option<String>,
     /// Decides gaps before code blocks.

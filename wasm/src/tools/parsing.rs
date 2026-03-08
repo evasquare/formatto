@@ -125,15 +125,17 @@ pub fn get_sections(
 
         let is_valid_callout_syntax_line = line.starts_with("> ");
         if is_valid_callout_syntax_line || is_reading_callout {
-            finish_current_content_section(
-                &mut is_reading_content_section,
-                &mut sections,
-                &mut temp_content_section,
-            );
+            if is_valid_callout_syntax_line {
+                finish_current_content_section(
+                    &mut is_reading_content_section,
+                    &mut sections,
+                    &mut temp_content_section,
+                );
+            }
 
             let mut is_reading_the_last_line = false;
 
-            if index == input_lines.len() - 1 {
+            if index == input_lines.len() - 1 && is_valid_callout_syntax_line {
                 is_reading_the_last_line = true;
                 if !temp_callout.is_empty() {
                     temp_callout.push('\n');

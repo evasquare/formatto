@@ -95,6 +95,11 @@ pub fn get_formatted_string(
                         0
                     } else if is_right_after_properties {
                         parse_string_to_usize(&options.other_gaps.after_properties, locale)? + 1
+                    } else if is_right_after_heading {
+                        parse_string_to_usize(
+                            &options.other_gaps.before_contents_after_headings,
+                            locale,
+                        )? + 1
                     } else if is_right_after_code_block {
                         parse_string_to_usize(
                             &options.other_gaps.before_contents_after_code_blocks,
