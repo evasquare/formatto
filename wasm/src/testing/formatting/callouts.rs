@@ -59,3 +59,41 @@ fn case_2() {
 
     assert_eq!(output, expected_output);
 }
+
+#[test]
+fn case_3() {
+    setup();
+
+    let input = r#"> Callout 1
+# Hello!
+
+
+
+
+> Callout 2
+> Callout 2
+
+
+
+
+> Callout 3
+> Callout 3
+> Callout 3
+"#;
+
+    let sections = get_sections(input, &get_example_preferences()).unwrap();
+    let output = get_formatted_string(sections, &get_example_preferences()).unwrap();
+    let expected_output = r#"> Callout 1
+
+
+
+# Hello!
+> Callout 2
+> Callout 2
+
+> Callout 3
+> Callout 3
+> Callout 3"#;
+
+    assert_eq!(output, expected_output);
+}

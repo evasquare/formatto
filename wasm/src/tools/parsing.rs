@@ -330,7 +330,7 @@ pub fn get_sections(
             append_a_line_break(&mut temp_content_section, line);
         }
 
-        // Run this when it's the last line.
+        // Run this when it's the last line of the content section.
         if index == &input_lines.len() - 1 {
             finish_current_content_section(
                 &mut is_reading_content_section,
