@@ -234,14 +234,19 @@ export class FormattoOptionTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_OPTIONS.otherGaps.beforeContents,
+                            FALLBACK_OPTIONS.otherGaps
+                                .beforeContentsAfterHeadings,
                         ),
                     )
-                    .setValue(this.plugin.settings.otherGaps.beforeContents)
+                    .setValue(
+                        this.plugin.settings.otherGaps
+                            .beforeContentsAfterHeadings,
+                    )
                     .onChange(async (value) => {
                         debounceMsg(value);
 
-                        this.plugin.settings.otherGaps.beforeContents = value;
+                        this.plugin.settings.otherGaps.beforeContentsAfterHeadings =
+                            value;
                         await this.plugin.saveOptions();
                     }),
             );
