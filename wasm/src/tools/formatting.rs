@@ -132,6 +132,26 @@ pub fn get_formatted_string(
                 is_right_after_heading = false;
                 is_right_after_code_block = true
             }
+            MarkdownSection::Callout(content) => {
+                output.push_str(&insert_line_breaks(
+                    &content,
+                    if output.is_empty() {
+                        0
+                    } else if is_right_after_heading {
+                        parse_string_to_usize(
+                            &options.other_gaps.before_callouts_after_headings,
+                            locale,
+                        )? + 1
+                    } else {
+                        parse_string_to_usize(&options.other_gaps.before_callouts, locale)? + 1
+                    },
+                    0,
+                ));
+
+                is_right_after_properties = false;
+                is_right_after_heading = false;
+                is_right_after_code_block = false
+            }
         }
     }
 

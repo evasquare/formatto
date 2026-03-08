@@ -54,6 +54,10 @@ pub fn get_sections(
     let mut is_reading_code_block = false;
     let mut current_code_block_backtick_count: Option<usize> = None;
 
+    // Callout sections.
+    let mut temp_callout = String::new();
+    let mut is_reading_callout = false;
+
     // Content sections.
     // Everything goes into `MarkdownSection::Content` type,
     // unless it detects some specific Markdown syntax that needs to be parsed.
@@ -67,7 +71,11 @@ pub fn get_sections(
     // Iterate over lines of a document.
     for (index, &line) in input_lines.iter().enumerate() {
         // "is_reading_content_section" should be updated in previous iterations.
-        if line.is_empty() && !is_reading_content_section && !is_reading_code_block {
+        if line.is_empty()
+            && !is_reading_content_section
+            && !is_reading_code_block
+            && !is_reading_callout
+        {
             continue;
         }
         is_reading_content_section = true;
@@ -111,6 +119,41 @@ pub fn get_sections(
                     temp_properties.push('\n');
                 }
                 temp_properties.push_str(line);
+                continue;
+            }
+        }
+
+        let is_valid_callout_syntax_line = line.starts_with("> ");
+        if is_valid_callout_syntax_line || is_reading_callout {
+            finish_current_content_section(
+                &mut is_reading_content_section,
+                &mut sections,
+                &mut temp_content_section,
+            );
+
+            let mut is_reading_the_last_line = false;
+
+            if index == input_lines.len() - 1 {
+                is_reading_the_last_line = true;
+                if !temp_callout.is_empty() {
+                    temp_callout.push('\n');
+                }
+                temp_callout.push_str(line);
+            }
+
+            if (!is_valid_callout_syntax_line && is_reading_callout) || is_reading_the_last_line {
+                is_reading_callout = false;
+                sections.push(MarkdownSection::Callout(temp_callout.clone()));
+                temp_callout.clear();
+            } else if is_valid_callout_syntax_line {
+                is_reading_callout = true;
+            }
+
+            if is_reading_callout {
+                if !temp_callout.is_empty() {
+                    temp_callout.push('\n');
+                }
+                temp_callout.push_str(line);
                 continue;
             }
         }

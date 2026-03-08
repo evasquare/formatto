@@ -11,4 +11,5 @@ pub enum MarkdownSection {
     Heading(HeadingLevel),
     Content(String),
     Code(String),
+    Callout(String),
 }

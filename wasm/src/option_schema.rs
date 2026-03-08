@@ -24,6 +24,10 @@ pub struct OtherGaps {
     pub before_code_blocks: Option<String>,
     /// Decides gaps before \"code blocks that are after headings.\"
     pub before_code_blocks_after_headings: Option<String>,
+    /// Decides gaps before \"callouts that are after headings.\"
+    pub before_callouts_after_headings: Option<String>,
+    /// Decides gaps before \"callouts that are after content sections.\"
+    pub before_callouts: Option<String>,
 }
 
 #[derive(Debug, Deserialize)]

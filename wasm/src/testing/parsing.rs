@@ -1,4 +1,5 @@
 mod get_sections {
+    mod callouts;
     mod code_blocks;
     mod contents;
     mod general;

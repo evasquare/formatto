@@ -34,6 +34,8 @@ fn get_example_options() -> PluginOptions {
             before_contents_after_code_blocks: Some("1".to_string()),
             before_code_blocks: Some("1".to_string()),
             before_code_blocks_after_headings: Some("0".to_string()),
+            before_callouts_after_headings: Some("0".to_string()),
+            before_callouts: Some("1".to_string())
         },
         format_options: FormatOptions {
             insert_newline: Some(false),
