@@ -60,13 +60,13 @@ export class FormattoOptionTab extends PluginSettingTab {
         );
 
         containerEl.createDiv({}, (div) => {
-            div.innerHTML = `<div style="color: var(--text-accent)">
+            div.innerHTML = `<div style="color: var(--text-accent); margin-bottom: 23px;">
                 ${getLocale(
                     LOCALE_CATEGORY.OPTION_WARNINGS,
                     "Gap value must be a whole number and it needs to be at least 0.",
                 )}
             </div>`;
-            div.className = "setting-item setting-item-description";
+            div.className = "setting-item-description";
         });
 
         // Heading Gaps
