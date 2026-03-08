@@ -22,6 +22,10 @@ export interface OtherGaps {
     beforeCodeBlocks: string;
     /** Decides gaps before \"code blocks that are after headings.\" */
     beforeCodeBlocksAfterHeadings: string;
+    /** Decides gaps before \"callouts that are after headings.\" */
+    beforeCalloutsAfterHeadings: string;
+    /** Decides gaps before \"callouts that are after content sections.\" */
+    beforeCallouts: string;
 }
 
 export interface FormatOptions {
@@ -61,6 +65,8 @@ export const FALLBACK_OTHER_GAPS: Partial<OtherGaps> = {
     beforeContentsAfterCodeBlocks: "1",
     beforeCodeBlocks: "1",
     beforeCodeBlocksAfterHeadings: "0",
+    beforeCalloutsAfterHeadings: "0",
+    beforeCallouts: "1",
 };
 
 export const FALLBACK_FORMAT_OPTIONS: Partial<FormatOptions> = {
@@ -96,6 +102,8 @@ export const EMPTY_OTHER_GAPS: Partial<OtherGaps> = {
     beforeContentsAfterCodeBlocks: "",
     beforeCodeBlocks: "",
     beforeCodeBlocksAfterHeadings: "",
+    beforeCalloutsAfterHeadings: "",
+    beforeCallouts: "",
 };
 
 export const DEFAULT_OPTIONS: FormattoPluginOptions = {

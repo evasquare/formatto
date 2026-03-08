@@ -12,11 +12,11 @@ export class FormattoOptionTab extends PluginSettingTab {
     private noticeMessages = {
         invalidNumberMessage: getLocale(
             LOCALE_CATEGORY.NOTICE_MESSAGES,
-            "Please enter a valid number.\nIt must be at least 0."
+            "Please enter a valid number.\nIt must be at least 0.",
         ),
         notWholeNumberMessage: getLocale(
             LOCALE_CATEGORY.NOTICE_MESSAGES,
-            "Please enter a valid number.\nIt must be a whole number."
+            "Please enter a valid number.\nIt must be a whole number.",
         ),
     };
 
@@ -32,7 +32,7 @@ export class FormattoOptionTab extends PluginSettingTab {
     private putDefaultIndicator(value: string): string {
         return `${value} ${getLocale(
             LOCALE_CATEGORY.PLACEHOLDERS,
-            "(Default)"
+            "(Default)",
         )}`;
     }
 
@@ -56,14 +56,14 @@ export class FormattoOptionTab extends PluginSettingTab {
                 }
             },
             1000,
-            true
+            true,
         );
 
         containerEl.createDiv({}, (div) => {
             div.innerHTML = `<div style="color: var(--text-accent)">
                 ${getLocale(
                     LOCALE_CATEGORY.OPTION_WARNINGS,
-                    "Gap value must be a whole number and it needs to be at least 0."
+                    "Gap value must be a whole number and it needs to be at least 0.",
                 )}
             </div>`;
             div.className = "setting-item setting-item-description";
@@ -77,24 +77,24 @@ export class FormattoOptionTab extends PluginSettingTab {
             .setName(
                 getLocale(
                     LOCALE_CATEGORY.HEADING_GAPS,
-                    "Before top-level headings"
-                )
+                    "Before top-level headings",
+                ),
             )
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.HEADING_GAPS,
-                    "Decides the gap before a top-level heading."
-                )
+                    "Decides the gap before a top-level heading.",
+                ),
             )
             .addText((text) =>
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_OPTIONS.headingGaps.beforeTopLevelHeadings
-                        )
+                            FALLBACK_OPTIONS.headingGaps.beforeTopLevelHeadings,
+                        ),
                     )
                     .setValue(
-                        this.plugin.settings.headingGaps.beforeTopLevelHeadings
+                        this.plugin.settings.headingGaps.beforeTopLevelHeadings,
                     )
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -102,30 +102,30 @@ export class FormattoOptionTab extends PluginSettingTab {
                         this.plugin.settings.headingGaps.beforeTopLevelHeadings =
                             value;
                         await this.plugin.saveOptions();
-                    })
+                    }),
             );
         new Setting(containerEl)
             .setName(
                 getLocale(
                     LOCALE_CATEGORY.HEADING_GAPS,
-                    "Before the first sub-level heading"
-                )
+                    "Before the first sub-level heading",
+                ),
             )
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.HEADING_GAPS,
-                    "Decides the child heading gap right after a parent heading."
-                )
+                    "Decides the child heading gap right after a parent heading.",
+                ),
             )
             .addText((text) =>
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_OPTIONS.headingGaps.beforeFirstSubHeading
-                        )
+                            FALLBACK_OPTIONS.headingGaps.beforeFirstSubHeading,
+                        ),
                     )
                     .setValue(
-                        this.plugin.settings.headingGaps.beforeFirstSubHeading
+                        this.plugin.settings.headingGaps.beforeFirstSubHeading,
                     )
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -133,30 +133,30 @@ export class FormattoOptionTab extends PluginSettingTab {
                         this.plugin.settings.headingGaps.beforeFirstSubHeading =
                             value;
                         await this.plugin.saveOptions();
-                    })
+                    }),
             );
         new Setting(containerEl)
             .setName(
                 getLocale(
                     LOCALE_CATEGORY.HEADING_GAPS,
-                    "Before sub-level headings"
-                )
+                    "Before sub-level headings",
+                ),
             )
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.HEADING_GAPS,
-                    "Decides gaps before headings that are not top-level."
-                )
+                    "Decides gaps before headings that are not top-level.",
+                ),
             )
             .addText((text) =>
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_OPTIONS.headingGaps.beforeSubHeadings
-                        )
+                            FALLBACK_OPTIONS.headingGaps.beforeSubHeadings,
+                        ),
                     )
                     .setValue(
-                        this.plugin.settings.headingGaps.beforeSubHeadings
+                        this.plugin.settings.headingGaps.beforeSubHeadings,
                     )
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -164,7 +164,7 @@ export class FormattoOptionTab extends PluginSettingTab {
                         this.plugin.settings.headingGaps.beforeSubHeadings =
                             value;
                         await this.plugin.saveOptions();
-                    })
+                    }),
             );
 
         // Other Gaps
@@ -176,15 +176,15 @@ export class FormattoOptionTab extends PluginSettingTab {
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    "Decides the gap after a property section."
-                )
+                    "Decides the gap after a property section.",
+                ),
             )
             .addText((text) =>
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_OPTIONS.otherGaps.afterProperties
-                        )
+                            FALLBACK_OPTIONS.otherGaps.afterProperties,
+                        ),
                     )
                     .setValue(this.plugin.settings.otherGaps.afterProperties)
                     .onChange(async (value) => {
@@ -192,22 +192,22 @@ export class FormattoOptionTab extends PluginSettingTab {
 
                         this.plugin.settings.otherGaps.afterProperties = value;
                         await this.plugin.saveOptions();
-                    })
+                    }),
             );
         new Setting(containerEl)
             .setName(getLocale(LOCALE_CATEGORY.OTHER_GAPS, "Before contents"))
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    "Decides gaps before content sections. (ex: Text before headings)"
-                )
+                    "Decides gaps before content sections. (ex: Text before headings)",
+                ),
             )
             .addText((text) =>
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_OPTIONS.otherGaps.beforeContents
-                        )
+                            FALLBACK_OPTIONS.otherGaps.beforeContents,
+                        ),
                     )
                     .setValue(this.plugin.settings.otherGaps.beforeContents)
                     .onChange(async (value) => {
@@ -215,32 +215,32 @@ export class FormattoOptionTab extends PluginSettingTab {
 
                         this.plugin.settings.otherGaps.beforeContents = value;
                         await this.plugin.saveOptions();
-                    })
+                    }),
             );
         new Setting(containerEl)
             .setName(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    "Before contents after code blocks"
-                )
+                    "Before contents after code blocks",
+                ),
             )
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    'Decides gaps before "contents that are after code blocks."' // eslint-disable-line
-                )
+                    'Decides gaps before "contents that are after code blocks."', // eslint-disable-line
+                ),
             )
             .addText((text) =>
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
                             FALLBACK_OPTIONS.otherGaps
-                                .beforeContentsAfterCodeBlocks
-                        )
+                                .beforeContentsAfterCodeBlocks,
+                        ),
                     )
                     .setValue(
                         this.plugin.settings.otherGaps
-                            .beforeContentsAfterCodeBlocks
+                            .beforeContentsAfterCodeBlocks,
                     )
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -248,24 +248,24 @@ export class FormattoOptionTab extends PluginSettingTab {
                         this.plugin.settings.otherGaps.beforeContentsAfterCodeBlocks =
                             value;
                         await this.plugin.saveOptions();
-                    })
+                    }),
             );
         new Setting(containerEl)
             .setName(
-                getLocale(LOCALE_CATEGORY.OTHER_GAPS, "Before code blocks")
+                getLocale(LOCALE_CATEGORY.OTHER_GAPS, "Before code blocks"),
             )
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    "Decides gaps before code blocks."
-                )
+                    "Decides gaps before code blocks.",
+                ),
             )
             .addText((text) =>
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_OPTIONS.otherGaps.beforeCodeBlocks
-                        )
+                            FALLBACK_OPTIONS.otherGaps.beforeCodeBlocks,
+                        ),
                     )
                     .setValue(this.plugin.settings.otherGaps.beforeCodeBlocks)
                     .onChange(async (value) => {
@@ -273,32 +273,32 @@ export class FormattoOptionTab extends PluginSettingTab {
 
                         this.plugin.settings.otherGaps.beforeCodeBlocks = value;
                         await this.plugin.saveOptions();
-                    })
+                    }),
             );
         new Setting(containerEl)
             .setName(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    "Before code blocks after headings"
-                )
+                    "Before code blocks after headings",
+                ),
             )
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_GAPS,
-                    'Decides gaps before "code blocks that are after headings."'
-                )
+                    'Decides gaps before "code blocks that are after headings."',
+                ),
             )
             .addText((text) =>
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
                             FALLBACK_OPTIONS.otherGaps
-                                .beforeCodeBlocksAfterHeadings
-                        )
+                                .beforeCodeBlocksAfterHeadings,
+                        ),
                     )
                     .setValue(
                         this.plugin.settings.otherGaps
-                            .beforeCodeBlocksAfterHeadings
+                            .beforeCodeBlocksAfterHeadings,
                     )
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -306,7 +306,63 @@ export class FormattoOptionTab extends PluginSettingTab {
                         this.plugin.settings.otherGaps.beforeCodeBlocksAfterHeadings =
                             value;
                         await this.plugin.saveOptions();
-                    })
+                    }),
+            );
+        new Setting(containerEl)
+            .setName(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_GAPS,
+                    "Before callouts after headings",
+                ),
+            )
+            .setDesc(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_GAPS,
+                    'Decides gaps before "callouts that are after headings."', // eslint-disable-line
+                ),
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_OPTIONS.otherGaps
+                                .beforeCalloutsAfterHeadings,
+                        ),
+                    )
+                    .setValue(
+                        this.plugin.settings.otherGaps
+                            .beforeCalloutsAfterHeadings,
+                    )
+                    .onChange(async (value) => {
+                        debounceMsg(value);
+
+                        this.plugin.settings.otherGaps.beforeCalloutsAfterHeadings =
+                            value;
+                        await this.plugin.saveOptions();
+                    }),
+            );
+        new Setting(containerEl)
+            .setName(getLocale(LOCALE_CATEGORY.OTHER_GAPS, "Before callouts"))
+            .setDesc(
+                getLocale(
+                    LOCALE_CATEGORY.OTHER_GAPS,
+                    'Decides gaps before "callouts that are after content sections."', // eslint-disable-line
+                ),
+            )
+            .addText((text) =>
+                text
+                    .setPlaceholder(
+                        this.putDefaultIndicator(
+                            FALLBACK_OPTIONS.otherGaps.beforeCallouts,
+                        ),
+                    )
+                    .setValue(this.plugin.settings.otherGaps.beforeCallouts)
+                    .onChange(async (value) => {
+                        debounceMsg(value);
+
+                        this.plugin.settings.otherGaps.beforeCallouts = value;
+                        await this.plugin.saveOptions();
+                    }),
             );
 
         // Format Options
@@ -317,14 +373,14 @@ export class FormattoOptionTab extends PluginSettingTab {
             .setName(
                 getLocale(
                     LOCALE_CATEGORY.FORMAT_OPTIONS,
-                    "Newline at the end of a document"
-                )
+                    "Newline at the end of a document",
+                ),
             )
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.FORMAT_OPTIONS,
-                    "Inserts a newline at the end of a document."
-                )
+                    "Inserts a newline at the end of a document.",
+                ),
             )
             .addToggle((text) =>
                 text
@@ -333,7 +389,7 @@ export class FormattoOptionTab extends PluginSettingTab {
                         this.plugin.settings.formatOptions.insertNewline =
                             value;
                         await this.plugin.saveOptions();
-                    })
+                    }),
             );
 
         // Other Options
@@ -344,75 +400,71 @@ export class FormattoOptionTab extends PluginSettingTab {
             .setName(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_OPTIONS,
-                    "Notify when no change is needed"
-                )
+                    "Notify when no change is needed",
+                ),
             )
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_OPTIONS,
-                    "Displays a different message when no change is needed."
-                )
+                    "Displays a different message when no change is needed.",
+                ),
             )
             .addToggle((text) =>
                 text
                     .setValue(
-                        this.plugin.settings.otherOptions.notifyWhenUnchanged
+                        this.plugin.settings.otherOptions.notifyWhenUnchanged,
                     )
                     .onChange(async (value) => {
                         this.plugin.settings.otherOptions.notifyWhenUnchanged =
                             value;
                         await this.plugin.saveOptions();
-                    })
+                    }),
             );
         new Setting(containerEl)
             .setName(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_OPTIONS,
-                    "More detailed error message"
-                )
+                    "More detailed error message",
+                ),
             )
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_OPTIONS,
-                    "Displays additional information when parsing fails."
-                )
+                    "Displays additional information when parsing fails.",
+                ),
             )
             .addToggle((text) =>
                 text
                     .setValue(
                         this.plugin.settings.otherOptions
-                            .showMoreDetailedErrorMessages
+                            .showMoreDetailedErrorMessages,
                     )
                     .onChange(async (value) => {
                         this.plugin.settings.otherOptions.showMoreDetailedErrorMessages =
                             value;
                         await this.plugin.saveOptions();
-                    })
+                    }),
             );
         new Setting(containerEl)
             .setName(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_OPTIONS,
-                    "Format documents on modification"
-                )
+                    "Format documents on modification",
+                ),
             )
             .setDesc(
                 getLocale(
                     LOCALE_CATEGORY.OTHER_OPTIONS,
-                    "Automatically format documents after each modification. Triggers on save and autosave."
-                )
+                    "Automatically format documents after each modification. Triggers on save and autosave.",
+                ),
             )
             .addToggle((text) =>
                 text
-                    .setValue(
-                        this.plugin.settings.otherOptions
-                            .formatOnSave
-                    )
+                    .setValue(this.plugin.settings.otherOptions.formatOnSave)
                     .onChange(async (value) => {
-                        this.plugin.settings.otherOptions.formatOnSave =
-                            value;
+                        this.plugin.settings.otherOptions.formatOnSave = value;
                         await this.plugin.saveOptions();
-                    })
+                    }),
             );
     }
 }

@@ -46,7 +46,11 @@
         "Before code blocks": "코드 블럭 앞",
         "Decides gaps before code blocks.": "코드 블럭의 앞 여백을 결정합니다.",
         "Before code blocks after headings": "제목 뒤 코드 블럭 앞",
-        "Decides gaps before \"code blocks that are after headings.\"": "\"제목 뒤 코드 블럭\"의 앞 여백을 결정합니다."
+        "Decides gaps before \"code blocks that are after headings.\"": "\"제목 뒤 코드 블럭\"의 앞 여백을 결정합니다.",
+        "Before callouts after headings": "",
+        "Decides gaps before \"callouts that are after headings.\"": "",
+        "Before callouts": "",
+        "Decides gaps before \"callouts\"": ""
     },
     "formatOptions": {
         "Newline at the end of a document": "문서 끝 새 줄",

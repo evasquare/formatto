@@ -46,7 +46,11 @@
         "Before code blocks": "Kód részek előtt",
         "Decides gaps before code blocks.": "Meghatározza a hézagot kód részek előtt.",
         "Before code blocks after headings": "Kód részek előtt, a címsorok előtt",
-        "Decides gaps before \"code blocks that are after headings.\"": "Meghatározza azon kód részi hézagokat, melyek címsorok után vannak."
+        "Decides gaps before \"code blocks that are after headings.\"": "Meghatározza azon kód részi hézagokat, melyek címsorok után vannak.",
+        "Before callouts after headings": "",
+        "Decides gaps before \"callouts that are after headings.\"": "",
+        "Before callouts": "",
+        "Decides gaps before \"callouts\"": ""
     },
     "formatOptions": {
         "Newline at the end of a document": "Új sor a dokumentum végére.",

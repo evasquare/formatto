@@ -46,7 +46,10 @@
         "Before code blocks": "",
         "Decides gaps before code blocks.": "",
         "Before code blocks after headings": "",
-        "Decides gaps before \"code blocks that are after headings.\"": ""
+        "Before callouts after headings": "",
+        "Decides gaps before \"callouts that are after headings.\"": "",
+        "Before callouts": "",
+        "Decides gaps before \"callouts\"": ""
     },
     "formatOptions": {
         "Newline at the end of a document": "",
