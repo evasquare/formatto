@@ -165,7 +165,8 @@ pub fn get_sections(
                     temp_callout.push_str(line);
                 }
 
-                if (!is_valid_callout_syntax_line && is_reading_callout) || is_reading_the_last_line
+                if ((!is_valid_callout_syntax_line && line.is_empty()) && is_reading_callout)
+                    || is_reading_the_last_line
                 {
                     is_reading_callout = false;
                     sections.push(MarkdownSection::Callout(temp_callout.clone()));
