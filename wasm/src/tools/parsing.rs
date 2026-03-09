@@ -79,21 +79,26 @@ pub fn get_sections(
             continue;
         }
         is_reading_content_section = true;
+
+        // Variables for detecting syntax.
+        // - Headings
         let is_hash_symbol_only = line.chars().all(|item| item == '#');
         let is_valid_hash_symbol_syntax =
             line.starts_with('#') && (line.contains("# ") || is_hash_symbol_only);
         let is_reading_a_heading = is_hash_symbol_only || is_valid_hash_symbol_syntax;
+        let alternate_heading_level: Option<usize> =
+            get_valid_alternate_heading_level(&input_lines, index);
+        // - Callouts
         let is_valid_callout_syntax_line = line.starts_with(">")
             || (index > 0
                 && (input_lines
                     .get(index - 1)
                     .is_some_and(|item| item.starts_with(">"))
                     && !line.trim().is_empty()));
+        // - Code blocks
         let is_valid_code_block_syntax_line = line.starts_with("```");
-        let alternate_heading_level: Option<usize> =
-            get_valid_alternate_heading_level(&input_lines, index);
 
-        // Read Properties.
+        // Read properties.
         if sections.is_empty()
             && ((index == 0 && alternate_heading_level.is_none() && line == "---")
                 || is_reading_property_block)
@@ -133,6 +138,7 @@ pub fn get_sections(
             }
         }
 
+        // Read callouts
         if is_valid_callout_syntax_line || is_reading_callout {
             if is_valid_callout_syntax_line {
                 finish_current_content_section(
@@ -142,7 +148,10 @@ pub fn get_sections(
                 );
             }
 
+            // Switching to another Markdown section.
             if is_reading_callout && (is_valid_code_block_syntax_line || is_reading_a_heading) {
+                // When faced with a code block or a heading,
+                // immediately stop parsing a callout section.
                 is_reading_callout = false;
                 sections.push(MarkdownSection::Callout(temp_callout.clone()));
                 temp_callout.clear();
