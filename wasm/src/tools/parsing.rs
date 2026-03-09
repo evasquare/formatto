@@ -93,7 +93,6 @@ pub fn get_sections(
         let alternate_heading_level: Option<usize> =
             get_valid_alternate_heading_level(&input_lines, index);
 
-        println!("{:#?}", sections);
         // Read Properties.
         if sections.is_empty()
             && ((index == 0 && alternate_heading_level.is_none() && line == "---")
