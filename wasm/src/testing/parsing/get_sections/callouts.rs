@@ -204,11 +204,7 @@ fn case_7() {
 Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
 
     let expected_output = vec![
-        MarkdownSection::Callout("> Callout 1\n> Callout 1\n> Callout 1".to_string()),
-        MarkdownSection::Content(
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-                .to_string(),
-        ),
+        MarkdownSection::Callout("> Callout 1\n> Callout 1\n> Callout 1\nLorem Ipsum is simply dummy text of the printing and typesetting industry.".to_string()),
     ];
 
     assert_eq!(
@@ -231,16 +227,33 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
 Lorem Ipsum is simply dummy text of the printing and typesetting industry."#;
 
     let expected_output = vec![
-        MarkdownSection::Callout("> Callout 1\n> Callout 1\n> Callout 1".to_string()),
-        MarkdownSection::Content(
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-                .to_string(),
-        ),
-        MarkdownSection::Callout("> Callout 1\n> Callout 1\n> Callout 1".to_string()),
-        MarkdownSection::Content(
-            "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
-                .to_string(),
-        ),
+        MarkdownSection::Callout("> Callout 1\n> Callout 1\n> Callout 1\nLorem Ipsum is simply dummy text of the printing and typesetting industry.\n> Callout 1\n> Callout 1\n> Callout 1\nLorem Ipsum is simply dummy text of the printing and typesetting industry.".to_string()),
+    ];
+
+    assert_eq!(
+        get_sections(input, &get_example_preferences()).unwrap(),
+        expected_output
+    );
+}
+
+#[test]
+fn case_9() {
+    setup();
+
+    let input = r#"> Callout 1
+> Callout 1
+> Callout 1
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+> Callout 1
+> Callout 1
+> Callout 1
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+```ts
+```"#;
+
+    let expected_output = vec![
+        MarkdownSection::Callout("> Callout 1\n> Callout 1\n> Callout 1\nLorem Ipsum is simply dummy text of the printing and typesetting industry.\n> Callout 1\n> Callout 1\n> Callout 1\nLorem Ipsum is simply dummy text of the printing and typesetting industry.".to_string()),
+        MarkdownSection::Code("```ts\n```".to_string())
     ];
 
     assert_eq!(

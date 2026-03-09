@@ -43,7 +43,7 @@ fn get_example_options() -> PluginOptions {
         },
         other_options: OtherOptions {
             notify_when_unchanged: Some(false),
-            show_more_detailed_error_messages: Some(false),
+            show_more_detailed_error_messages: Some(true),
         },
     }
 }

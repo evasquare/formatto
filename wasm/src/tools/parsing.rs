@@ -79,10 +79,21 @@ pub fn get_sections(
             continue;
         }
         is_reading_content_section = true;
-
+        let is_hash_symbol_only = line.chars().all(|item| item == '#');
+        let is_valid_hash_symbol_syntax =
+            line.starts_with('#') && (line.contains("# ") || is_hash_symbol_only);
+        let is_reading_a_heading = is_hash_symbol_only || is_valid_hash_symbol_syntax;
+        let is_valid_callout_syntax_line = line.starts_with(">")
+            || (index > 0
+                && (input_lines
+                    .get(index - 1)
+                    .is_some_and(|item| item.starts_with(">"))
+                    && !line.trim().is_empty()));
+        let is_valid_code_block_syntax_line = line.starts_with("```");
         let alternate_heading_level: Option<usize> =
             get_valid_alternate_heading_level(&input_lines, index);
 
+        println!("{:#?}", sections);
         // Read Properties.
         if sections.is_empty()
             && ((index == 0 && alternate_heading_level.is_none() && line == "---")
@@ -123,7 +134,6 @@ pub fn get_sections(
             }
         }
 
-        let is_valid_callout_syntax_line = line.starts_with("> ");
         if is_valid_callout_syntax_line || is_reading_callout {
             if is_valid_callout_syntax_line {
                 finish_current_content_section(
@@ -133,35 +143,40 @@ pub fn get_sections(
                 );
             }
 
-            let mut is_reading_the_last_line = false;
-
-            if index == input_lines.len() - 1 && is_valid_callout_syntax_line {
-                is_reading_the_last_line = true;
-                if !temp_callout.is_empty() {
-                    temp_callout.push('\n');
-                }
-                temp_callout.push_str(line);
-            }
-
-            if (!is_valid_callout_syntax_line && is_reading_callout) || is_reading_the_last_line {
+            if is_reading_callout && (is_valid_code_block_syntax_line || is_reading_a_heading) {
                 is_reading_callout = false;
                 sections.push(MarkdownSection::Callout(temp_callout.clone()));
                 temp_callout.clear();
-            } else if is_valid_callout_syntax_line {
-                is_reading_callout = true;
-            }
+            } else {
+                let is_reading_the_last_line = index == input_lines.len() - 1;
 
-            if is_reading_callout {
-                if !temp_callout.is_empty() {
-                    temp_callout.push('\n');
+                if is_reading_the_last_line && is_valid_callout_syntax_line {
+                    if !temp_callout.is_empty() {
+                        temp_callout.push('\n');
+                    }
+                    temp_callout.push_str(line);
                 }
-                temp_callout.push_str(line);
-                continue;
+
+                if (!is_valid_callout_syntax_line && is_reading_callout) || is_reading_the_last_line
+                {
+                    is_reading_callout = false;
+                    sections.push(MarkdownSection::Callout(temp_callout.clone()));
+                    temp_callout.clear();
+                } else if is_valid_callout_syntax_line {
+                    is_reading_callout = true;
+                }
+
+                if is_reading_callout {
+                    if !temp_callout.is_empty() {
+                        temp_callout.push('\n');
+                    }
+                    temp_callout.push_str(line);
+                    continue;
+                }
             }
         }
 
         // Read code blocks.
-        let is_valid_code_block_syntax_line = line.starts_with("```");
         if is_valid_code_block_syntax_line || is_reading_code_block {
             finish_current_content_section(
                 &mut is_reading_content_section,
@@ -212,8 +227,7 @@ pub fn get_sections(
         }
 
         // Read hash headings.
-        let is_hash_symbol_only = line.chars().all(|item| item == '#');
-        if line.starts_with('#') && (line.contains("# ") || is_hash_symbol_only) {
+        if is_valid_hash_symbol_syntax {
             if let Some(document_top_heading_level) = document_top_heading_level {
                 let is_top_level = validate_top_hash_heading(line, &top_heading_hash_literal);
 
