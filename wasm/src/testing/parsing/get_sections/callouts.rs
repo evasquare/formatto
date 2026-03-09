@@ -261,3 +261,57 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry.
         expected_output
     );
 }
+
+#[test]
+fn case_10() {
+    setup();
+
+    let input = r#"> Callout 1
+> Callout 1
+> Callout 1
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+> Callout 1
+> Callout 1
+> Callout 1
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+```ts
+```"#;
+
+    let expected_output = vec![
+        MarkdownSection::Callout("> Callout 1\n> Callout 1\n> Callout 1\nLorem Ipsum is simply dummy text of the printing and typesetting industry.\nLorem Ipsum is simply dummy text of the printing and typesetting industry.\n> Callout 1\n> Callout 1\n> Callout 1\nLorem Ipsum is simply dummy text of the printing and typesetting industry.".to_string()),
+        MarkdownSection::Code("```ts\n```".to_string())
+    ];
+
+    assert_eq!(
+        get_sections(input, &get_example_preferences()).unwrap(),
+        expected_output
+    );
+}
+
+#[test]
+fn case_11() {
+    setup();
+
+    let input = r#"> Callout 1
+> Callout 1
+>
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+> Callout 1
+> Callout 1
+> Callout 1
+Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+```ts
+```"#;
+
+    let expected_output = vec![
+        MarkdownSection::Callout("> Callout 1\n> Callout 1\n>\nLorem Ipsum is simply dummy text of the printing and typesetting industry.\nLorem Ipsum is simply dummy text of the printing and typesetting industry.\n> Callout 1\n> Callout 1\n> Callout 1\nLorem Ipsum is simply dummy text of the printing and typesetting industry.".to_string()),
+        MarkdownSection::Code("```ts\n```".to_string())
+    ];
+
+    assert_eq!(
+        get_sections(input, &get_example_preferences()).unwrap(),
+        expected_output
+    );
+}
