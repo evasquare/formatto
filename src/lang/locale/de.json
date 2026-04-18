@@ -1,6 +1,7 @@
 {
     "commands": {
-        "Format Document": "Dokument formatieren"
+        "Format Document": "Dokument formatieren",
+        "Format Notes in Current Folder": ""
     },
     "editorMenu": {
         "Format Document": "Dokument formatieren"
@@ -12,6 +13,7 @@
         "Document Formatted!": "",
         "Document is already formatted!": "",
         "No open document is found.": "",
+        "Folder formatting completed. Checked: {TOTAL}, Changed: {CHANGED}, Failed: {FAILED}.": "",
         "You can only format in editing mode.": "",
         "Please enter a valid number.\nIt must be at least 0.": "",
         "Please enter a valid number.\nIt must be a whole number.": ""

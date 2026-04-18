@@ -1,6 +1,7 @@
 {
     "commands": {
-        "Format Document": "Dokumentum formázása"
+        "Format Document": "Dokumentum formázása",
+        "Format Notes in Current Folder": ""
     },
     "editorMenu": {
         "Format Document": "Dokumentum formázása"
@@ -12,6 +13,7 @@
         "Document Formatted!": "A dokumentum meg lett formázva!",
         "Document is already formatted!": "A dokumentum már meg van formázva!",
         "No open document is found.": "Nem található megnyitott dokumentum.",
+        "Folder formatting completed. Checked: {TOTAL}, Changed: {CHANGED}, Failed: {FAILED}.": "",
         "You can only format in editing mode.": "A formázás csakis a szerkesztői módban lehetséges. ",
         "Please enter a valid number.\nIt must be at least 0.": "Kérlek egy megfelelő számot írjál be.\nLegalább 0 legyen.",
         "Please enter a valid number.\nIt must be a whole number.": "Kérlek egy megfelelő számot írjál be.\nEgész szám legyen."
