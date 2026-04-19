@@ -7,7 +7,8 @@
         "Format Document": "Dokument formatieren"
     },
     "ribbonIcons": {
-        "Format Document": "Dokument formatieren"
+        "Format Document": "Dokument formatieren",
+        "Format Notes in Current Folder": ""
     },
     "noticeMessages": {
         "Document Formatted!": "",

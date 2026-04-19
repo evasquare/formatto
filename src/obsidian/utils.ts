@@ -27,11 +27,12 @@ export class FormattoUtils {
             this.formattedDocument = format_document(
                 this.originalDocument,
                 copiedOptions,
-                JSON.stringify(getWasmLocale())
+                JSON.stringify(getWasmLocale()),
             );
             this.displayMessage();
         } catch (error) {
-            new Notice(error);
+            const stringifiedError = String(error);
+            new Notice(stringifiedError);
         }
 
         if (!this.formattedDocument) return;
@@ -53,7 +54,7 @@ export class FormattoUtils {
             this.formattedDocument = format_document(
                 this.originalDocument,
                 copiedOptions,
-                JSON.stringify(getWasmLocale())
+                JSON.stringify(getWasmLocale()),
             );
             return this.formattedDocument;
         } catch (error) {
@@ -73,7 +74,8 @@ export class FormattoUtils {
 
         for (const file of filesInFolder) {
             try {
-                const originalText = await this.plugin.app.vault.cachedRead(file);
+                const originalText =
+                    await this.plugin.app.vault.cachedRead(file);
                 const formattedText = this.formatText(originalText, false);
 
                 if (formattedText !== originalText) {
@@ -88,7 +90,7 @@ export class FormattoUtils {
 
         const message = getLocale(
             LOCALE_CATEGORY.NOTICE_MESSAGES,
-            "Folder formatting completed. Checked: {TOTAL}, Changed: {CHANGED}, Failed: {FAILED}."
+            "Folder formatting completed. Checked: {TOTAL}, Changed: {CHANGED}, Failed: {FAILED}.",
         )
             .replace("{TOTAL}", String(filesInFolder.length))
             .replace("{CHANGED}", String(changedCount))
@@ -99,12 +101,14 @@ export class FormattoUtils {
 
     private getMarkdownFilesInFolder(folderPath: string): TFile[] {
         const markdownFiles = this.plugin.app.vault.getMarkdownFiles();
-        if (folderPath === "") {
+        if (folderPath === "/") {
             return markdownFiles;
         }
 
         const folderPrefix = `${folderPath}/`;
-        return markdownFiles.filter((file) => file.path.startsWith(folderPrefix));
+        return markdownFiles.filter((file) =>
+            file.path.startsWith(folderPrefix),
+        );
     }
 
     private displayMessage() {
@@ -115,15 +119,15 @@ export class FormattoUtils {
             new Notice(
                 getLocale(
                     LOCALE_CATEGORY.NOTICE_MESSAGES,
-                    "Document is already formatted!"
-                )
+                    "Document is already formatted!",
+                ),
             );
         } else {
             new Notice(
                 getLocale(
                     LOCALE_CATEGORY.NOTICE_MESSAGES,
-                    "Document Formatted!"
-                )
+                    "Document Formatted!",
+                ),
             );
         }
     }

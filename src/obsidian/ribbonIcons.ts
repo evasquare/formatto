@@ -23,23 +23,70 @@ export class FormattoRibbonIcons {
                     new Notice(
                         getLocale(
                             LOCALE_CATEGORY.NOTICE_MESSAGES,
-                            "No open document is found."
-                        )
+                            "No open document is found.",
+                        ),
                     );
                     return;
                 }
-                if (activeView.getMode() !== "source") {
+                if (activeView?.getMode() !== "source") {
                     new Notice(
                         getLocale(
                             LOCALE_CATEGORY.NOTICE_MESSAGES,
-                            "You can only format in editing mode."
-                        )
+                            "You can only format in editing mode.",
+                        ),
                     );
                     return;
                 }
 
                 this.plugin.utils.formatDocument(editor);
-            }
+            },
+        );
+
+        this.plugin.addRibbonIcon(
+            "formatto-logo",
+            getLocale(
+                LOCALE_CATEGORY.RIBBON_ICONS,
+                "Format Notes in Current Folder",
+            ),
+            () => {
+                const editor = this.plugin.app.workspace.activeEditor?.editor;
+                const activeView =
+                    this.plugin.app.workspace.getActiveViewOfType(MarkdownView);
+
+                const activeFile = this.plugin.app.workspace.getActiveFile();
+
+                if (!activeFile) {
+                    new Notice(
+                        getLocale(
+                            LOCALE_CATEGORY.NOTICE_MESSAGES,
+                            "No open document is found.",
+                        ),
+                    );
+                    return;
+                }
+                if (activeView?.getMode() !== "source") {
+                    new Notice(
+                        getLocale(
+                            LOCALE_CATEGORY.NOTICE_MESSAGES,
+                            "You can only format in editing mode.",
+                        ),
+                    );
+                    return;
+                }
+                if (!editor) {
+                    new Notice(
+                        getLocale(
+                            LOCALE_CATEGORY.NOTICE_MESSAGES,
+                            "No open document is found.",
+                        ),
+                    );
+                    return;
+                }
+
+                this.plugin.utils.formatFolderFiles(
+                    activeFile.parent?.path ?? "",
+                );
+            },
         );
     };
 }

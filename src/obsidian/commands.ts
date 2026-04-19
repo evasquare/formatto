@@ -31,23 +31,24 @@ export class FormattoCommands {
                 id: "formatto-folder",
                 name: getLocale(
                     LOCALE_CATEGORY.COMMANDS,
-                    "Format Notes in Current Folder"
+                    "Format Notes in Current Folder",
                 ),
                 icon: "formatto-logo",
                 callback: async () => {
-                    const activeFile = this.plugin.app.workspace.getActiveFile();
+                    const activeFile =
+                        this.plugin.app.workspace.getActiveFile();
                     if (!activeFile) {
                         new Notice(
                             getLocale(
                                 LOCALE_CATEGORY.NOTICE_MESSAGES,
-                                "No open document is found."
-                            )
+                                "No open document is found.",
+                            ),
                         );
                         return;
                     }
 
                     await this.plugin.utils.formatFolderFiles(
-                        activeFile.parent?.path ?? ""
+                        activeFile.parent?.path ?? "",
                     );
                 },
             },
