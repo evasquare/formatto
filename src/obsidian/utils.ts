@@ -1,4 +1,4 @@
-import { Editor, EditorPosition, Notice } from "obsidian";
+import { Editor, EditorPosition, Notice, TFile } from "obsidian";
 
 import { getLocale, getWasmLocale, LOCALE_CATEGORY } from "@src/lang/lang";
 import FormattoPlugin from "@src/main";
@@ -43,7 +43,7 @@ export class FormattoUtils {
         this.clearVariables();
     }
 
-    formatText(data: string): string {
+    formatText(data: string, showErrorNotice = true): string {
         const copiedOptions = JSON.parse(JSON.stringify(this.plugin.settings));
         this.handleEmptyOptions(copiedOptions);
 
@@ -57,10 +57,54 @@ export class FormattoUtils {
             );
             return this.formattedDocument;
         } catch (error) {
-            new Notice(error);
+            if (showErrorNotice) {
+                new Notice(String(error));
+            }
+            return data;
         } finally {
             this.clearVariables();
         }
+    }
+
+    async formatFolderFiles(folderPath: string) {
+        const filesInFolder = this.getMarkdownFilesInFolder(folderPath);
+        let changedCount = 0;
+        let failedCount = 0;
+
+        for (const file of filesInFolder) {
+            try {
+                const originalText = await this.plugin.app.vault.cachedRead(file);
+                const formattedText = this.formatText(originalText, false);
+
+                if (formattedText !== originalText) {
+                    await this.plugin.app.vault.modify(file, formattedText);
+                    changedCount += 1;
+                }
+            } catch (error) {
+                failedCount += 1;
+                console.error(`Failed to format file: ${file.path}`, error);
+            }
+        }
+
+        const message = getLocale(
+            LOCALE_CATEGORY.NOTICE_MESSAGES,
+            "Folder formatting completed. Checked: {TOTAL}, Changed: {CHANGED}, Failed: {FAILED}."
+        )
+            .replace("{TOTAL}", String(filesInFolder.length))
+            .replace("{CHANGED}", String(changedCount))
+            .replace("{FAILED}", String(failedCount));
+
+        new Notice(message);
+    }
+
+    private getMarkdownFilesInFolder(folderPath: string): TFile[] {
+        const markdownFiles = this.plugin.app.vault.getMarkdownFiles();
+        if (folderPath === "") {
+            return markdownFiles;
+        }
+
+        const folderPrefix = `${folderPath}/`;
+        return markdownFiles.filter((file) => file.path.startsWith(folderPrefix));
     }
 
     private displayMessage() {
