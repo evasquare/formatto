@@ -1,5 +1,5 @@
-import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang.ts";
-import FormattoPlugin from "@src/main.ts";
+import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang.js";
+import FormattoPlugin from "@src/main.js";
 
 export class FormattoEditorMenuEvent {
     private plugin: FormattoPlugin;

@@ -1,8 +1,8 @@
 import { debounce, Notice, PluginSettingTab, Setting } from "obsidian";
 
-import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang.ts";
+import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang.js";
 
-import { FALLBACK_OPTIONS } from "./optionTypes.ts";
+import { FALLBACK_OPTIONS } from "./optionTypes.js";
 
 import type { App } from "obsidian";
 import type FormattoPlugin from "@src/main.ts";

@@ -1,8 +1,8 @@
 import { Command, Notice } from "obsidian";
 
-import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang.ts";
+import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang.js";
 
-import FormattoPlugin from "../main.ts";
+import FormattoPlugin from "../main.js";
 
 export class FormattoCommands {
     private plugin: FormattoPlugin;

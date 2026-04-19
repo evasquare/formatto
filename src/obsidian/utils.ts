@@ -1,13 +1,13 @@
 import { Editor, EditorPosition, Notice, TFile } from "obsidian";
 
-import { getLocale, getWasmLocale, LOCALE_CATEGORY } from "@src/lang/lang.ts";
-import FormattoPlugin from "@src/main.ts";
+import { getLocale, getWasmLocale, LOCALE_CATEGORY } from "@src/lang/lang.js";
+import FormattoPlugin from "@src/main.js";
 
 import { format_document } from "../../wasm/pkg/formatto_wasm.js";
 import {
     FALLBACK_OPTIONS,
     FormattoPluginOptions,
-} from "./options/optionTypes.ts";
+} from "./options/optionTypes.js";
 
 export class FormattoUtils {
     private plugin: FormattoPlugin;
