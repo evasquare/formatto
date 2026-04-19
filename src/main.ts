@@ -1,13 +1,13 @@
 import { Plugin } from "obsidian";
 
-import { FormattoCommands } from "@obsidian/commands.ts";
-import { FormattoIcons } from "@obsidian/icons/icons.ts";
-import { FormattoRibbonIcons } from "@obsidian/ribbonIcons.ts";
-import { FormattoUtils } from "@obsidian/utils.ts";
-import { FormattoEditorMenuEvent } from "@src/obsidian/events/editorMenuEvent.ts";
-import { FormattoModifyEvent } from "@src/obsidian/events/modifyEvent.ts";
-import { FormattoOptionTab } from "@src/obsidian/options/optionTab.ts";
-import { DEFAULT_OPTIONS } from "@src/obsidian/options/optionTypes.ts";
+import { FormattoCommands } from "@obsidian/commands.js";
+import { FormattoIcons } from "@obsidian/icons/icons.js";
+import { FormattoRibbonIcons } from "@obsidian/ribbonIcons.js";
+import { FormattoUtils } from "@obsidian/utils.js";
+import { FormattoEditorMenuEvent } from "@src/obsidian/events/editorMenuEvent.js";
+import { FormattoModifyEvent } from "@src/obsidian/events/modifyEvent.js";
+import { FormattoOptionTab } from "@src/obsidian/options/optionTab.js";
+import { DEFAULT_OPTIONS } from "@src/obsidian/options/optionTypes.js";
 
 import __wbg_init from "../wasm/pkg/formatto_wasm.js";
 import formatto_wasm from "../wasm/pkg/formatto_wasm.js";

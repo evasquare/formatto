@@ -1,6 +1,6 @@
 import { TFile } from "obsidian";
 
-import FormattoPlugin from "@src/main.ts";
+import FormattoPlugin from "@src/main.js";
 
 export class FormattoModifyEvent {
     private plugin: FormattoPlugin;
