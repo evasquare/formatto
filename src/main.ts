@@ -16,8 +16,8 @@ import type { FormattoPluginOptions } from "@src/obsidian/options/optionTypes.ts
 
 /** Entry Point. */
 export default class FormattoPlugin extends Plugin {
-    // @ts-expect-error A value injected by the Obsidian client.
-    settings: FormattoPluginOptions;
+    // `settings` get injected by the Obsidian client.
+    settings!: FormattoPluginOptions;
 
     utils = new FormattoUtils(this);
     private icons = new FormattoIcons();
