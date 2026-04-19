@@ -22,7 +22,7 @@ export const LOCALE_CATEGORY = {
 type ObjectValues<T> = T[keyof T];
 type LocaleCategory = ObjectValues<typeof LOCALE_CATEGORY>;
 
-const locales: { [key: string]: typeof en } = {
+const locales: { en: typeof en; [key: string]: typeof en } = {
     en: en,
     de: de,
     hu: hu,
@@ -30,20 +30,30 @@ const locales: { [key: string]: typeof en } = {
 };
 
 /** @example getLocale(LOCALE_CATEGORY.COMMANDS, "Format Document") */
-export const getLocale = (category: LocaleCategory, key: string) => {
-    const usingLocale = locales[detectedLanguage] ?? locales.en;
-    const message = usingLocale[category][key];
-
-    if (message === "") {
+export const getLocale = (category: LocaleCategory, key: string): string => {
+    if (!detectedLanguage) {
         const usingLocale = locales.en;
-        return usingLocale[category][key];
+        return (
+            (usingLocale[category] as Record<string, string>)[key] ??
+            "INVALID_VALUE"
+        );
     }
 
-    return usingLocale[category][key];
+    const usingLocale = locales[detectedLanguage] ?? locales.en;
+    const message =
+        (usingLocale[category] as Record<string, string>)[key] ??
+        "INVALID_VALUE";
+
+    return message;
 };
 
 /** Returns the "wasm" object in the locale file. */
 export const getWasmLocale = () => {
+    if (!detectedLanguage) {
+        const usingLocale = locales.en;
+        return usingLocale.wasm;
+    }
+
     const usingLocale = locales[detectedLanguage] ?? locales.en;
     return usingLocale.wasm;
 };

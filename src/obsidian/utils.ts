@@ -1,16 +1,19 @@
 import { Editor, EditorPosition, Notice, TFile } from "obsidian";
 
-import { getLocale, getWasmLocale, LOCALE_CATEGORY } from "@src/lang/lang";
-import FormattoPlugin from "@src/main";
+import { getLocale, getWasmLocale, LOCALE_CATEGORY } from "@src/lang/lang.ts";
+import FormattoPlugin from "@src/main.ts";
 
-import { format_document } from "../../wasm/pkg/formatto_wasm";
-import { FALLBACK_OPTIONS, FormattoPluginOptions } from "./options/optionTypes";
+import { format_document } from "../../wasm/pkg/formatto_wasm.js";
+import {
+    FALLBACK_OPTIONS,
+    FormattoPluginOptions,
+} from "./options/optionTypes.ts";
 
 export class FormattoUtils {
     private plugin: FormattoPlugin;
-    private cursorPosition: EditorPosition;
-    private originalDocument: string;
-    private formattedDocument: string;
+    private cursorPosition: EditorPosition | undefined;
+    private originalDocument: string | undefined;
+    private formattedDocument: string | undefined;
 
     constructor(plugin: FormattoPlugin) {
         this.plugin = plugin;
@@ -133,8 +136,12 @@ export class FormattoUtils {
     }
 
     private handleEmptyOptions(copiedOptions: FormattoPluginOptions) {
-        for (const sectionKey of Object.keys(copiedOptions)) {
-            for (const optionKey of Object.keys(copiedOptions[sectionKey])) {
+        for (const sectionKey of Object.keys(
+            copiedOptions,
+        ) as (keyof FormattoPluginOptions)[]) {
+            for (const optionKey of Object.keys(
+                copiedOptions[sectionKey] as object,
+            ) as (keyof (typeof copiedOptions)[typeof sectionKey])[]) {
                 if (copiedOptions[sectionKey][optionKey] === "") {
                     copiedOptions[sectionKey][optionKey] =
                         FALLBACK_OPTIONS[sectionKey][optionKey];

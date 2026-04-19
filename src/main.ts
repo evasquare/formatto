@@ -1,21 +1,22 @@
 import { Plugin } from "obsidian";
 
-import { FormattoCommands } from "@obsidian/commands";
-import { FormattoIcons } from "@obsidian/icons/icons";
-import { FormattoRibbonIcons } from "@obsidian/ribbonIcons";
-import { FormattoUtils } from "@obsidian/utils";
-import { FormattoEditorMenuEvent } from "@src/obsidian/events/editorMenuEvent";
-import { FormattoModifyEvent } from "@src/obsidian/events/modifyEvent";
-import { FormattoOptionTab } from "@src/obsidian/options/optionTab";
-import { DEFAULT_OPTIONS } from "@src/obsidian/options/optionTypes";
+import { FormattoCommands } from "@obsidian/commands.ts";
+import { FormattoIcons } from "@obsidian/icons/icons.ts";
+import { FormattoRibbonIcons } from "@obsidian/ribbonIcons.ts";
+import { FormattoUtils } from "@obsidian/utils.ts";
+import { FormattoEditorMenuEvent } from "@src/obsidian/events/editorMenuEvent.ts";
+import { FormattoModifyEvent } from "@src/obsidian/events/modifyEvent.ts";
+import { FormattoOptionTab } from "@src/obsidian/options/optionTab.ts";
+import { DEFAULT_OPTIONS } from "@src/obsidian/options/optionTypes.ts";
 
-import __wbg_init from "../wasm/pkg/formatto_wasm";
-import formatto_wasm from "../wasm/pkg/formatto_wasm_bg.wasm";
+import __wbg_init from "../wasm/pkg/formatto_wasm.js";
+import formatto_wasm from "../wasm/pkg/formatto_wasm.js";
 
-import type { FormattoPluginOptions } from "@src/obsidian/options/optionTypes";
+import type { FormattoPluginOptions } from "@src/obsidian/options/optionTypes.ts";
 
 /** Entry Point. */
 export default class FormattoPlugin extends Plugin {
+    // @ts-expect-error A value injected by the Obsidian client.
     settings: FormattoPluginOptions;
 
     utils = new FormattoUtils(this);
@@ -30,7 +31,7 @@ export default class FormattoPlugin extends Plugin {
         this.settings = Object.assign(
             {},
             DEFAULT_OPTIONS,
-            await this.loadData()
+            await this.loadData(),
         );
     }
     async saveOptions() {
@@ -43,7 +44,6 @@ export default class FormattoPlugin extends Plugin {
 
         // Initialize WebAssembly
         await (async () => {
-            // @ts-expect-error: formatto_wasm should be called.
             await __wbg_init(await formatto_wasm());
         })();
 
@@ -56,7 +56,7 @@ export default class FormattoPlugin extends Plugin {
         this.commands.registerCommands();
 
         console.log(
-            "Plugin Loaded: Formatto\n(Some error details are going to be displayed here.)"
+            "Plugin Loaded: Formatto\n(Some error details are going to be displayed here.)",
         );
     }
 

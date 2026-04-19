@@ -1,11 +1,11 @@
 import { debounce, Notice, PluginSettingTab, Setting } from "obsidian";
 
-import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang";
+import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang.ts";
 
-import { FALLBACK_OPTIONS } from "./optionTypes";
+import { FALLBACK_OPTIONS } from "./optionTypes.ts";
 
 import type { App } from "obsidian";
-import type FormattoPlugin from "@src/main";
+import type FormattoPlugin from "@src/main.ts";
 
 export class FormattoOptionTab extends PluginSettingTab {
     private plugin: FormattoPlugin;
@@ -90,11 +90,13 @@ export class FormattoOptionTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_OPTIONS.headingGaps.beforeTopLevelHeadings,
+                            FALLBACK_OPTIONS.headingGaps
+                                .beforeTopLevelHeadings ?? "",
                         ),
                     )
                     .setValue(
-                        this.plugin.settings.headingGaps.beforeTopLevelHeadings,
+                        this.plugin.settings.headingGaps
+                            .beforeTopLevelHeadings ?? "",
                     )
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -121,11 +123,13 @@ export class FormattoOptionTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_OPTIONS.headingGaps.beforeFirstSubHeading,
+                            FALLBACK_OPTIONS.headingGaps
+                                .beforeFirstSubHeading ?? "",
                         ),
                     )
                     .setValue(
-                        this.plugin.settings.headingGaps.beforeFirstSubHeading,
+                        this.plugin.settings.headingGaps
+                            .beforeFirstSubHeading ?? "",
                     )
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -152,11 +156,13 @@ export class FormattoOptionTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_OPTIONS.headingGaps.beforeSubHeadings,
+                            FALLBACK_OPTIONS.headingGaps.beforeSubHeadings ??
+                                "",
                         ),
                     )
                     .setValue(
-                        this.plugin.settings.headingGaps.beforeSubHeadings,
+                        this.plugin.settings.headingGaps.beforeSubHeadings ??
+                            "",
                     )
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -183,10 +189,12 @@ export class FormattoOptionTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_OPTIONS.otherGaps.afterProperties,
+                            FALLBACK_OPTIONS.otherGaps.afterProperties ?? "",
                         ),
                     )
-                    .setValue(this.plugin.settings.otherGaps.afterProperties)
+                    .setValue(
+                        this.plugin.settings.otherGaps.afterProperties ?? "",
+                    )
                     .onChange(async (value) => {
                         debounceMsg(value);
 
@@ -206,10 +214,12 @@ export class FormattoOptionTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_OPTIONS.otherGaps.beforeContents,
+                            FALLBACK_OPTIONS.otherGaps.beforeContents ?? "",
                         ),
                     )
-                    .setValue(this.plugin.settings.otherGaps.beforeContents)
+                    .setValue(
+                        this.plugin.settings.otherGaps.beforeContents ?? "",
+                    )
                     .onChange(async (value) => {
                         debounceMsg(value);
 
@@ -235,12 +245,12 @@ export class FormattoOptionTab extends PluginSettingTab {
                     .setPlaceholder(
                         this.putDefaultIndicator(
                             FALLBACK_OPTIONS.otherGaps
-                                .beforeContentsAfterHeadings,
+                                .beforeContentsAfterHeadings ?? "",
                         ),
                     )
                     .setValue(
                         this.plugin.settings.otherGaps
-                            .beforeContentsAfterHeadings,
+                            .beforeContentsAfterHeadings ?? "",
                     )
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -268,12 +278,12 @@ export class FormattoOptionTab extends PluginSettingTab {
                     .setPlaceholder(
                         this.putDefaultIndicator(
                             FALLBACK_OPTIONS.otherGaps
-                                .beforeContentsAfterCodeBlocks,
+                                .beforeContentsAfterCodeBlocks ?? "",
                         ),
                     )
                     .setValue(
                         this.plugin.settings.otherGaps
-                            .beforeContentsAfterCodeBlocks,
+                            .beforeContentsAfterCodeBlocks ?? "",
                     )
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -297,10 +307,12 @@ export class FormattoOptionTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_OPTIONS.otherGaps.beforeCodeBlocks,
+                            FALLBACK_OPTIONS.otherGaps.beforeCodeBlocks ?? "",
                         ),
                     )
-                    .setValue(this.plugin.settings.otherGaps.beforeCodeBlocks)
+                    .setValue(
+                        this.plugin.settings.otherGaps.beforeCodeBlocks ?? "",
+                    )
                     .onChange(async (value) => {
                         debounceMsg(value);
 
@@ -326,12 +338,12 @@ export class FormattoOptionTab extends PluginSettingTab {
                     .setPlaceholder(
                         this.putDefaultIndicator(
                             FALLBACK_OPTIONS.otherGaps
-                                .beforeCodeBlocksAfterHeadings,
+                                .beforeCodeBlocksAfterHeadings ?? "",
                         ),
                     )
                     .setValue(
                         this.plugin.settings.otherGaps
-                            .beforeCodeBlocksAfterHeadings,
+                            .beforeCodeBlocksAfterHeadings ?? "",
                     )
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -359,12 +371,12 @@ export class FormattoOptionTab extends PluginSettingTab {
                     .setPlaceholder(
                         this.putDefaultIndicator(
                             FALLBACK_OPTIONS.otherGaps
-                                .beforeCalloutsAfterHeadings,
+                                .beforeCalloutsAfterHeadings ?? "",
                         ),
                     )
                     .setValue(
                         this.plugin.settings.otherGaps
-                            .beforeCalloutsAfterHeadings,
+                            .beforeCalloutsAfterHeadings ?? "",
                     )
                     .onChange(async (value) => {
                         debounceMsg(value);
@@ -386,10 +398,12 @@ export class FormattoOptionTab extends PluginSettingTab {
                 text
                     .setPlaceholder(
                         this.putDefaultIndicator(
-                            FALLBACK_OPTIONS.otherGaps.beforeCallouts,
+                            FALLBACK_OPTIONS.otherGaps.beforeCallouts ?? "",
                         ),
                     )
-                    .setValue(this.plugin.settings.otherGaps.beforeCallouts)
+                    .setValue(
+                        this.plugin.settings.otherGaps.beforeCallouts ?? "",
+                    )
                     .onChange(async (value) => {
                         debounceMsg(value);
 
@@ -417,7 +431,10 @@ export class FormattoOptionTab extends PluginSettingTab {
             )
             .addToggle((text) =>
                 text
-                    .setValue(this.plugin.settings.formatOptions.insertNewline)
+                    .setValue(
+                        this.plugin.settings.formatOptions.insertNewline ??
+                            false,
+                    )
                     .onChange(async (value) => {
                         this.plugin.settings.formatOptions.insertNewline =
                             value;
@@ -445,7 +462,8 @@ export class FormattoOptionTab extends PluginSettingTab {
             .addToggle((text) =>
                 text
                     .setValue(
-                        this.plugin.settings.otherOptions.notifyWhenUnchanged,
+                        this.plugin.settings.otherOptions.notifyWhenUnchanged ??
+                            false,
                     )
                     .onChange(async (value) => {
                         this.plugin.settings.otherOptions.notifyWhenUnchanged =
@@ -470,7 +488,7 @@ export class FormattoOptionTab extends PluginSettingTab {
                 text
                     .setValue(
                         this.plugin.settings.otherOptions
-                            .showMoreDetailedErrorMessages,
+                            .showMoreDetailedErrorMessages ?? false,
                     )
                     .onChange(async (value) => {
                         this.plugin.settings.otherOptions.showMoreDetailedErrorMessages =
@@ -493,7 +511,9 @@ export class FormattoOptionTab extends PluginSettingTab {
             )
             .addToggle((text) =>
                 text
-                    .setValue(this.plugin.settings.otherOptions.formatOnSave)
+                    .setValue(
+                        this.plugin.settings.otherOptions.formatOnSave ?? false,
+                    )
                     .onChange(async (value) => {
                         this.plugin.settings.otherOptions.formatOnSave = value;
                         await this.plugin.saveOptions();

@@ -10,13 +10,14 @@
         "resolveJsonModule": true,
         "moduleDetection": "force",
         "noUncheckedIndexedAccess": true,
-        "moduleResolution": "node10",
-        "module": "ESNext",
+        "moduleResolution": "node16",
+        "module": "node16",
         "lib": ["ES2022", "DOM"],
-        "baseUrl": "./",
+        "noEmit": true,
+        "allowImportingTsExtensions": true,
         "paths": {
-            "@src/*": ["src/*"],
-            "@obsidian/*": ["src/obsidian/*"]
+            "@src/*": ["./src/*"],
+            "@obsidian/*": ["./src/obsidian/*"]
         }
     }
 }

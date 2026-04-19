@@ -1,6 +1,6 @@
 import { TFile } from "obsidian";
 
-import FormattoPlugin from "@src/main";
+import FormattoPlugin from "@src/main.ts";
 
 export class FormattoModifyEvent {
     private plugin: FormattoPlugin;
@@ -9,7 +9,7 @@ export class FormattoModifyEvent {
         this.plugin = plugin;
     }
 
-    private timer = null;
+    private timer: any = null;
     private timerDelay = 1000;
 
     registerEvents() {

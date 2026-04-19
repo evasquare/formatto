@@ -1,5 +1,5 @@
-import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang";
-import FormattoPlugin from "@src/main";
+import { getLocale, LOCALE_CATEGORY } from "@src/lang/lang.ts";
+import FormattoPlugin from "@src/main.ts";
 
 export class FormattoEditorMenuEvent {
     private plugin: FormattoPlugin;
@@ -22,13 +22,13 @@ export class FormattoEditorMenuEvent {
                         .setTitle(
                             getLocale(
                                 LOCALE_CATEGORY.EDITOR_MENU,
-                                "Format Document"
-                            )
+                                "Format Document",
+                            ),
                         )
                         .setIcon("formatto-logo")
                         .onClick(() => {
                             this.plugin.utils.formatDocument(editor);
-                        })
+                        }),
                 );
             }),
         ];
